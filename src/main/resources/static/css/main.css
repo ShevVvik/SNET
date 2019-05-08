@@ -1,0 +1,22 @@
+* {
+	margin: 0;
+	padding:0;
+	color: #333;
+}
+
+.a {
+	color: #e74c3c;
+	margin-left: 8px;
+}
+
+span {
+	margin-top: 8px;
+    color: #333;
+    font-size: 28px;
+}
+
+div {
+	margin: 0px;
+	padding: 0px;
+    background-color: #16a085;
+}
