@@ -9,8 +9,6 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-
-//Авыфывфывфывфыв
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 /*
