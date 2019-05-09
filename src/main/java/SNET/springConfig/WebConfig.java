@@ -11,18 +11,18 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-
+/*
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("index");
 		registry.addViewController("/login").setViewName("/user/login");
         registry.addViewController("/access-denied").setViewName("access-denied");
-	}
-	
+	}*/
 	@Bean
 	public LocaleResolver localeResolver() {
 	    SessionLocaleResolver localeResolver = new SessionLocaleResolver();
 	    localeResolver.setDefaultLocale(Locale.ENGLISH);
 	    return localeResolver;
-	}		
+	}	
+
+	
 }
