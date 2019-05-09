@@ -14,7 +14,6 @@ public class WebConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("index");
 		registry.addViewController("/login").setViewName("/user/login");
         registry.addViewController("/access-denied").setViewName("access-denied");
 	}
@@ -24,5 +23,5 @@ public class WebConfig implements WebMvcConfigurer {
 	    SessionLocaleResolver localeResolver = new SessionLocaleResolver();
 	    localeResolver.setDefaultLocale(Locale.ENGLISH);
 	    return localeResolver;
-	}		
+	}	
 }

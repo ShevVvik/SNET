@@ -1,24 +1,23 @@
 package SNET.springConfig;
-/*
-import java.util.ArrayList;
+
 import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import SNET.domain.entity.LogIn;
-import SNET.domain.entity.User;
-import SNET.domain.entity.UserRole;
+import springweb.domain.entity.User;
+import springweb.domain.entity.UserRole;
 
-public class UserDetailsImpl implements UserDetails{
+public class UserDetailsImpl implements UserDetails {
 
-	private static final long serialVersionUID = 2877136743159387065L;
-    private LogIn user;
+    private static final long serialVersionUID = 2877136743159387065L;
+    private User user;
     private List<GrantedAuthority> roles = new ArrayList<>();
 
-    public UserDetailsImpl(LogIn user) {
+    public UserDetailsImpl(User user) {
         this.user = user;
 
         for (UserRole role : user.getUserRoles()) {
@@ -66,4 +65,4 @@ public class UserDetailsImpl implements UserDetails{
         return user;
     }
 
-}*/
+}
