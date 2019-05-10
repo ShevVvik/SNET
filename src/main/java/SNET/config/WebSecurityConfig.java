@@ -29,6 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.anyRequest().authenticated()
 			.and().exceptionHandling().accessDeniedPage("/access-denied")
 			.and().formLogin().loginPage("/login").permitAll()
+			.defaultSuccessUrl("/profile")
 			.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 				.logoutSuccessUrl("/").deleteCookies("JSESSIONID").invalidateHttpSession(true);
 	}

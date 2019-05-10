@@ -140,7 +140,8 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName + ", password=" + password + "]";
+		return "User [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" 
+				+ lastName + ", password=" + password + ", login" + login + ", city=" + city + ", education=" + education + "]";
     }
 
 	public String getHighLevelRole() {
