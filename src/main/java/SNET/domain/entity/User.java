@@ -16,6 +16,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 
 
 @Entity
@@ -23,6 +26,7 @@ import javax.persistence.Table;
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 6216344084865363418L;
+
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -32,13 +36,14 @@ public class User implements Serializable {
 	@Column(name="email", length=320, nullable=false)
 	private String email;
 
-	@Column(name="firstName", length=64, nullable=true)
+	
+	@Column(name="firstName", length=64, nullable=false)
 	private String firstName;
 
-	@Column(name="lastName", length=64, nullable=true)
+	@Column(name="lastName", length=64, nullable=false)
 	private String lastName;
 
-	@Column(name="login", length=64, nullable=true)
+	@Column(name="login", length=64, nullable=false)
 	private String login;
 	
 	@Column(name="password", length=64, nullable=false)
@@ -46,10 +51,10 @@ public class User implements Serializable {
 
 	@Column(name="enabled")
 	private boolean enabled;
-
+/*
 	@Column(name="token", length=32, nullable=true)
 	private String token;
-
+*/
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="user", orphanRemoval = true)
 	private Set<UserRole> userRoles;
 
@@ -108,19 +113,19 @@ public class User implements Serializable {
 		this.enabled = enabled;
 	}
 
-	public String getToken() {
-		return token;
+	public String getLogin() {
+		return login;
 	}
 
-	public void setToken(String token) {
-		this.token = token;
+	public void setLogin(String login) {
+		this.login = login;
 	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName + ", password=" + password + "]";
     }
-/*
+
 	public String getHighLevelRole() {
 
 	    List<String> allRoles = new ArrayList<>();
@@ -148,7 +153,11 @@ public class User implements Serializable {
 
 	    return list;
 	}
-*/
+
+    public String getFullName() {
+        return this.firstName + " " + this.lastName;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(id, email, password);
@@ -172,5 +181,204 @@ public class User implements Serializable {
 
         return false;
     }
+	
+	/*
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="idUser")
+	private Long id;
+/*
+	@Column(name="email", length=320, nullable=false)
+	private String email;
 
+	@Column(name="firstName", length=64, nullable=true)
+	private String firstName;
+
+	@Column(name="lastName", length=64, nullable=true)
+	private String lastName;
+*//*
+	@Column(name="login", length=64, nullable=true)
+	private String login;
+	
+	@Column(name="password", length=64, nullable=false)
+	private String password;
+
+	/*
+	@Column(name="birthday")
+	@Temporal(TemporalType.DATE)
+	private String birthday;                              //Спрсить про дату в Spring
+	*/
+	/*
+	 * Спросить про то как хранить изображение в сущности	 * 
+	 */
+	/*
+	@Column(name="city", length=64, nullable=false)
+	private String city;
+	
+	@Column(name="education", length=64, nullable=false)
+	private String education;
+	
+	/*
+	 * Так же спросить как храниться дата в сущности 
+	 */
+/*
+	
+	@Column(name="enabled")
+	private boolean enabled;
+
+	@Column(name="hash", length=32, nullable=true)
+	private String hash;
+
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="user", orphanRemoval = true)
+	private Set<UserRole> userRoles;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}*/
+/*
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+*//*
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Set<UserRole> getUserRoles() {
+		if (userRoles == null) {
+			userRoles = new HashSet<>();
+		}
+		return userRoles;
+	}
+	
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}*/
+/*
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getEducation() {
+		return education;
+	}
+
+	public void setEducation(String education) {
+		this.education = education;
+	}
+
+	public String getHash() {
+		return hash;
+	}
+
+	public void setHash(String hash) {
+		this.hash = hash;
+	}
+*//*
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", password=" + password + "]";
+    }
+*/
+/* Спросить как лучше поступить с ролями хранить их в отдельной табличке или как множество в коде
+ * */
+	
+	/*
+	public String getHighLevelRole() {
+
+	    List<String> allRoles = new ArrayList<>();
+
+	    for (UserRole role : this.getUserRoles()) {
+            allRoles.add(role.getRole());
+        }
+
+	    if (allRoles.contains(Role.ROLE_ADMIN)) {
+	        return Role.ROLE_ADMIN;
+	    } else if(allRoles.contains(Role.ROLE_MANAGER)) {
+	        return Role.ROLE_MANAGER;
+	    } else {
+	        return Role.ROLE_USER;
+	    }
+
+	}
+
+
+	public List<String> getRolesList() {
+	    List<String> list = new ArrayList<>();
+
+	    for (UserRole role : this.getUserRoles()) {
+            list.add(role.getRole());
+        }
+
+	    return list;
+	}
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, login, password);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+
+        if (obj == this)
+            return true;
+
+        if (!(obj instanceof User))
+        return false;
+
+        User user = (User)obj;
+
+        if (user.hashCode() == this.hashCode())
+            return true;
+
+        return false;
+    }
+*/
 }

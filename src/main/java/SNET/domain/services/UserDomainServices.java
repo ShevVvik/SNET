@@ -45,7 +45,7 @@ public class UserDomainServices {
 			}
 		}
 
-		return false;
+		return true;
 	}
 
 }

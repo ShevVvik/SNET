@@ -33,7 +33,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.logoutSuccessUrl("/").deleteCookies("JSESSIONID").invalidateHttpSession(true);
 	}
 
-
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(plainPasswordEncoder());
     }

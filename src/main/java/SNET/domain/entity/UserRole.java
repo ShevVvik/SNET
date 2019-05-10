@@ -23,7 +23,7 @@ public class UserRole implements Serializable {
 	private int id;
 
 	@ManyToOne
-    @JoinColumn(name="userId", nullable=false)
+    @JoinColumn(name="user_id", nullable=false)
  	private User user;
 
 	@Column(name="role", length=64, nullable=false)
