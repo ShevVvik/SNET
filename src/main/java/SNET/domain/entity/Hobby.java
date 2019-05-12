@@ -21,6 +21,7 @@ public class Hobby {
 	@Column(name="nameHobby", length=320, nullable=false)
 	private String nameHobby;
 
+	
 	public Long getId() {
 		return id;
 	}
