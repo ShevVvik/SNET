@@ -1,0 +1,38 @@
+* {
+	margin: 0;
+	padding:0;
+}
+
+body {
+	background-image: url('../img/bg.jpg');
+	background-size: cover;
+}
+
+.A {
+	color: #e74c3c;
+	margin-left: 8px;
+}
+
+span {
+	margin-top: 8px;
+    color: #fafafa;
+    font-size: 128px;
+}
+
+p {
+	color: #fafafa;
+}
+
+div {
+	opacity: 0.8;
+    background:#2d3436;
+    width: 350px;
+    height: 150px;
+    border-radius:50px;
+	padding: 40px;
+    position: absolute;
+    top: 50%;
+    margin-left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+}
