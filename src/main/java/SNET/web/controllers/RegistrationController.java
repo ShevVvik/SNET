@@ -33,15 +33,15 @@ public class RegistrationController {
 		binder.addValidators(userValidator);
 	}
 	
-	@GetMapping("/user/registration")
+	@GetMapping("registration")
 	public String registration(Model model, UserRegistrationForm userForm) {
 		
 		model.addAttribute("userForm", userForm);
 		
-		return "user/registration";
+		return "registration";
 	}
 
-	@PostMapping("/user/registration")
+	@PostMapping("registration")
 	public String registrationPost(Model model, @Valid @ModelAttribute("userForm") UserRegistrationForm userForm,
 				BindingResult binding) {
 		
