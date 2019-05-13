@@ -43,10 +43,11 @@ public class UserDetailsImpl implements UserDetails {
 
     public UserDetailsImpl(User user) {
         this.user = user;
-
-        for (UserRole role : user.getUserRoles()) {
-            GrantedAuthority auth = new SimpleGrantedAuthority(role.getRole());
-            roles.add(auth);
+        if (user != null) {
+            for (UserRole role : user.getUserRoles()) {
+                GrantedAuthority auth = new SimpleGrantedAuthority(role.getRole());
+                roles.add(auth);
+            }
         }
     }
 
@@ -82,6 +83,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isEnabled() {
+    	if (user == null) return false;
         return user.isEnabled();
     }
 
