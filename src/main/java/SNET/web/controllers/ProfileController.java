@@ -5,9 +5,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import SNET.config.UserDetailsImpl;
 import SNET.domain.entity.User;
+import SNET.domain.services.NewsDomainServices;
 import SNET.domain.services.UserDomainServices;
 
 
@@ -18,8 +20,11 @@ public class ProfileController {
 	@Autowired
 	private UserDomainServices userService;
 	
+	@Autowired
+	private NewsDomainServices newsService;
+	
 	@GetMapping("/profile")
-	public String index(Model model) {
+	public String profile(Model model) {
 		
 		UserDetailsImpl userDet = (UserDetailsImpl) SecurityContextHolder
 		        .getContext()
@@ -28,6 +33,23 @@ public class ProfileController {
 		User user = userDet.getUser();
 		
 		model.addAttribute("user", user);
+		model.addAttribute("news", newsService.getNewsByAuthor(user.getId()));
+		
+		return "/user/profile";
+	}
+	
+	@GetMapping("/u/{userId}")
+	public String index(Model model, @PathVariable Long userId) {
+		
+		UserDetailsImpl userDet = (UserDetailsImpl) SecurityContextHolder
+		        .getContext()
+		        .getAuthentication()
+		        .getPrincipal();
+		User userX = userDet.getUser();
+		
+		User user = userService.getById(userId);
+		model.addAttribute("user", user);
+		model.addAttribute("news", newsService.getNewsByAuthor(user.getId()));
 		
 		return "/user/profile";
 	}
