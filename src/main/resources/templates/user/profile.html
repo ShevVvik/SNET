@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-123
 <div>
 		<p>First name: <p th:text="${user.firstName}">
 		<br>
@@ -21,6 +20,14 @@
 		<div th:if="${news} != null">
 			<ul th:each="new1, st: ${news}">
 				<li th:text="${new1.text}">test@test.tt</li>
+			</ul>
+		</div>
+		
+		<div th:if="${userFriends} != null">
+		<h1>Friends</h1>
+			<ul th:each="friend, st: ${userFriends}">
+				<li th:text="${friend.user1.email}"></li>
+				<div><a href="/u/3">Accept</a></div>
 			</ul>
 		</div>
 </body>
