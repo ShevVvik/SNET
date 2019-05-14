@@ -1,6 +1,8 @@
 package SNET.domain.entity;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.data.annotation.LastModifiedDate;
 
 
 
@@ -37,10 +43,11 @@ public class Comments implements Serializable {
 		@Column(name="comment_text", length=255, nullable=false)
 		private String text;
 		
-		//ИСПРАВИТЬ КАК БУДЕТ ВОЗМОЖНОСТЬ
-		//@Column(name="comment_date", nullable=false)
-		// private DATETAMETYPE_CHECK_ME comment_date;
-		
+		/* @Temporal(TemporalType.TIMESTAMP)
+			@Column(name="commentDate", nullable=false)
+			@LastModifiedDate
+			private Date commentDate;
+		*/
 		public String getText() {
 			return text;
 		}
