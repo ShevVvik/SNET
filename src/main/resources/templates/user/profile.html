@@ -19,11 +19,9 @@
 		</div>
 		<h1>News</h1>
 		<div th:if="${news} != null">
-		
 			<ul th:each="new1, st: ${news}">
 				<li th:text="${new1.text}">test@test.tt</li>
 			</ul>
-		
 		</div>
 </body>
 </html>

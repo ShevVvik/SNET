@@ -165,7 +165,7 @@ public class User implements Serializable {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" 
-				+ lastName + ", password=" + password + ", login" + login + ", city=" + city + ", education=" + education + "]";
+				+ lastName + ", password=" + password + ", login=" + login + ", city=" + city + ", education=" + education + "]";
     }
 
 	public String getHighLevelRole() {
@@ -183,7 +183,6 @@ public class User implements Serializable {
 	    } else {
 	        return Role.ROLE_USER;
 	    }
-
 	}
 
 	public List<String> getRolesList() {
@@ -233,6 +232,4 @@ public class User implements Serializable {
 
         return false;
     }
-	
-
 }

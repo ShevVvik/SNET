@@ -12,7 +12,6 @@ import SNET.domain.entity.User;
 import SNET.domain.entity.UserRole;
 import SNET.web.form.UserRegistrationForm;
 
-
 @Service
 public class UserDomainServices {
 
@@ -53,7 +52,6 @@ public class UserDomainServices {
 
 	
 	public void createUserFromRegistrationForm(UserRegistrationForm userForm) {
-		
 		User u = new User();
 		
 		BeanUtils.copyProperties(userForm, u);
