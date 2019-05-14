@@ -2,6 +2,7 @@ package SNET.domain.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,11 +26,11 @@ public class Comments implements Serializable {
 
 		@Id
 		@GeneratedValue(strategy=GenerationType.IDENTITY)
-		@Column(name="id_comment")
+		@Column(name="idComment")
 		private int id;
 		
 		@ManyToOne
-	    @JoinColumn(name="id_commentator", nullable=false)
+	    @JoinColumn(name="idCommentator", nullable=false)
 	 	private User commentator;
 		
 		public User getCommentator() {
@@ -40,7 +41,7 @@ public class Comments implements Serializable {
 			this.commentator = commentator;
 		}
 
-		@Column(name="comment_text", length=255, nullable=false)
+		@Column(name="commentText", length=255, nullable=false)
 		private String text;
 		
 		/* @Temporal(TemporalType.TIMESTAMP)
@@ -57,7 +58,30 @@ public class Comments implements Serializable {
 		}
 
 		@ManyToOne
-	    @JoinColumn(name="id_news", nullable=false)
-	 	private News id_news;
+	    @JoinColumn(name="idNews", nullable=false)
+	 	private News idNews;
+		
+		 @Override
+		    public int hashCode() {
+		        return Objects.hash(id, commentator, text, idNews);
+		 }
+		 @Override
+		    public boolean equals(Object obj) {
+		        if (obj == null)
+		            return false;
+
+		        if (obj == this)
+		            return true;
+
+		        if (!(obj instanceof News))
+		        return false;
+
+		        Comments comments = (Comments)obj;
+
+		        if (comments.hashCode() == this.hashCode())
+		            return true;
+
+		        return false;
+		    }
 }
 
