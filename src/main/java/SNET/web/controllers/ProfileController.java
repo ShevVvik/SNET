@@ -48,6 +48,9 @@ public class ProfileController {
 		User userX = userDet.getUser();
 		
 		User user = userService.getById(userId);
+		
+		if (userX.equals(user)) return "redirect:/profile";
+		
 		model.addAttribute("user", user);
 		model.addAttribute("news", newsService.getNewsByAuthor(user.getId()));
 		
