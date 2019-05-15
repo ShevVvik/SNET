@@ -1,5 +1,7 @@
 package SNET.domain.entity;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,6 +30,10 @@ public class FriendList {
 
 	@Column(name="friendship")
 	private boolean friendship;
+	
+	@Column(name="token")
+	private String token;
+	
 	
 	public boolean isFriendship() {
 		return friendship;
@@ -60,4 +66,35 @@ public class FriendList {
 	public void setUser2(User user2) {
 		this.user2 = user2;
 	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+	
+	 @Override
+	 public int hashCode() {
+		 return Objects.hash(id, user1, user2);
+	 }
+
+	 @Override
+	 public boolean equals(Object obj) {
+	     if (obj == null)
+	         return false;
+	     if (obj == this)
+	         return true;
+
+	     if (!(obj instanceof FriendList))
+	        return false;
+
+	     FriendList friends = (FriendList)obj;
+
+	     if (friends.hashCode() == this.hashCode())
+	        return true;
+
+	        return false;
+	    }
 }

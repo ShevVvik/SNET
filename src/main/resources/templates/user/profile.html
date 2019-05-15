@@ -27,7 +27,7 @@
 		<h1>Friends</h1>
 			<ul th:each="friend, st: ${userFriends}">
 				<li th:text="${friend.user1.email}"></li>
-				<div><a href="/u/3">Accept</a></div>
+				<div th:if="${friend.friendship} == false"><a href="/s/${friend.token}">Accept</a></div>
 			</ul>
 		</div>
 </body>

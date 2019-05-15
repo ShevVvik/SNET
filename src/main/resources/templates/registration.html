@@ -7,7 +7,7 @@
 	<th:block>
 		<h1>User registration</h1>
 		
-		<form action="#" method="post" th:action="@{/user/registration}" th:object="${userForm}">
+		<form action="#" method="post" th:action="@{/registration}" th:object="${userForm}">
 			<label>Email</label><input type="text" th:field="*{email}">&nbsp;<span th:errors="*{email}"></span><br>
 			<label>Password</label><input type="text" th:field="*{password}">&nbsp;<span th:errors="*{password}"></span><br>
 			<label>First name</label><input type="text" th:field="*{firstName}">&nbsp;<span th:errors="*{firstName}"></span><br>
@@ -19,5 +19,4 @@
 		</form>
 	</th:block>
 </body>
-
 </html>

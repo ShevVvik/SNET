@@ -18,4 +18,14 @@ public class FriendListDomainServices {
 	public List<FriendList> getFriends(Long userId) {
 		return friendListDao.findByUser1IdOrUser2Id(userId, userId);
 	}
+	
+	public FriendList getFriendsByToken(String token) {
+		return friendListDao.findByToken(token);
+	}
+	
+	public void createFriendship(FriendList friendship) {
+		friendship.setFriendship(true);
+		friendListDao.save(friendship);
+	}
+	
 }
