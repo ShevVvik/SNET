@@ -38,7 +38,7 @@ public class ProfileController {
 		
 		model.addAttribute("user", user);
 		model.addAttribute("news", newsService.getNewsByAuthor(user.getId()));
-		System.out.println(friendsService.getFriends(user.getId()).get(0).getToken());
+		System.out.println(friendsService.getFriends(user.getId()).get(1).getToken());
 		model.addAttribute("userFriends", friendsService.getFriends(user.getId()));
 		return "/user/profile";
 	}
