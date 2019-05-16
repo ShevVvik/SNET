@@ -19,7 +19,7 @@ public class FriendAcceptController {
 	
 	@GetMapping("/s/{token}")
 	public String profile(Model model, @PathVariable String token) {
-		System.out.println(token);
+		System.out.println("Ghbsdfsdfadadasd");
 		friendsService.createFriendship(friendsService.getFriendsByToken(token));
 		return "redirect:/friendlist";
 	}

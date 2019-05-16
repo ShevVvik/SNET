@@ -38,7 +38,6 @@ public class ProfileController {
 		
 		model.addAttribute("user", user);
 		model.addAttribute("news", newsService.getNewsByAuthor(user.getId()));
-		System.out.println(friendsService.getFriends(user.getId()).get(1).getToken());
 		model.addAttribute("userFriends", friendsService.getFriends(user.getId()));
 		return "/user/profile";
 	}
@@ -53,6 +52,7 @@ public class ProfileController {
 		User user = userDet.getUser();
 		
 		model.addAttribute("userFriends", friendsService.getFriends(user.getId()));
+		model.addAttribute("user", user);
 		return "/user/friendlist";
 	}
 	
