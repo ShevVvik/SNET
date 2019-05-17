@@ -14,11 +14,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
+import javax.persistence.JoinColumn;
 
 
 @Entity
@@ -35,7 +37,6 @@ public class User implements Serializable {
 
 	@Column(name="email", length=320, nullable=false)
 	private String email;
-
 	
 	@Column(name="firstName", length=64, nullable=false)
 	private String firstName;
@@ -67,6 +68,12 @@ public class User implements Serializable {
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="user", orphanRemoval = true)
 	private Set<UserRole> userRoles;
 
+	@ManyToMany
+	@JoinTable(name = "friend_list", 
+	    joinColumns = @JoinColumn(name = "user2Id", referencedColumnName = "idUser", nullable = false), 
+	    inverseJoinColumns = @JoinColumn(name = "user1Id", referencedColumnName = "idUser", nullable = false))
+	private Set<User> friends;
+	
 	public Long getId() {
 		return id;
 	}
@@ -145,7 +152,13 @@ public class User implements Serializable {
 		return userHobbies;
 	}
 
-	
+	public Set<User> getFriends() {
+		if (friends == null) {
+			friends = new HashSet<>();
+		}
+		return friends;
+	}
+
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -204,7 +217,17 @@ public class User implements Serializable {
 
 	    return list;
 	}
-	
+
+	public List<User> getFriendsList() {
+	    List<User> list = new ArrayList<>();
+
+	    for (User user : this.getFriends()) {
+            list.add(user);
+        }
+
+	    return list;
+	}
+
     public String getFullName() {
         return this.firstName + " " + this.lastName;
     }

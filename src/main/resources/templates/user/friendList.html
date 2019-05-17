@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<title>Friend list</title>
+</head>
+<body>
+<div>
+		<div th:if="${userFriends} != null">
+		<h1>Friends</h1>
+			<ul th:if="${user.id} != ${friend.user1.id}" th:each="friend, st: ${userFriends}">
+				<li th:if="${friend.friendship} == false" th:text="${friend.user1.email}"><a th:href="@{'/s/' + ${friend.token}}">Accept</a></li>
+				
+			</ul>
+		
+		<h1>Friends</h1>
+			<ul th:if="${friend.friendship} == true" th:each="friend, st: ${userFriends}">
+				<li th:text="${friend.user1.email}"></li>
+			</ul>
+		</div>
+</body>
+</html>

@@ -17,8 +17,6 @@ import SNET.web.form.UserRegistrationForm;
 import SNET.web.validators.UserRegistrationFormValidator;
 
 
-
-
 @Controller
 public class RegistrationController {
 

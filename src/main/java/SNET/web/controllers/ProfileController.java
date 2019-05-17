@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import SNET.config.UserDetailsImpl;
 import SNET.domain.entity.User;
+import SNET.domain.services.FriendListDomainServices;
 import SNET.domain.services.NewsDomainServices;
 import SNET.domain.services.UserDomainServices;
 
@@ -23,6 +24,9 @@ public class ProfileController {
 	@Autowired
 	private NewsDomainServices newsService;
 	
+	@Autowired
+	private FriendListDomainServices friendsService;
+	
 	@GetMapping("/profile")
 	public String profile(Model model) {
 		
@@ -34,8 +38,22 @@ public class ProfileController {
 		
 		model.addAttribute("user", user);
 		model.addAttribute("news", newsService.getNewsByAuthor(user.getId()));
-		
+		model.addAttribute("userFriends", friendsService.getFriends(user.getId()));
 		return "/user/profile";
+	}
+	
+	@GetMapping("/friendlist")
+	public String friendlist(Model model) {
+		
+		UserDetailsImpl userDet = (UserDetailsImpl) SecurityContextHolder
+		        .getContext()
+		        .getAuthentication()
+		        .getPrincipal();
+		User user = userDet.getUser();
+		
+		model.addAttribute("userFriends", friendsService.getFriends(user.getId()));
+		model.addAttribute("user", user);
+		return "/user/friendlist";
 	}
 	
 	@GetMapping("/u/{userId}")
@@ -49,7 +67,7 @@ public class ProfileController {
 		User user = userService.getById(userId);
 		
 		if (userX.equals(user)) return "redirect:/profile";
-			
+
 		model.addAttribute("user", user);
 		model.addAttribute("news", newsService.getNewsByAuthor(user.getId()));
 		

@@ -29,12 +29,14 @@ public class UserRegistrationForm {
 	private String passwordConfirm;
 
 	public String getLogin() {
+		System.out.println(login);
 		return login;
 	}
 	public void setLogin(String login) {
 		this.login = login;
 	}
 	public String getFirstName() {
+		System.out.println(firstName);
 		return firstName;
 	}
 	public void setFirstName(String firstName) {
@@ -61,6 +63,7 @@ public class UserRegistrationForm {
 	public String getPasswordConfirm() {
 		return passwordConfirm;
 	}
+	
 	public void setPasswordConfirm(String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
 		
@@ -68,8 +71,5 @@ public class UserRegistrationForm {
 			this.passwordConfirm = null;
 		}
 		
-	}
-	
-	
-	
+	}	
 }
