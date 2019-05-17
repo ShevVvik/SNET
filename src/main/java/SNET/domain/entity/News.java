@@ -1,6 +1,8 @@
 package SNET.domain.entity;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 @Table(name="news")
@@ -45,11 +51,12 @@ public class News implements Serializable {
 /*
 	@Column(name="link_image", length=255, nullable=true)
  	private byte[] image;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="newsDate", nullable=false)
+	@LastModifiedDate
+	private Date newsDate;
 	*/
-	//ИСПРАВИТЬ КАК БУДЕТ ВОЗМОЖНОСТЬ
-	//@Column(name="news_date", nullable=false)
-	// private DATETAMETYPE_CHECK_ME news_date;
-	/*
 	public byte[] getImage() {
 		return image;
 	}
@@ -67,6 +74,27 @@ public class News implements Serializable {
 	public void setFor_friends(boolean for_friends) {
 		this.for_friends = for_friends;
 	}
-*/	
-	
+// ниже еще должно быть image и newsDate?
+	 @Override
+	    public int hashCode() {
+	        return Objects.hash(id, author, text, for_friends);
+	 }
+	 @Override
+	    public boolean equals(Object obj) {
+	        if (obj == null)
+	            return false;
+
+	        if (obj == this)
+	            return true;
+
+	        if (!(obj instanceof News))
+	        return false;
+
+	        News news = (News)obj;
+
+	        if (news.hashCode() == this.hashCode())
+	            return true;
+
+	        return false;
+	    }
 }

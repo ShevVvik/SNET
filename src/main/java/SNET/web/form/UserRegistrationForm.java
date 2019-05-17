@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class UserRegistrationForm {
-
+	@NotNull
 	@NotBlank
 	private String email;
 	
