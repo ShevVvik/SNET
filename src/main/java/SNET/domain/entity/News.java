@@ -43,7 +43,7 @@ public class News implements Serializable {
 		this.text = text;
 	}
 /*
-	@Column(name="link_image", length=255, nullable=true)
+	@Column(name="image", length=255, nullable=true)
  	private byte[] image;
 	*/
 	//ИСПРАВИТЬ КАК БУДЕТ ВОЗМОЖНОСТЬ
