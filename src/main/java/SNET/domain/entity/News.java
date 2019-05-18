@@ -56,15 +56,15 @@ public class News implements Serializable {
 	@Column(name="newsDate", nullable=false)
 	@LastModifiedDate
 	private Date newsDate;
-	*/
+	
 	public byte[] getImage() {
 		return image;
 	}
 
 	public void setImage(byte[] image) {
 		this.image = image;
-	}
-	@Column(name="for_friends", nullable=false)
+	}*//*
+	@Column(name="forFriends", nullable=false)
 	private boolean for_friends;
 
 	public boolean isFor_friends() {
@@ -73,11 +73,11 @@ public class News implements Serializable {
 
 	public void setFor_friends(boolean for_friends) {
 		this.for_friends = for_friends;
-	}
+	}*/
 // ниже еще должно быть image и newsDate?
 	 @Override
 	    public int hashCode() {
-	        return Objects.hash(id, author, text, for_friends);
+	        return Objects.hash(id, author, text);
 	 }
 	 @Override
 	    public boolean equals(Object obj) {
