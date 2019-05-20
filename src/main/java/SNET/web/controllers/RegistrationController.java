@@ -45,7 +45,7 @@ public class RegistrationController {
 		
 		if(binding.hasErrors()) {
 			model.addAttribute("userForm", userForm);
-			return "login";
+			return "registration";
 		}
 		
 		userService.createUserFromRegistrationForm(userForm);

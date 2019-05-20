@@ -5,6 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class UserRegistrationForm {
+	
 	@NotNull
 	@NotBlank
 	private String email;
@@ -29,14 +30,12 @@ public class UserRegistrationForm {
 	private String passwordConfirm;
 
 	public String getLogin() {
-		System.out.println(login);
 		return login;
 	}
 	public void setLogin(String login) {
 		this.login = login;
 	}
 	public String getFirstName() {
-		System.out.println(firstName);
 		return firstName;
 	}
 	public void setFirstName(String firstName) {
