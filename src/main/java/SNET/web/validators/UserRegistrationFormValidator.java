@@ -30,8 +30,7 @@ public class UserRegistrationFormValidator implements Validator {
 			errors.rejectValue("email", "form.user.email.exist", "User with email already exists");
 		}
 
-	}
-*/
+	}*/
 
 	@Override
 	public void validate(Object target, Errors errors) {
