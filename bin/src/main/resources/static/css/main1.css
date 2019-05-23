@@ -1,40 +1,19 @@
 * {
-	margin: 0;
-	padding:0;
+    margin: 0;
+	padding: 0;
 }
 
 body {
-	background-attachment: fixed;
+    background-attachment: fixed;
     background-image: url('../img/bg.jpg');
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
 }
 
-.A {
-	color: #e74c3c;
-	margin-left: 8px;
-}
-
-a {
-	text-decoration: none;
-	color: #fafafa;
-	font-size 64px;
-}
-
-span {
-	margin-top: 8px;
-    color: #fafafa;
-    font-size: 128px;
-}
-
-p {
-	color: #fafafa;
-}
-
-div {
+form {
 	opacity: 0.8;
-    background:#2d3436;
+    background:white;
     width: 350px;
     height: 150px;
     border-radius:50px;
@@ -44,4 +23,20 @@ div {
     margin-left: 50%;
     transform: translate(-50%,-50%);
     text-align: center;
+}
+
+.A {
+	color: #e74c3c;
+	margin-left: 10px;
+}
+
+span {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #fafafa;
+    font-size: 64px;
+}
+
+.title {
+    background-color: #3B3B3B;
 }
