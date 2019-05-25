@@ -54,7 +54,7 @@ public class User implements Serializable {
 	private boolean enabled;
 
 	@Column(name="token", length=32, nullable=false)
-	private String token;
+	private int token;
 
 	@Column(name="city", length=32, nullable=true)
 	private String city;
@@ -109,11 +109,11 @@ public class User implements Serializable {
 		this.firstName = firstName;
 	}
 
-	public String getToken() {
+	public int getToken() {
 		return token;
 	}
 
-	public void setToken(String token) {
+	public void setToken(int token) {
 		this.token = token;
 	}
 
