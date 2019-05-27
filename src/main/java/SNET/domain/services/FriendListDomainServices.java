@@ -28,4 +28,8 @@ public class FriendListDomainServices {
 		friendListDao.save(friendship);
 	}
 	
+	
+	public void addFriend(FriendList friendship) {
+		friendListDao.save(friendship);
+	}
 }

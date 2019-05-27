@@ -26,6 +26,10 @@ public class UserRegistrationForm {
 	@NotBlank
 	private String password;
 	
+	private String city;
+	
+	private String education;
+	
 	@NotNull
 	private String passwordConfirm;
 
@@ -70,5 +74,17 @@ public class UserRegistrationForm {
 			this.passwordConfirm = null;
 		}
 		
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getEducation() {
+		return education;
+	}
+	public void setEducation(String education) {
+		this.education = education;
 	}	
 }
