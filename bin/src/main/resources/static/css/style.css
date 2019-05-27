@@ -1,0 +1,152 @@
+/*
+ffffff - white
+ff3535 - red
+e96060 - middle-red         //hover forms
+a12626 - dark-red           //active forms
+e3e3e3 - double-leght-grey  //forms
+a7a7a7 - light-grey         //comments/newnews
+4a4a4a - middle-grey        //background
+3d3d3d - dark-grey          //top
+000000 - black
+*/
+
+/*@font-face {
+    font-family: Snet;
+    src: url("C:/Users/qq/Desktop/ТЗ/web/fonts/12529.otf") format("opentype");
+    }*/
+
+body{
+    background-color: #4a4a4a;
+    background-image: 
+    linear-gradient(to top, rgba(74, 74, 74, 0.5), rgba(74,74,74,0.5)),
+    url('../img/0.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: Calibri Regular;
+    letter-spacing: 2px;
+    font-size: 20px;
+    margin: 0px;
+}
+
+a {
+    outline: none;
+}
+
+.dws-link{
+    color: #ff3535;
+    text-decoration: none;
+    font-size: 13px;
+    display: block;
+    padding-top: 10px;
+    padding-left: 110px;
+}
+
+.dws-link:active{
+    color: #a12626;
+}
+
+.containerLogin{
+    width: 340px;
+    height: 210px;
+    background-color: #ffffffde;
+    border-radius: 40px;
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-transform: uppercase;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+input[type="text"],input[type="password"]{
+    width: 250px;
+    padding-top: 15px;
+    font-size: 18px;
+    margin: 5px auto 5px auto;
+    text-align: center;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #ff3535;
+}
+
+input[type="text"]{
+    text-transform: uppercase;
+}
+
+input:hover{
+    border-bottom: 2px solid #e96060;
+}
+
+input:focus{
+    outline: none;
+}
+
+.dws-submit {
+    width: 250px;
+    margin: 30px auto 0 auto;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 20px;
+    background-color: #ff3535;
+    cursor: pointer;
+    text-decoration: none;
+   }
+
+.dws-submit:hover{
+    background-color: #e96060;
+}
+
+.dws-submit:active{
+    background-color: #a12626;
+}
+   
+.submit{
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.top{
+    height: 80px;
+    background-color: #3d3d3d;
+    position: absolute;
+    top:0;
+    width: 100%;
+}
+
+.logo{
+    padding: 25px;
+    padding-left: 70px;
+}
+
+.signup{
+    text-transform: uppercase;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 20px;
+    position:absolute;
+    left:90%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    max-width:100%;
+    max-height: 100%;
+}
+
+.signup:active{
+    color: #a12626;
+}
+
+.bottom{
+    height: 40px;
+    background-color: #3d3d3d;
+    position:absolute;
+    bottom:0;
+    width:100%; 
+}

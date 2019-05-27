@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div>
+		<p>First name: <p th:text="${user.firstName}">
+		<br>
+		<p>Last name: <p th:text="${user.lastName}">
+		<br>
+		<p>Email: <p th:text="${user.email}">
+		<br>
+		<p>City: <p th:text="${user.city}"> Not found
+		</div>
+		<h1>News</h1>
+		<div th:if="${news} != null">
+			<ul th:each="new1, st: ${news}">
+				<li th:text="${new1.text}">test@test.tt</li>
+			</ul>
+		</div>
+		
+		<div th:if="${userFriends} != null">
+		<a href="/friendlist">Friends</a>
+			
+		</div>
+</body>
+</html>

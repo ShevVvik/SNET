@@ -57,7 +57,7 @@ public class User implements Serializable {
 	@Column(name="enabled")
 	private boolean enabled;
 
-	@Column(name="token", length=32, nullable=true)
+	@Column(name="token", length=32, nullable=false)
 	private String token;
 
 	@Column(name="city", length=32, nullable=true)
@@ -65,6 +65,17 @@ public class User implements Serializable {
 
 	@Column(name="education", length=32, nullable=true)
 	private String education;
+	
+	@Column(name="active")
+	private boolean active;
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="user", orphanRemoval = true)
 	private Set<UserHobby> userHobbies;
@@ -134,6 +145,7 @@ public class User implements Serializable {
 	public String getEducation() {
 		return education;
 	}
+
 
 	public void setEducation(String education) {
 		this.education = education;
