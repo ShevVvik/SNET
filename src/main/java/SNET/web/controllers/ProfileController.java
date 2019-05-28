@@ -1,13 +1,24 @@
 package SNET.web.controllers;
 
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.HtmlUtils;
 
 import SNET.config.UserDetailsImpl;
+import SNET.domain.entity.FriendList;
 import SNET.domain.entity.User;
 import SNET.domain.services.FriendListDomainServices;
 import SNET.domain.services.NewsDomainServices;
@@ -70,6 +81,7 @@ public class ProfileController {
 
 		model.addAttribute("user", user);
 		model.addAttribute("news", newsService.getNewsByAuthor(user.getId()));
+		model.addAttribute("otherUser", true);
 		
 		return "/user/profile";
 	}

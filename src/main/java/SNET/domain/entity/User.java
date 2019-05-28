@@ -2,6 +2,7 @@ package SNET.domain.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -20,6 +21,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.JoinColumn;
 
 
@@ -78,13 +82,26 @@ public class User implements Serializable {
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="user", orphanRemoval = true)
 	private Set<UserRole> userRoles;
+	/*
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="dateBirthday", nullable=false)
+	@LastModifiedDate
+	private Date dateBirthday;
+	public Date getDateBirthday() {
+		return dateBirthday;
+	}
 
+	public void setDateBirthday(Date dateBirthday) {
+		this.dateBirthday = dateBirthday;
+	}
+*/
+	/*
 	@ManyToMany
 	@JoinTable(name = "friend_list", 
 	    joinColumns = @JoinColumn(name = "user2Id", referencedColumnName = "idUser", nullable = false), 
 	    inverseJoinColumns = @JoinColumn(name = "user1Id", referencedColumnName = "idUser", nullable = false))
 	private Set<User> friends;
-	
+	*/
 	public Long getId() {
 		return id;
 	}
@@ -163,14 +180,14 @@ public class User implements Serializable {
 		}
 		return userHobbies;
 	}
-
+/*
 	public Set<User> getFriends() {
 		if (friends == null) {
 			friends = new HashSet<>();
 		}
 		return friends;
 	}
-
+*/
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -229,7 +246,7 @@ public class User implements Serializable {
 
 	    return list;
 	}
-
+/*
 	public List<User> getFriendsList() {
 	    List<User> list = new ArrayList<>();
 
@@ -239,7 +256,7 @@ public class User implements Serializable {
 
 	    return list;
 	}
-
+*/
     public String getFullName() {
         return this.firstName + " " + this.lastName;
     }
