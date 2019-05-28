@@ -5,15 +5,16 @@ import java.util.Collections;
 import javax.security.auth.Subject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import SNET.dao.UserRepository;
 import SNET.domain.entity.Role;
 import SNET.domain.entity.User;
+import SNET.domain.services.MailSender;
 
 /*Core interface which loads user-specific data.
  * 
@@ -42,8 +43,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new UserDetailsImpl(user);
     }
 
-   /* public boolean addUser(User user) {
-    	User userFromDb = userRepository.findByUsername(user.getLogin());
+    public boolean addUser(User user) {
+    	User userFromDb = userRepository.findByLogin(user.getLogin());
     	
     	if (userFromDb != null)
     	{
@@ -65,5 +66,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     return true;
-} */
+} 
 }
