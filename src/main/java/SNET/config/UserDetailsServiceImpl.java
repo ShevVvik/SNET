@@ -1,8 +1,7 @@
 package SNET.config;
 
 import java.util.Collections;
-
-import javax.security.auth.Subject;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -49,11 +48,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     	if (userFromDb != null)
     	{
     		return false;
-    		user.setActive(true);
-    		user.setToken(user.hashCode());
     		
-    		userRepository.save(user);
     	}
+    	
+    	user.setEnabled(true);
+		user.setToken(UUID.randomUUID().toString());
+		
+		userRepository.save(user);
     if (!StringUtils.isEmpty(user.getEmail())) {
         String message = String.format(
                 "Hello, %s! \n" +

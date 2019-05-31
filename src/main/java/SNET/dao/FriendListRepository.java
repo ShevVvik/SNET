@@ -11,4 +11,5 @@ public interface FriendListRepository extends JpaRepository<FriendList, Long> {
 	
 	List<FriendList> findByUser1IdOrUser2Id(Long user1Id, Long user2Id);
 	FriendList findByToken(String token);
+	List<FriendList> findByUser1IdOrUser2IdAndFriendshipTrue(Long userId, Long userId2);
 }

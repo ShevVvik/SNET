@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.HtmlUtils;
 
 import SNET.config.UserDetailsImpl;
+import SNET.domain.dto.NewsDTO;
 import SNET.domain.entity.FriendList;
 import SNET.domain.entity.User;
 import SNET.domain.services.FriendListDomainServices;
@@ -37,7 +38,10 @@ public class ProfileController {
 	
 	@Autowired
 	private FriendListDomainServices friendsService;
-	
+	/*
+	@Autowired
+	private CommentsDomainServices commentsService;
+	*/
 	@GetMapping("/profile")
 	public String profile(Model model) {
 		
@@ -48,8 +52,7 @@ public class ProfileController {
 		User user = userDet.getUser();
 		
 		model.addAttribute("user", user);
-		model.addAttribute("news", newsService.getNewsByAuthor(user.getId()));
-		model.addAttribute("userFriends", friendsService.getFriends(user.getId()));
+		model.addAttribute("news", user.getNewsList());
 		return "/user/profile";
 	}
 	

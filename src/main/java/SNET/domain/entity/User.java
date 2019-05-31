@@ -33,7 +33,6 @@ public class User implements Serializable {
 
 	private static final long serialVersionUID = 6216344084865363418L;
 
-
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idUser")
@@ -58,7 +57,7 @@ public class User implements Serializable {
 	private boolean enabled;
 
 	@Column(name="token", length=32, nullable=false)
-	private int token;
+	private String token;
 
 	@Column(name="city", length=32, nullable=true)
 	private String city;
@@ -66,22 +65,17 @@ public class User implements Serializable {
 	@Column(name="education", length=32, nullable=true)
 	private String education;
 	
-	@Column(name="active")
-	private boolean active;
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="user", orphanRemoval = true)
 	private Set<UserHobby> userHobbies;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="user", orphanRemoval = true)
 	private Set<UserRole> userRoles;
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="author", orphanRemoval = true)
+	private Set<News> news;
+	
+	
+	
 	/*
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="dateBirthday", nullable=false)
@@ -102,6 +96,7 @@ public class User implements Serializable {
 	    inverseJoinColumns = @JoinColumn(name = "user1Id", referencedColumnName = "idUser", nullable = false))
 	private Set<User> friends;
 	*/
+	
 	public Long getId() {
 		return id;
 	}
@@ -126,11 +121,11 @@ public class User implements Serializable {
 		this.firstName = firstName;
 	}
 
-	public int getToken() {
+	public String getToken() {
 		return token;
 	}
 
-	public void setToken(int token) {
+	public void setToken(String token) {
 		this.token = token;
 	}
 
@@ -179,6 +174,13 @@ public class User implements Serializable {
 			userHobbies = new HashSet<>();
 		}
 		return userHobbies;
+	}
+	
+	public Set<News> getNews() {
+		if (news == null) {
+			news = new HashSet<>();
+		}
+		return news;
 	}
 /*
 	public Set<User> getFriends() {
@@ -242,6 +244,16 @@ public class User implements Serializable {
 
 	    for (UserHobby hobby : this.getUserHobbies()) {
             list.add(hobby.getHobby());
+        }
+
+	    return list;
+	}
+	
+	public List<News> getNewsList() {
+	    List<News> list = new ArrayList<>();
+	    
+	    for (News news : this.getNews()) {
+            list.add(news);
         }
 
 	    return list;

@@ -26,12 +26,19 @@ public class Comments implements Serializable {
 
 		@Id
 		@GeneratedValue(strategy=GenerationType.IDENTITY)
-		@Column(name="idComment")
-		private int id;
+		@Column(name="id")
+		private Long id;
 		
 		@ManyToOne
 	    @JoinColumn(name="idCommentator", nullable=false)
 	 	private User commentator;
+		
+		@ManyToOne
+	    @JoinColumn(name="idNews", nullable=false)
+	 	private News news;
+		
+		@Column(name="сommentsText", length=255, nullable=false)
+		private String text;
 		
 		public User getCommentator() {
 			return commentator;
@@ -41,9 +48,6 @@ public class Comments implements Serializable {
 			this.commentator = commentator;
 		}
 
-		@Column(name="commentText", length=255, nullable=false)
-		private String text;
-		
 		/* @Temporal(TemporalType.TIMESTAMP)
 			@Column(name="commentDate", nullable=false)
 			@LastModifiedDate
@@ -53,17 +57,33 @@ public class Comments implements Serializable {
 			return text;
 		}
 
+		public Comments getComments() {
+			return this;
+		}
+		
 		public void setText(String text) {
 			this.text = text;
 		}
-
-		@ManyToOne
-	    @JoinColumn(name="idNews", nullable=false)
-	 	private News idNews;
 		
-		 @Override
+		 public Long getId() {
+			return id;
+		}
+
+		public void setId(Long id) {
+			this.id = id;
+		}
+
+		public News getNews() {
+			return news;
+		}
+
+		public void setNews(News news) {
+			this.news = news;
+		}
+
+		@Override
 		    public int hashCode() {
-		        return Objects.hash(id, commentator, text, idNews);
+		        return Objects.hash(id, commentator, text, news);
 		 }
 		 @Override
 		    public boolean equals(Object obj) {

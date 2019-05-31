@@ -20,11 +20,28 @@
 		<br>
 		<p>City: <p th:text="${user.city}"> Not found
 		</div>
-		<h1>News</h1>
-		<div th:if="${news} != null">
+		<a href="/friendlist" id="friends">Friends</a>
+		<br>
+		<a id="newPost">Create post</a>
+		<div style="padding: 0.5em;">
+           	<input class="inputForm" id="userFilter" type="text" placeholder="Text" />
+			<input type="button" id="test" value="Search">
+        </div>
+		<h1>News adasd</h1>
+		<div th:if="${news} != null" id="newsList">
 			<ul th:each="new1, st: ${news}">
-				<li th:text="${new1.text}">test@test.tt</li>
+				<li>
+				<p th:text="${new1.text}">
+				<div th:if="${new1.comments} != null">
+					<ul th:each="comment, st: ${new1.comments}">
+						<li th:text="${comment.text}">test@test.tt</li>
+					</ul>
+				</div>
+				</li>
 			</ul>
+		</div>
+		
+		<div id="21">
 		</div>
 		
 		<div th:if="${userFriends} != null">

@@ -19,6 +19,10 @@ public class FriendListDomainServices {
 		return friendListDao.findByUser1IdOrUser2Id(userId, userId);
 	}
 	
+	public List<FriendList> getActiveFriends(Long userId) {
+		return friendListDao.findByUser1IdOrUser2IdAndFriendshipTrue(userId, userId);
+	}
+	
 	public FriendList getFriendsByToken(String token) {
 		return friendListDao.findByToken(token);
 	}
