@@ -52,7 +52,7 @@ public class ProfileController {
 		User user = userDet.getUser();
 		
 		model.addAttribute("user", user);
-		model.addAttribute("news", user.getNewsList());
+		model.addAttribute("news", newsService.getNewsByAuthor(user.getId()));
 		return "/user/profile";
 	}
 	

@@ -44,8 +44,21 @@ public class News implements Serializable {
 	@Column(name="newsText", length=255, nullable=false)
 	private String text;
 	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="newsDate", nullable=false)
+	@LastModifiedDate
+	private Date newsDate;
+	
 	public User getAuthor() {
 		return author;
+	}
+
+	public Date getNewsDate() {
+		return newsDate;
+	}
+
+	public void setNewsDate(Date newsDate) {
+		this.newsDate = newsDate;
 	}
 
 	public int getId() {

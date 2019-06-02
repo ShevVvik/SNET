@@ -26,7 +26,7 @@ public class Comments implements Serializable {
 
 		@Id
 		@GeneratedValue(strategy=GenerationType.IDENTITY)
-		@Column(name="id")
+		@Column(name="idComment")
 		private Long id;
 		
 		@ManyToOne
@@ -37,7 +37,7 @@ public class Comments implements Serializable {
 	    @JoinColumn(name="idNews", nullable=false)
 	 	private News news;
 		
-		@Column(name="сommentsText", length=255, nullable=false)
+		@Column(name="commentsText", length=255, nullable=false)
 		private String text;
 		
 		public User getCommentator() {

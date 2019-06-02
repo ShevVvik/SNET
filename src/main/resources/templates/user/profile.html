@@ -31,10 +31,16 @@
 		<div th:if="${news} != null" id="newsList">
 			<ul th:each="new1, st: ${news}">
 				<li>
+				<p hidden th:text="${new1.id}">
 				<p th:text="${new1.text}">
+				<br>
+				<a>Edit</a>
 				<div th:if="${new1.comments} != null">
 					<ul th:each="comment, st: ${new1.comments}">
-						<li th:text="${comment.text}">test@test.tt</li>
+						<li>
+							<p hidden th:text="${comment.id}">
+							<p th:text="${comment.text}">							
+						</li>
 					</ul>
 				</div>
 				</li>

@@ -119,3 +119,26 @@ function sendNews(){
 }
 
 document.getElementById('newPost').addEventListener('click', openMenu);
+
+function editNews(){
+	var id = document.getElementById('id').innerHTML;
+	var text = document.getElementById('newsText').value;
+    var token = document.head.querySelector("meta[name='_csrf']").content;
+    var header = document.head.querySelector("meta[name='_csrf_header']").content;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/news/add', true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.setRequestHeader(header, token);
+    
+    xhr.onreadystatechange = function() {
+    	if (xhr.readyState != 4) 
+    		return;
+    	if (xhr.status != 200) {
+    		alert(xhr.status + ': ' + xhr.statusText);
+    	} else {
+    		document.getElementById('submitPost').removeEventListener('click', sendNews);
+    		document.getElementById('formPost').remove();
+    	}
+    }
+    xhr.send('newsText=' + text + '&idNews=' + idNews + '&id=' + id); 
+}

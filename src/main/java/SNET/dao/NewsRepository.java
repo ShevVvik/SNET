@@ -9,6 +9,6 @@ import SNET.domain.entity.User;
 
 public interface NewsRepository extends JpaRepository<News, Long> {
 
-	List<News> findByAuthorId(Long id);
-	List<News> findAllByTextContainingAndAuthorId(String text, Long id);
+	List<News> findByAuthorIdOrderByIdDesc(Long id);
+	List<News> findAllByTextContainingAndAuthorIdOrderByIdDesc(String text, Long id);
 }

@@ -30,12 +30,12 @@ public class NewsDomainServices {
 	
 	
 	public List<News> getNewsByAuthor(Long id){
-		return newsDao.findByAuthorId(id);
+		return newsDao.findByAuthorIdOrderByIdDesc(id);
 	}
 	
 	public List<NewsDTO> searchNewsByPatternAsJson(String pattern, Long id) {
 		
-		List<News> news = newsDao.findAllByTextContainingAndAuthorId(pattern, id);
+		List<News> news = newsDao.findAllByTextContainingAndAuthorIdOrderByIdDesc(pattern, id);
 		System.out.println(news);
 		List<NewsDTO> newsJson = null;
 		
