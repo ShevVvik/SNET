@@ -4,10 +4,14 @@
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 <title>Insert title here</title>
+<script th:src="@{/js/main.js}" defer="defer"></script>
 </head>
 <body>
 <div>
+		<p id="id" hidden th:text="${user.id}">
 		<p>First name: <p th:text="${user.firstName}">
 		<br>
 		<p>Last name: <p th:text="${user.lastName}">
@@ -16,16 +20,41 @@
 		<br>
 		<p>City: <p th:text="${user.city}"> Not found
 		</div>
-		<h1>News</h1>
-		<div th:if="${news} != null">
+		<a href="/friendlist" id="friends">Friends</a>
+		<br>
+		<a id="newPost">Create post</a>
+		<div style="padding: 0.5em;">
+           	<input class="inputForm" id="userFilter" type="text" placeholder="Text" />
+			<input type="button" id="test" value="Search">
+        </div>
+		<h1>News adasd</h1>
+		<div th:if="${news} != null" id="newsList">
 			<ul th:each="new1, st: ${news}">
-				<li th:text="${new1.text}">test@test.tt</li>
+				<li>
+				<p hidden th:text="${new1.id}">
+				<p th:text="${new1.text}">
+				<br>
+				<a>Edit</a>
+				<div th:if="${new1.comments} != null">
+					<ul th:each="comment, st: ${new1.comments}">
+						<li>
+							<p hidden th:text="${comment.id}">
+							<p th:text="${comment.text}">							
+						</li>
+					</ul>
+				</div>
+				</li>
 			</ul>
 		</div>
 		
+		<div id="21">
+		</div>
+		
 		<div th:if="${userFriends} != null">
-		<a href="/friendlist">Friends</a>
-			
+			<a href="/friendlist">Friends</a>
+		</div>
+		<div th:if="${otherUser} == true">
+			<input type="button" th:onclick="ajaxEmployerListUpdate('id');" value="Search">
 		</div>
 </body>
 </html>

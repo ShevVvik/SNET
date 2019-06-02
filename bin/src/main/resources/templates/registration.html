@@ -1,22 +1,72 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org" >
-
-
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" th:href="@{/css/registration.css}" type="text/css">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script th:src="@{/js/loadFoto.js}" defer="defer"></script>
+    <title>SNET</title>
+</head>
 <body>
-	<th:block>
-		<h1>User registration</h1>
-		
-		<form action="#" method="post" th:action="@{/registration}" th:object="${userForm}">
-			<label>Email</label><input type="text" th:field="*{email}">&nbsp;<span th:errors="*{email}"></span><br>
-			<label>Password</label><input type="text" th:field="*{password}">&nbsp;<span th:errors="*{password}"></span><br>
-			<label>First name</label><input type="text" th:field="*{firstName}">&nbsp;<span th:errors="*{firstName}"></span><br>
-			<label>Last name</label><input type="text" th:field="*{lastName}">&nbsp;<span th:errors="*{lastName}"></span><br>
-			<label>Login</label><input type="text" th:field="*{login}">&nbsp;<span th:errors="*{login}"></span><br>
-			<label>Confirm</label><input type="text" th:field="*{passwordConfirm}">&nbsp;<span th:errors="*{passwordConfirm}"></span><br>
-			<br>
-			<input type="submit" value="Save">
-		</form>
-	</th:block>
+    <div >
+        <form id="myForm" action="#" method="post" th:action="@{/registration}" th:object="${userForm}" enctype="multipart/form-data">
+            <table id="tab" class="containerRegistation"><tr>
+                <td id="left">
+                    <input required type="text" name="login" placeholder="login" minlength="6" maxlength="15" th:field="*{login}">
+                    <input required type="password" name="password0" placeholder="PASSWORD" minlength="8" maxlength="20" th:field="*{password}">
+                    <input required type="password" name="password1" placeholder="PASSWORD" minlength="8" maxlength="20" th:field="*{passwordConfirm}"> 
+                    <input required type="email" name="email" placeholder="email" th:field="*{email}">
+                    <input required type="text" name="name" placeholder="name" minlength="4" maxlength="15" th:field="*{firstName}">
+                    <input required type="text" name="surname" placeholder="surname" minlength="4" maxlength="15" th:field="*{lastName}">
+                    
+                    <input required type="date" name="date" placeholder="date">
+                    <input type="text" name="city" placeholder="city" minlength="4" maxlength="15" th:field="*{city}">
+                    <input type="text" name="education" placeholder="education" minlength="4" maxlength="15" th:field="*{education}">
+                </td>
+
+                <td id="right">
+                    <div class="upload foto">
+                        <img src="" height="200" alt="your photo" class="foto">
+                    </div>
+
+                    <div>
+                        <input type="text" name="namePhoto" placeholder="name">
+                        <input type="submit" value="upload" id="sub">
+                        
+                    </div>
+                    <div>
+                        <section class="main">
+                            <div class="wrapper-demo">
+                                <div id="dd" class="wrapper-dropdown-4">hobby
+                                    <ul class="dropdown">
+                                        <li><input type="checkbox" id="el-1" name="el-1" value="donut"><label for="el-1">Eat a donut</label></li>
+                                        <li><input type="checkbox" id="el-2" name="el-2" value="neighbour"><label for="el-2">Spy on my neighbours</label></li>
+                                        <li><input type="checkbox" id="el-3" name="el-3" value="T-rex"><label for="el-3">Feed my T-rex</label></li>
+                                    </ul>
+                                </div>
+                            ​</div>
+                        </section>
+                    </div>
+
+                    <div class="dws-submit" id="subret">
+                    	<a class="submit">submit</a>
+                    </div>
+                </td>
+            </tr></table>
+                
+            </div>
+        </form>
+    </div>
+
+    
+    <div class="top">
+        <div class="logo">
+            <img src="../img/logo.png">
+        </div>
+            <a href="../html/login.html" class="signin">sign in</a>
+    </div>
+    <div class="bottom"></div>
 </body>
 </html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<title>Insert title here</title>
+</head>
+<body>
+		<h1>News</h1>
+		<div th:if="${news} != null">
+			<ul th:each="new1, st: ${news}">
+				<li th:text="${new1.text}">test@test.tt</li>
+			</ul>
+		</div>
+</body>
+</html>

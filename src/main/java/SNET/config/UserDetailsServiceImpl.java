@@ -52,7 +52,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     	}
     	
     	user.setEnabled(true);
-		user.setToken(UUID.randomUUID().toString());
+    	 user.setToken(UUID.randomUUID().toString());
+
 		
 		userRepository.save(user);
     if (!StringUtils.isEmpty(user.getEmail())) {
@@ -67,5 +68,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     return true;
-} 
+}
+
+	public  boolean activateUser(String code) {
+		 User user = userRepository.findByToken(code);
+
+	        if (user == null) {
+	            return false;
+	        }
+
+	        user.setToken(null);
+
+	        userRepository.save(user);
+
+	        return true;
+	} 
 }
