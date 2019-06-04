@@ -90,9 +90,10 @@ function openMenu(){
 	formPost.appendChild(textAreaPost);
 	formPost.appendChild(submit);
 	
-	div.appendChild(formPost);
+	div.insertBefore(formPost, div.children[0]);
 	
 	submit.addEventListener('click', sendNews);
+	document.getElementById('newPost').removeEventListener('click', openMenu);
 }
 
 function sendNews(){
@@ -113,6 +114,7 @@ function sendNews(){
     	} else {
     		document.getElementById('submitPost').removeEventListener('click', sendNews);
     		document.getElementById('formPost').remove();
+    		document.getElementById('newPost').addEventListener('click', openMenu);
     	}
     }
     xhr.send('newsText=' + text + '&id=' + id); 
