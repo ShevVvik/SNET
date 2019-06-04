@@ -36,10 +36,6 @@ public class RegistrationController {
 	@Autowired
 	private UserDomainServices userService;
 	
-	
-	@Autowired
-	private UserDetailsServiceImpl UserDetailsServiceIml;
-	
 	@Autowired
 	private UserRegistrationFormValidator userValidator;
 	
@@ -59,12 +55,12 @@ public class RegistrationController {
 	@PostMapping("registration")
 	public String registrationPost(Model model, @Valid @ModelAttribute("userForm") UserRegistrationForm userForm,
 				BindingResult binding, @RequestParam("files") MultipartFile[] files) {
-		
 		if(binding.hasErrors()) {
 			model.addAttribute("userForm", userForm);
 			return "registration";
 		}
-		
+
+		if (files != null) {
 		for (MultipartFile multipartFile : files) {
             String filePath = "C:\\Folder" + File.separator + userForm.getLogin() + File.separator;
     
@@ -92,21 +88,22 @@ public class RegistrationController {
                 e.printStackTrace();
             }
         }
-		
+		}
 		userService.createUserFromRegistrationForm(userForm);
 		
 		return "redirect:/";
 	}
-	  @GetMapping("/activate/{code}")
-	    public String activate(Model model, @PathVariable String code) {
-	        boolean isActivated = UserDetailsServiceIml.activateUser(code);
+	  
+	@GetMapping("/activate/{code}")
+	public String activate(Model model, @PathVariable String code) {
+		boolean isActivated = userService.activateUser(code);
 
-	        if (isActivated) {
-	            model.addAttribute("message", "User successfully activated");
-	        } else {
-	            model.addAttribute("message", "Activation code is not found!");
-	        }
-
-	        return "login";
+	    if (isActivated) {
+	    	model.addAttribute("message", "User successfully activated");
+	    } else {
+	        model.addAttribute("message", "Activation code is not found!");
 	    }
+
+	    return "login";
+	}
 }

@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 
 public class UserRegistrationForm {
 	
+	@Email
 	@NotNull
 	@NotBlank
 	private String email;

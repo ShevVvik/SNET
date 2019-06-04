@@ -20,7 +20,7 @@ public class UserRegistrationFormValidator implements Validator {
 	public boolean supports(Class<?> clazz) {
 		return UserRegistrationForm.class.equals(clazz);
 	}
-/*
+
 	@Override
 	public void validate(Object target, Errors errors) {
 		
@@ -29,12 +29,11 @@ public class UserRegistrationFormValidator implements Validator {
 		if(userDomainService.isUserWithEmailExist(form.getEmail())) {
 			errors.rejectValue("email", "form.user.email.exist", "User with email already exists");
 		}
-
-	}*/
-
-	@Override
-	public void validate(Object target, Errors errors) {
-		// TODO Auto-generated method stub
 		
+		if(userDomainService.isUserWithLoginExist(form.getLogin())) {
+			errors.rejectValue("login", "form.user.email.exist", "User with email already exists");
+		}
+
 	}
+
 }

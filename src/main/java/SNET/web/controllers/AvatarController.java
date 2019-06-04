@@ -24,27 +24,26 @@ public class AvatarController {
     @Value("C:\\Folder")
     private String avatarDirPath;
 
-    @GetMapping(value="/big/{userId}", produces=MediaType.IMAGE_PNG_VALUE)
+    @GetMapping(value="/big/{login}", produces=MediaType.IMAGE_PNG_VALUE)
     @ResponseBody
-    public FileSystemResource bigAvatar(ModelAndView modelAndView, @PathVariable Long userId) {
-        return this.getAvatar(userId, BIG_AVATAR_POSTFIX);
+    public FileSystemResource bigAvatar(ModelAndView modelAndView, @PathVariable String login) {
+    	
+        return this.getAvatar(login, BIG_AVATAR_POSTFIX);
     }
     
     
-    @GetMapping(value="/small/{userId}", produces=MediaType.IMAGE_PNG_VALUE)
+    @GetMapping(value="/small/{login}", produces=MediaType.IMAGE_PNG_VALUE)
     @ResponseBody
-    public FileSystemResource smallAvatar(ModelAndView modelAndView, @PathVariable Long userId, HttpServletResponse response) {
-        return this.getAvatar(userId, SMALL_AVATAR_POSTFIX);
+    public FileSystemResource smallAvatar(ModelAndView modelAndView, @PathVariable String login, HttpServletResponse response) {
+        return this.getAvatar(login, SMALL_AVATAR_POSTFIX);
     }
         
-    private FileSystemResource getAvatar(Long id, String postfix) {
-        String avatarFileName = avatarDirPath + File.separator + id + File.separator + id + postfix;
-    
+    private FileSystemResource getAvatar(String login, String postfix) {
+        String avatarFileName = avatarDirPath + File.separator + login + File.separator + login + postfix;
         File f = new File(avatarFileName);
         if(f.exists() && !f.isDirectory()) {
             return new FileSystemResource(f);
         }
-    
         return null;
     }
 }

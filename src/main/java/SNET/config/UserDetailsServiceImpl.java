@@ -30,9 +30,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
-    
-    @Autowired
-    private MailSender mailSender;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -41,46 +38,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         return new UserDetailsImpl(user);
     }
-
-    public boolean addUser(User user) {
-    	User userFromDb = userRepository.findByLogin(user.getLogin());
-    	
-    	if (userFromDb != null)
-    	{
-    		return false;
-    		
-    	}
-    	
-    	user.setEnabled(true);
-    	 user.setToken(UUID.randomUUID().toString());
-
-		
-		userRepository.save(user);
-    if (!StringUtils.isEmpty(user.getEmail())) {
-        String message = String.format(
-                "Hello, %s! \n" +
-                		"Welcome to SNET. Please, visit next link and activated you profile: http://localhost:8080/activate/%s",
-                user.getFirstName(),
-                user.getToken()
-        );
-
-        mailSender.send(user.getEmail(), "Activation code", message);
-    }
-
-    return true;
-}
-
-	public  boolean activateUser(String code) {
-		 User user = userRepository.findByToken(code);
-
-	        if (user == null) {
-	            return false;
-	        }
-
-	        user.setToken(null);
-
-	        userRepository.save(user);
-
-	        return true;
-	} 
 }

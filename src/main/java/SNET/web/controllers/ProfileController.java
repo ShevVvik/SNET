@@ -53,6 +53,7 @@ public class ProfileController {
 		
 		model.addAttribute("user", user);
 		model.addAttribute("news", newsService.getNewsByAuthor(user.getId()));
+		model.addAttribute("hobby", user.getHobbiesList());
 		return "/user/profile";
 	}
 	

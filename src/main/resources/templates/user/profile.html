@@ -11,6 +11,9 @@
 </head>
 <body>
 <div>
+		<div style="padding:0.5em; float:left; background: #f0f0f0;">
+            <img th:src="@{/avatar/big/} + ${user.login}" src="#" alt="not"><br>
+        </div>
 		<p id="id" hidden th:text="${user.id}">
 		<p>First name: <p th:text="${user.firstName}">
 		<br>
@@ -22,6 +25,16 @@
 		</div>
 		<a href="/friendlist" id="friends">Friends</a>
 		<br>
+		<h1>Hobby</h1>
+		<div th:if="${hobby} != null" id="hobby">
+			<ul th:each="hob, st: ${hobby}">
+				<li>
+				<p hidden th:text="${hob.id}">
+				<p th:text="${hob.nameHobby}">
+				</li>
+			</ul>
+		</div>
+		
 		<a id="newPost">Create post</a>
 		<div style="padding: 0.5em;">
            	<input class="inputForm" id="userFilter" type="text" placeholder="Text" />

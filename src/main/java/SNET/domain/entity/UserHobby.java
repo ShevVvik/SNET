@@ -45,7 +45,7 @@ public class UserHobby implements Serializable {
 	public void setHobby(Hobby hobby) {
 		this.hobby = hobby;
 	}
-
+	
 	public static UserHobby createUserHobby(Hobby hobby) {
 		UserHobby userHobby = new UserHobby();
 		userHobby.setHobby(hobby);
