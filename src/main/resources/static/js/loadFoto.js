@@ -16,10 +16,7 @@ function previewFile() {
 
 $(document).ready(function() {
     $('.input_file input[type=file]').change(function() {
-        var t = $(this).val();
-        if (t.indexOf('C:\\fakepath\\') + 1) t = t.substr(12);
-        var e = $(this).next().find('.fake_file_input');
-        e.val(t);
+        previewFile();
     });
 });
 

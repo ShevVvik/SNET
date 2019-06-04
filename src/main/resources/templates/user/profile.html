@@ -22,7 +22,7 @@
 		</div>
 		<a href="/friendlist" id="friends">Friends</a>
 		<br>
-		<a id="newPost">Create post</a>
+		<a th:if="${otherUser} != true" id="newPost">Create post</a>
 		<div style="padding: 0.5em;">
            	<input class="inputForm" id="userFilter" type="text" placeholder="Text" />
 			<input type="button" id="test" value="Search">
@@ -45,9 +45,6 @@
 				</div>
 				</li>
 			</ul>
-		</div>
-		
-		<div id="21">
 		</div>
 		
 		<div th:if="${userFriends} != null">
