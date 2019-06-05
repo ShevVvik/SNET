@@ -57,13 +57,13 @@ function fillTable(data) {
 
             var newLi = document.createElement('li');
             var p = document.createElement('p');
-            p.innerHTML = elem.text;
+            p.textContent = elem.text;
             
             var comDiv = document.createElement('div');
             var comUl = document.createElement('ul');
             elem.comments.forEach(function(com) {
             	var li = document.createElement('li');
-            	li.innerHTML = com.text;
+            	li.textContent = com.text;
             	comUl.appendChild(li);
             });
             comDiv.appendChild(comUl);

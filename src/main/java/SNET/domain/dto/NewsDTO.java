@@ -29,7 +29,4 @@ public class NewsDTO {
 	public void setText(String text) {
 		this.text = text;
 	}
-
-	
-	
 }
