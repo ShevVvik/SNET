@@ -30,42 +30,6 @@ a7a7a7 - light-grey         //comments/newnews
         margin: 0px;
     }
     
-   	.input_file {
-    position: relative;
-    margin: 0 0 10px 0;
-}
-
-.input_file input[type=file] {
-    opacity: 0;
-    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
-    position: relative;
-    z-index: 2;
-    cursor: pointer;
-    height: 34px;
-    width: 200px;
-    top: -5px;
-}
-
-.fake_file {
-    position: absolute;
-    z-index: 1;
-    top: 0 px;
-    left: 25px;
-}
-
-.fake_file {
-    border-radius: 0px 0px 20px 20px;
-    behavior: url(PIE.htc);
-    height: 34px;
-    width: 200px;
-    background-color: #ff3535;
-    border: none;
-    color: #fff;
-    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
-    font-size: 14px;
-    cursor: pointer;
-}
-    
     .dws-link{
         color: #ff3535;
         text-decoration: none;
@@ -77,11 +41,11 @@ a7a7a7 - light-grey         //comments/newnews
     
    	.input_file {
     	position: relative;
-    	margin: 10px 0 10px 0;
 	}
 
 	.input_file input[type=file] {
     	opacity: 0;
+    	top: -5px;
     	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
     	position: relative;
     	z-index: 2;
@@ -94,9 +58,8 @@ a7a7a7 - light-grey         //comments/newnews
    		position: absolute;
     	z-index: 1;
     	width: 200px;
-    	top: 5px;
     	left: 25px;
-    	border-radius: 17px;
+    	border-radius: 0 0 20px 20px;
     	behavior: url(PIE.htc);
     	height: 34px;
     	background-color: #ff3535;

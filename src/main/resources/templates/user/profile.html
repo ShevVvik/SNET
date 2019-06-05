@@ -7,6 +7,7 @@
 <meta name="_csrf" th:content="${_csrf.token}" />
 <meta name="_csrf_header" th:content="${_csrf.headerName}" />
 <title>Insert title here</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script th:src="@{/js/main.js}" defer="defer"></script>
 </head>
 <body>
@@ -34,7 +35,7 @@
 				</li>
 			</ul>
 		</div>
-		<a th:if="${otherUser} != true" id="newPost">Create post</a>
+		<a id="newPost">Create post</a>
 		<div style="padding: 0.5em;">
            	<input class="inputForm" id="userFilter" type="text" placeholder="Text" />
 			<input type="button" id="test" value="Search">
@@ -42,8 +43,8 @@
 		<h1>News adasd</h1>
 		<div th:if="${news} != null" id="newsList">
 			<ul th:each="new1, st: ${news}">
-				<li>
-				<p hidden th:text="${new1.id}">
+				<li th:id="${new1.id}">
+				<a th:if="${role} == ROLE_ADMIN" class="deleteNews">Delete</a>
 				<p th:text="${new1.text}">
 				<br>
 				<a>Edit</a>

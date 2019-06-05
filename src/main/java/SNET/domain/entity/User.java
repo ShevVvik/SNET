@@ -215,15 +215,12 @@ public class User implements Serializable {
 	public String getHighLevelRole() {
 
 	    List<String> allRoles = new ArrayList<>();
-
 	    for (UserRole role : this.getUserRoles()) {
             allRoles.add(role.getRole());
         }
 
 	    if (allRoles.contains(Role.ROLE_ADMIN)) {
 	        return Role.ROLE_ADMIN;
-	    } else if(allRoles.contains(Role.ROLE_MANAGER)) {
-	        return Role.ROLE_MANAGER;
 	    } else {
 	        return Role.ROLE_USER;
 	    }
@@ -233,6 +230,7 @@ public class User implements Serializable {
 	    List<String> list = new ArrayList<>();
 
 	    for (UserRole role : this.getUserRoles()) {
+	    	System.out.println(role.getRole());
             list.add(role.getRole());
         }
 

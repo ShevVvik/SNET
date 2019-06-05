@@ -72,4 +72,9 @@ public class NewsDomainServices {
 		news.setText(text);
 		newsDao.save(news);
 	}
+	
+	public void deleteNews(Long id) {
+		
+		newsDao.deleteById(id);
+	}
 }

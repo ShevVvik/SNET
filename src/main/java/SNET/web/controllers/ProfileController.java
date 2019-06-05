@@ -85,6 +85,7 @@ public class ProfileController {
 
 		model.addAttribute("user", user);
 		model.addAttribute("news", newsService.getNewsByAuthor(user.getId()));
+		model.addAttribute("role", userX.getHighLevelRole());
 		model.addAttribute("otherUser", true);
 		
 		return "/user/profile";

@@ -16,7 +16,9 @@ import org.springframework.web.util.HtmlUtils;
 
 import SNET.config.UserDetailsImpl;
 import SNET.domain.entity.FriendList;
+import SNET.domain.entity.Role;
 import SNET.domain.services.FriendListDomainServices;
+import SNET.domain.services.NewsDomainServices;
 import SNET.domain.services.UserDomainServices;
 
 
@@ -30,6 +32,9 @@ public class AjaxController {
 	
 	@Autowired
 	private UserDomainServices userService;
+	
+	@Autowired
+	private NewsDomainServices newsService;
 
 	@PostMapping("/addFriend")
     public String userFilter(@RequestParam("q") String pattern, ModelAndView modelAndView, Authentication auth) {
@@ -46,5 +51,14 @@ public class AjaxController {
     	return "Succes";
     }
 	
-	
+	@PostMapping("/deleteNews")
+    public String deleteNews(@RequestParam("id") String idNews, ModelAndView modelAndView, Authentication auth) {
+    	
+    	UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
+    	if (userDetails.getUser().getHighLevelRole() == Role.ROLE_ADMIN) {
+    		newsService.deleteNews(Long.parseLong(idNews));
+    	}
+		
+    	return "Succes";
+    }
 }
