@@ -1,5 +1,6 @@
 package SNET.domain.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -10,6 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import SNET.dao.UserRepository;
+import SNET.domain.dto.CommentsDTO;
+import SNET.domain.dto.NewsDTO;
+import SNET.domain.dto.UserDTO;
+import SNET.domain.entity.Comments;
+import SNET.domain.entity.News;
 import SNET.domain.entity.User;
 import SNET.domain.entity.UserRole;
 import SNET.web.form.UserRegistrationForm;
@@ -96,5 +102,29 @@ public class UserDomainServices {
 
 	public boolean isUserWithLoginExist(String login) {
 		return userDao.countByLogin(login) != 0 ? true : false;
+	}
+	
+	public List<UserDTO> searchUsertByPatternAsJson(String pattern, String parametr) {
+		
+		List<User> user = null;
+		switch(parametr) {
+		case "firstName": user = userDao.findAllByFirstNameContainingOrderByIdDesc(pattern);
+		case "lastName" : user = userDao.findAllByLastNameContainingOrderByIdDesc(pattern);
+		}
+		
+		List<UserDTO> userJson = null;
+		
+		if (user != null && user.size() > 0) {
+			userJson = new ArrayList<>();
+			
+			for (User u : user) {
+				UserDTO userDTO = new UserDTO();
+				
+				BeanUtils.copyProperties(u, userDTO);
+				userJson.add(userDTO);
+			}
+		}
+		
+		return userJson;
 	}
 }

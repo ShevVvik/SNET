@@ -1,5 +1,6 @@
 package SNET.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,4 +18,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	
 	int countByEmail(String email);
 	int countByLogin(String login);
+	List<User> findAllByFirstNameContainingOrderByIdDesc(String pattern);
+	List<User> findAllByLastNameContainingOrderByIdDesc(String pattern);
 }

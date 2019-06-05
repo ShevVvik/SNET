@@ -29,7 +29,6 @@ public class NewsSearchController {
 	@RequestMapping(value="/news/add", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public void addNews(@RequestParam("newsText") String text, 
     					@RequestParam("id") String id, ModelAndView modelAndView) {
-		System.out.println("TEST");
 		newsService.addNewNews(text, Long.parseLong(id));
 	}
 }
