@@ -49,6 +49,9 @@ public class News implements Serializable {
 	@LastModifiedDate
 	private Date newsDate;
 	
+	@Column(name="forFriends", nullable=false)
+	private boolean forFriends;
+	
 	public User getAuthor() {
 		return author;
 	}
@@ -102,32 +105,13 @@ public class News implements Serializable {
 	    return list;
 	}
 	
-/*
-	@Column(name="image", length=255, nullable=true)
- 	private byte[] image;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="newsDate", nullable=false)
-	@LastModifiedDate
-	private Date newsDate;
-	
-	public byte[] getImage() {
-		return image;
+	public boolean isForFriends() {
+		return forFriends;
 	}
 
-	public void setImage(byte[] image) {
-		this.image = image;
-	}*//*
-	@Column(name="forFriends", nullable=false)
-	private boolean for_friends;
-
-	public boolean isFor_friends() {
-		return for_friends;
+	public void setForFriends(boolean forFriends) {
+		this.forFriends = forFriends;
 	}
-
-	public void setFor_friends(boolean for_friends) {
-		this.for_friends = for_friends;
-	}*/
 // ниже еще должно быть image и newsDate?
 	
 	

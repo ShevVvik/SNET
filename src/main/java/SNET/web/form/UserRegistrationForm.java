@@ -1,5 +1,7 @@
 package SNET.web.form;
 
+import java.util.List;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -34,6 +36,8 @@ public class UserRegistrationForm {
 	@NotNull
 	private String passwordConfirm;
 
+	private List<String> hobby;
+	
 	public String getLogin() {
 		return login;
 	}
@@ -87,5 +91,11 @@ public class UserRegistrationForm {
 	}
 	public void setEducation(String education) {
 		this.education = education;
+	}
+	public List<String> getHobby() {
+		return hobby;
+	}
+	public void setHobby(List<String> hobby) {
+		this.hobby = hobby;
 	}	
 }

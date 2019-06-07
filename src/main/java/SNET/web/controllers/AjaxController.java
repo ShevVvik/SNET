@@ -39,14 +39,8 @@ public class AjaxController {
 	@PostMapping("/addFriend")
     public String userFilter(@RequestParam("q") String pattern, ModelAndView modelAndView, Authentication auth) {
     	
-    	UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
-		FriendList newFriend = new FriendList();
-		newFriend.setUser1(userDetails.getUser());
-		newFriend.setUser2(userService.getById((long)Integer.parseInt(pattern)));
-		newFriend.setFriendship(false);
-		newFriend.setToken(UUID.randomUUID().toString());
-		
-		friendsService.addFriend(newFriend);
+    	UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();		
+		friendsService.addFriend(userDetails.getUser(), (long)Integer.parseInt(pattern));
     	
     	return "Succes";
     }
@@ -59,6 +53,12 @@ public class AjaxController {
     		newsService.deleteNews(Long.parseLong(idNews));
     	}
 		
+    	return "Succes";
+    }
+	
+	@PostMapping("/forgotPassword")
+    public String forgotPassword(@RequestParam("login") String login, ModelAndView modelAndView) {
+		userService.forgotPassword(login);
     	return "Succes";
     }
 }

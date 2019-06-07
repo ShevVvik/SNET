@@ -2,6 +2,8 @@ package SNET.web.controllers;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import SNET.config.UserDetailsServiceImpl;
+import SNET.domain.services.HobbyDomainServices;
 import SNET.domain.services.UserDomainServices;
 import SNET.web.form.UserRegistrationForm;
 import SNET.web.validators.UserRegistrationFormValidator;
@@ -37,6 +40,9 @@ public class RegistrationController {
 	private UserDomainServices userService;
 	
 	@Autowired
+	private HobbyDomainServices hobbyService;
+	
+	@Autowired
 	private UserRegistrationFormValidator userValidator;
 	
 	@InitBinder("userForm")
@@ -48,13 +54,15 @@ public class RegistrationController {
 	public String registration(Model model, UserRegistrationForm userForm) {
 		
 		model.addAttribute("userForm", userForm);
-		
+		model.addAttribute("allHobby", hobbyService.getAllHobby());
 		return "registration";
 	}
 
 	@PostMapping("registration")
 	public String registrationPost(Model model, @Valid @ModelAttribute("userForm") UserRegistrationForm userForm,
-				BindingResult binding, @RequestParam("files") MultipartFile[] files) {
+				BindingResult binding, @RequestParam("files") MultipartFile[] files,
+				@RequestParam List<String> hobby) {
+		
 		if(binding.hasErrors()) {
 			model.addAttribute("userForm", userForm);
 			return "registration";
@@ -89,7 +97,7 @@ public class RegistrationController {
             }
         }
 		}
-		userService.createUserFromRegistrationForm(userForm);
+		userService.createUserFromRegistrationForm(userForm, hobby);
 		
 		return "redirect:/";
 	}

@@ -20,4 +20,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	int countByLogin(String login);
 	List<User> findAllByFirstNameContainingOrderByIdDesc(String pattern);
 	List<User> findAllByLastNameContainingOrderByIdDesc(String pattern);
+	List<User> findAllByCityContainingOrderByIdDesc(String pattern);
+	List<User> findAllByEducationContainingOrderByIdDesc(String pattern);
 }

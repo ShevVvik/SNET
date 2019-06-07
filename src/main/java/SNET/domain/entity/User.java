@@ -65,8 +65,15 @@ public class User implements Serializable {
 	@Column(name="education", length=32, nullable=true)
 	private String education;
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="user", orphanRemoval = true)
-	private Set<UserHobby> userHobbies;
+	@ManyToMany(fetch = FetchType.LAZY,
+		    cascade = {
+		        CascadeType.PERSIST,
+		        CascadeType.MERGE
+		    })
+			@JoinTable(name = "user_hobby",
+		    joinColumns = { @JoinColumn(name = "idUser") },
+		    inverseJoinColumns = { @JoinColumn(name = "idHobby") })
+	private Set<Hobby> userHobbies;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="user", orphanRemoval = true)
 	private Set<UserRole> userRoles;
@@ -74,13 +81,11 @@ public class User implements Serializable {
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="author", orphanRemoval = true)
 	private Set<News> news;
 	
-	
-	
-	/*
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="dateBirthday", nullable=false)
 	@LastModifiedDate
 	private Date dateBirthday;
+	
 	public Date getDateBirthday() {
 		return dateBirthday;
 	}
@@ -88,7 +93,6 @@ public class User implements Serializable {
 	public void setDateBirthday(Date dateBirthday) {
 		this.dateBirthday = dateBirthday;
 	}
-*/
 	/*
 	@ManyToMany
 	@JoinTable(name = "friend_list", 
@@ -169,11 +173,15 @@ public class User implements Serializable {
 		return userRoles;
 	}
 
-	public Set<UserHobby> getUserHobbies() {
+	public Set<Hobby> getUserHobbies() {
 		if (userHobbies == null) {
 			userHobbies = new HashSet<>();
 		}
 		return userHobbies;
+	}
+	
+	public void setUserHobbies(Set<Hobby> hobby) {
+		this.userHobbies = hobby;
 	}
 	
 	public Set<News> getNews() {
@@ -240,8 +248,8 @@ public class User implements Serializable {
 	public List<Hobby> getHobbiesList() {
 	    List<Hobby> list = new ArrayList<>();
 
-	    for (UserHobby hobby : this.getUserHobbies()) {
-            list.add(hobby.getHobby());
+	    for (Hobby hobby : this.getUserHobbies()) {
+            list.add(hobby);
         }
 
 	    return list;

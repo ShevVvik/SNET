@@ -20,11 +20,11 @@ a7a7a7 - light-grey         //comments/newnews
         background-color: #4a4a4a;
         background-image: 
         linear-gradient(to top, rgba(74, 74, 74, 0.5), rgba(74,74,74,0.5)),
-        url("../img/0.jpg");
+        url("../img/gg.jpg");
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
-        font-family: Calibri Regular;
+        font-family: Calibri;
         letter-spacing: 2px;
         font-size: 20px;
         margin: 0px;
@@ -288,6 +288,12 @@ a7a7a7 - light-grey         //comments/newnews
         pointer-events: none;
        }
 
+		.dropdown {
+			overflow-y: auto;
+			height: auto;
+   			max-height: 120px;
+		}
+		
        .wrapper-dropdown-4 .dropdown li {
         position: relative;
        }

@@ -1,70 +1,163 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:th="https://www.thymeleaf.org"
-	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="_csrf" th:content="${_csrf.token}" />
-<meta name="_csrf_header" th:content="${_csrf.headerName}" />
-<title>Insert title here</title>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<script th:src="@{/js/main.js}" defer="defer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script th:src="@{/js/main.js}" defer="defer"></script>
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
+    <title>profile</title>
 </head>
 <body>
-<div>
-		<div style="padding:0.5em; float:left; background: #f0f0f0;">
-            <img th:src="@{/avatar/big/} + ${user.login}" src="#" alt="not"><br>
+    <div class="container">
+        <div class="profile">
+        	<p id="id" hidden th:text="${user.id}">
+                <div class="profilePhoto">
+                    <img th:src="@{/avatar/big/} + ${user.login}" height="200" width="200" alt="wow" class="foto">
+                    <div class="butMain">
+                        <div class="butFriend"><a id="butFriend" href="friendList.html">.</a></div>
+                        <!--<div class="butFriend"><a id="butFriend" href="friendList.html">.</a></div>
+                        <div class="butFriend"><a id="butFriend" href="friendList.html">.</a></div>-->
+                    </div>
+                </div>
+                <div class="profileInfo">
+                    <div class="nameLogin">
+                        <div id="name" th:text="${user.firstName}">ivanov ivan</div>
+                        <div id="login" th:text="@{@} + ${user.login}">@lolalol</div>
+                    </div>
+                    <div class="emailDate">
+                        <div id="email" th:text="${user.email}">loliva@gmail.com</div>
+                        <div id="dateHB" th:text="${user.dateBirthday}">12.01.2001</div>
+                    </div>
+                    <div class="moreInfo">
+                        <div style="display:none" id="blockInfo">
+                            <div id="city"><div id="information">city: </div><div id="cityInf" th:text="${user.city}">saratov</div></div>
+                            <div id="education"><div id="information">education: </div><div id="educationInf" th:text="${user.education}">ssu</div></div>
+                            <div id="hobby"><p id="information">hobby: </p><li id="hobbyInf" 
+                            												th:each="hob, st : ${hobby}">
+                            												<p th:text="${hob.nameHobby} + @{, }">hobby</p></li></div>
+                        </div>
+                        <label id="openInfo">more info:</label>
+                        <br/>
+                        <br/>
+                    </div>
+                </div>
         </div>
-		<p id="id" hidden th:text="${user.id}">
-		<p>First name: <p th:text="${user.firstName}">
-		<br>
-		<p>Last name: <p th:text="${user.lastName}">
-		<br>
-		<p>Email: <p th:text="${user.email}">
-		<br>
-		<p>City: <p th:text="${user.city}"> Not found
-		</div>
-		<a href="/friendlist" id="friends">Friends</a>
-		<br>
-		<h1>Hobby</h1>
-		<div th:if="${hobby} != null" id="hobby">
-			<ul th:each="hob, st: ${hobby}">
-				<li>
-				<p hidden th:text="${hob.id}">
-				<p th:text="${hob.nameHobby}">
-				</li>
-			</ul>
-		</div>
-		<a id="newPost">Create post</a>
-		<div style="padding: 0.5em;">
-           	<input class="inputForm" id="userFilter" type="text" placeholder="Text" />
-			<input type="button" id="test" value="Search">
+
+        <div class="news">
+            <div class="search">
+                <input class="inputForm" id="userFilter" type="text" placeholder="Text" />
+				<input class="inputFormBut"type="button" id="test" value="Search">
+            </div>
+
+            <ul>
+                <li>
+                    <div class="createNews" >
+                        <div id="redLine">
+                            <div id="name">ivanov ivan</div>
+                            <div id="login">@lolalol</div>
+                        </div>
+                        
+                        <div class="fieldNews">
+                            <textarea id="textNews" maxlength="300"></textarea>
+                            <div class="buttomsNews">
+                                
+                                    <div class="radio-container">
+                                        <div class="form-item radio-btn nth-2">
+                                            <input type="radio" name="option1" id="radio1" checked>
+                                            <label for="radio1">for everyone</label>
+                                        </div>
+                                        <div class="form-item radio-btn nth-2">
+                                            <input type="radio" name="option1" id="radio2">
+                                            <label for="radio2">for friends</label>
+                                        </div>
+                                    </div>
+                                <div class="left">
+                                    <div class="addFoto">
+                                        <a id="sub" href="#">add photo</a>
+                                    </div>
+
+                                    <div class="tags">
+                                        <div class="redTags">tags:</div>
+                                        <div><input class="notRedTags" type="text" placeholder="#tags"></div>
+                                    </div>
+                                </div>
+
+                                <div class="right">
+                                    <div class="create">
+                                        <a id="crt" href="#">create</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <ul>
+                    <li th:each="new1, st: ${news}">
+                        <div th:id="${new1.id}" class="newsnews" >
+                            <div id="redLine">
+                                <div class="nameLog">
+                                    <div id="name" th:text="${new1.author.firstName}">ivanov ivan</div>
+                                    <div id="login" th:text="@{@} + ${new1.author.login}">@lolalol</div>
+                                </div>
+                                <div class="buttonEditDelete" id="butEditDel">
+                                    <a id="butEditDel" href="#edit">edit</a><div>|</div>
+                                    <a id="butEditDel" class="deleteNews">delete<img src="../img/x.png"></a>
+                                </div>
+                            </div>
+
+                            <div class="newsContent" th:text="${new1.text}">
+                                News
+                            </div>
+
+                            <div class="bot">
+                                <div class="fieldInfo">
+                                    <div class="leftField">
+                                        <div id="date" th:text="${#dates.format(new1.newsDate, 'dd-MM-yyyy')}">10.01.20</div>
+                                        <div id="levelView" th:if="${new1.forFriends} == true" >for friends</div>
+                                        <div id="tags">#NEWS, #WOW</div>
+                                    </div>
+                                    <div class="buttomComment">
+                                            <a id="butCom" href="#comment">comment<img src="../img/circle.png"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ul>
+                            <li th:each="comment, st: ${new1.comments}">
+                                <div class="comments">
+                                    <div class="topCom">
+                                        <div class="comCont"th:text="${comment.text}">
+                                        </div>
+                                    </div>  
+                                    <div class="botCom">
+                                        <div id="dateCom" th:text="${#dates.format(comment.commentDate, 'dd-MM-yyyy')}">10.01.20</div>
+                                        <div class="nameLogCom">
+                                            <div id="login" th:text="@{@} + ${comment.commentator.firstName}">@Fail</div>
+                                        </div>
+                                        <!-- <a id="butComCreate" href="#create">create<img src="../source/circle.png"></a> -->
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </ul>
         </div>
-		<h1>News adasd</h1>
-		<div th:if="${news} != null" id="newsList">
-			<ul th:each="new1, st: ${news}">
-				<li th:id="${new1.id}">
-				<a th:if="${role} == ROLE_ADMIN" class="deleteNews">Delete</a>
-				<p th:text="${new1.text}">
-				<br>
-				<a>Edit</a>
-				<div th:if="${new1.comments} != null">
-					<ul th:each="comment, st: ${new1.comments}">
-						<li>
-							<p hidden th:text="${comment.id}">
-							<p th:text="${comment.text}">							
-						</li>
-					</ul>
-				</div>
-				</li>
-			</ul>
-		</div>
-		
-		<div th:if="${userFriends} != null">
-			<a href="/friendlist">Friends</a>
-		</div>
-		<div th:if="${otherUser} == true">
-			<input type="button" th:onclick="ajaxEmployerListUpdate('id');" value="Search">
-		</div>
+    </div>
+
+    <header>
+        <div class="top">
+            <div class="logo">
+                <a href="profile.html"><img src="../img/logo.png"></a>
+            </div>
+                <a href="edit.html" class="edit"><img src="../img/edit.png" onclick='this.src="../img/editRed.png"'></a>
+        </div>
+    </header>
+    <div class="bottom"></div>
 </body>
 </html>

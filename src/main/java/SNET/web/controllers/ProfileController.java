@@ -52,7 +52,7 @@ public class ProfileController {
 		User user = userDet.getUser();
 		
 		model.addAttribute("user", user);
-		model.addAttribute("news", newsService.getNewsByAuthor(user.getId()));
+		model.addAttribute("news", newsService.getNewsByAuthor(user.getId(), user));
 		model.addAttribute("hobby", user.getHobbiesList());
 		return "/user/profile";
 	}
@@ -84,7 +84,7 @@ public class ProfileController {
 		if (userX.equals(user)) return "redirect:/profile";
 
 		model.addAttribute("user", user);
-		model.addAttribute("news", newsService.getNewsByAuthor(user.getId()));
+		model.addAttribute("news", newsService.getNewsByAuthor(user.getId(), userX));
 		model.addAttribute("role", userX.getHighLevelRole());
 		model.addAttribute("otherUser", true);
 		

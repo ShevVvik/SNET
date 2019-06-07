@@ -4,20 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <script th:src="@{/js/script.js}" defer="defer"></script>
     <title>SNET</title>
 </head>
 <body>
-        <div class="containerLogin">
+	<div class="containerLogin">
         <form id="myform" th:action="@{/login}" method="post"> 
             <input type="text" name="username" placeholder="login" minlength="6" maxlength="15">
             <input type="password" name="password" placeholder="PASSWORD" minlength="8" maxlength="20">
-            <a href="#" class="dws-link">forgot password?</a>
+            <a href="#" class="dws-link" id="forgot">forgot password?</a>
             <div href="" id="subret" class="dws-submit">
                 <a class="submit">submit</a>
             </div>
         </form>
+        <div id="forgotPassword" hidden>
+			<input type="text" id="loginPass" placeholder="login" minlength="6" maxlength="15">
+			<div id="requestPassword" class="dws-submit">
+				<a class="submit">submit</a>
+			</div>
+    	</div>
     </div>
     <div class="top">
         <div class="logo">

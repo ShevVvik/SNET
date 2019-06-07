@@ -1,3 +1,17 @@
+function openInfo() {
+	var block = document.getElementById('blockInfo');
+	var but = document.getElementById('openInfo');
+	if (block.style.display === 'none') {
+		block.style.display = 'block';
+		but.textContent = 'Hide info';
+	} else {
+		block.style.display = 'none';
+		but.textContent = 'More info';
+	}
+}
+
+document.getElementById('openInfo').addEventListener('click', openInfo);
+
 function ajaxEmployerListUpdate(elem) {
     var pattern = document.getElementById(elem).innerHTML;
     var token = document.head.querySelector("meta[name='_csrf']").content;
@@ -120,7 +134,7 @@ function sendNews(){
     xhr.send('newsText=' + text + '&id=' + id); 
 }
 
-document.getElementById('newPost').addEventListener('click', openMenu);
+//document.getElementById('newPost').addEventListener('click', openMenu);
 
 function editNews(){
 	var id = document.getElementById('id').innerHTML;
@@ -146,9 +160,10 @@ function editNews(){
 }
 
 
+
 $('.deleteNews').on('click', function() {
 	alert();
-    var id = $(this).parent().attr('id');
+    var id = $(this).parent().parent().parent().attr('id');
     console.log(id);
     var token = document.head.querySelector("meta[name='_csrf']").content;
     var header = document.head.querySelector("meta[name='_csrf_header']").content;

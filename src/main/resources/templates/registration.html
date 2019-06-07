@@ -40,9 +40,10 @@
                             <div class="wrapper-demo">
                                 <div id="dd" class="wrapper-dropdown-4">hobby
                                     <ul class="dropdown">
-                                        <li><input type="checkbox" id="el-1" name="el-1" value="donut"><label for="el-1">Eat a donut</label></li>
-                                        <li><input type="checkbox" id="el-2" name="el-2" value="neighbour"><label for="el-2">Spy on my neighbours</label></li>
-                                        <li><input type="checkbox" id="el-3" name="el-3" value="T-rex"><label for="el-3">Feed my T-rex</label></li>
+                                        <li th:each="hob, st : ${allHobby}">
+                                        	<input type="checkbox" name="hobby" th:value="${hob.nameHobby}">
+                                        	<label th:text="${hob.nameHobby}"></label>
+                                        </li>
                                     </ul>
                                 </div>
                             ​</div>

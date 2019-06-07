@@ -3,6 +3,7 @@ package SNET.domain.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
@@ -15,6 +16,7 @@ import SNET.domain.dto.CommentsDTO;
 import SNET.domain.dto.NewsDTO;
 import SNET.domain.dto.UserDTO;
 import SNET.domain.entity.Comments;
+import SNET.domain.entity.Hobby;
 import SNET.domain.entity.News;
 import SNET.domain.entity.User;
 import SNET.domain.entity.UserRole;
@@ -24,11 +26,14 @@ import SNET.web.form.UserRegistrationForm;
 public class UserDomainServices {
 
 	@Autowired
-	public UserRepository userDao;
+	private UserRepository userDao;
 	
     @Autowired
     private MailSender mailSender;
 
+    @Autowired
+    private HobbyDomainServices hobbyService;
+    
 	public List<User> getList() {
 		return userDao.findAll();
 	}
@@ -62,10 +67,12 @@ public class UserDomainServices {
 	}
 
 	
-	public void createUserFromRegistrationForm(UserRegistrationForm userForm) {
+	public void createUserFromRegistrationForm(UserRegistrationForm userForm, List<String> hobby) {
 		User u = new User();
 		
 		BeanUtils.copyProperties(userForm, u);
+		Set<Hobby> hobbies = hobbyService.getAllHobbyByName(hobby);
+		u.setUserHobbies(hobbies);
 		u.setEnabled(false);
 		u.setToken(UUID.randomUUID().toString());
 		
@@ -110,6 +117,8 @@ public class UserDomainServices {
 		switch(parametr) {
 		case "firstName": user = userDao.findAllByFirstNameContainingOrderByIdDesc(pattern);
 		case "lastName" : user = userDao.findAllByLastNameContainingOrderByIdDesc(pattern);
+		case "city"     : user = userDao.findAllByCityContainingOrderByIdDesc(pattern);
+		case "education": user = userDao.findAllByEducationContainingOrderByIdDesc(pattern);
 		}
 		
 		List<UserDTO> userJson = null;
@@ -126,5 +135,40 @@ public class UserDomainServices {
 		}
 		
 		return userJson;
+	}
+	
+	public boolean forgotPassword(String login) {
+		User user = userDao.findByLogin(login);
+		
+		if (user != null) {
+			if(user.getToken() == null) {
+				user.setToken(UUID.randomUUID().toString());
+				userDao.save(user);
+			}
+			String message = String.format(
+	                "Hello, %s! \n" +
+	                		"Welcome to SNET. Please, visit next link and change your password: http://localhost:8080/p/%s",
+	                user.getFirstName(),
+	                user.getToken()
+	        );
+			//mailSender.send(user.getEmail(), "Password", message);
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean changePassword(String password, String token) {
+		User user = userDao.findByToken(token);
+		if (user != null) {
+			if (!user.isEnabled()) {
+				user.setEnabled(true);
+			}
+			user.setPassword(password);
+			user.setToken(null);
+			userDao.save(user);
+			return true;
+		}
+		return false;
 	}
 }

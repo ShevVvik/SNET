@@ -48,11 +48,11 @@ public class Comments implements Serializable {
 			this.commentator = commentator;
 		}
 
-		/* @Temporal(TemporalType.TIMESTAMP)
-			@Column(name="commentDate", nullable=false)
-			@LastModifiedDate
-			private Date commentDate;
-		*/
+		@Temporal(TemporalType.TIMESTAMP)
+		@Column(name="commentsDate", nullable=false)
+		@LastModifiedDate
+		private Date commentDate;
+		
 		public String getText() {
 			return text;
 		}
@@ -79,6 +79,14 @@ public class Comments implements Serializable {
 
 		public void setNews(News news) {
 			this.news = news;
+		}
+
+		public Date getCommentDate() {
+			return commentDate;
+		}
+
+		public void setCommentDate(Date commentDate) {
+			this.commentDate = commentDate;
 		}
 
 		@Override

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<title>Insert title here</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script th:src="@{/js/main.js}" defer="defer"></script>
+</head>
+<body>
+<div>
+		<div style="padding:0.5em; float:left; background: #f0f0f0;">
+            <img th:src="@{/avatar/big/} + ${user.login}" src="#" alt="not"><br>
+        </div>
+		<p id="id" hidden th:text="${user.id}">
+		<p>First name: <p th:text="${user.firstName}">
+		<br>
+		<p>Last name: <p th:text="${user.lastName}">
+		<br>
+		<p>Email: <p th:text="${user.email}">
+		<br>
+		<p>City: <p th:text="${user.city}"> Not found
+		</div>
+		<a href="/friendlist" id="friends">Friends</a>
+		<br>
+		<h1>Hobby</h1>
+		<div th:if="${hobby} != null" id="hobby">
+			<ul th:each="hob, st: ${hobby}">
+				<li>
+				<p hidden th:text="${hob.id}">
+				<p th:text="${hob.nameHobby}">
+				</li>
+			</ul>
+		</div>
+		<a id="newPost">Create post</a>
+		<div style="padding: 0.5em;">
+           	<input class="inputForm" id="userFilter" type="text" placeholder="Text" />
+			<input type="button" id="test" value="Search">
+        </div>
+		<h1>News adasd</h1>
+		<div th:if="${news} != null" id="newsList">
+			<ul th:each="new1, st: ${news}">
+				<li th:id="${new1.id}">
+				<a th:if="${role} == ROLE_ADMIN" class="deleteNews">Delete</a>
+				<p th:text="${new1.text}">
+				<br>
+				<a>Edit</a>
+				<div th:if="${new1.comments} != null">
+					<ul th:each="comment, st: ${new1.comments}">
+						<li>
+							<p hidden th:text="${comment.id}">
+							<p th:text="${comment.text}">							
+						</li>
+					</ul>
+				</div>
+				</li>
+			</ul>
+		</div>
+		
+		<div th:if="${userFriends} != null">
+			<a href="/friendlist">Friends</a>
+		</div>
+		<div th:if="${otherUser} == true">
+			<input type="button" th:onclick="ajaxEmployerListUpdate('id');" value="Search">
+		</div>
+</body>
+</html>
