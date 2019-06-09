@@ -19,6 +19,7 @@
         background-color: #3d3d3d;
         position: fixed;
         top:0;
+        z-index: 9999;
         width: 100%;
     }
     
@@ -46,19 +47,12 @@
 
     .container{
         width: 1000px;
-        height: auto;
+        height: 100%;
         background-color: #635f5cde;
         padding: 3%;
-        padding-top: 320px;
         text-transform: uppercase;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        -webkit-transform: translate(-50%, -50%);
-        -moz-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        -o-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
+        margin: 80px auto 0 auto;
+        
     }
 
     .profile{
@@ -163,7 +157,7 @@
 
     .createNews{
         background-color: #a79797;
-        display: none;
+        display: block;
         border-radius: 20px;
         margin: 15px 0px;
     }

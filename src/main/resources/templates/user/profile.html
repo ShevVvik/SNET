@@ -12,6 +12,13 @@
     <title>profile</title>
 </head>
 <body>
+<div class="top">
+	<div class="logo">
+    	<a href="profile.html"><img src="../img/logo.png"></a>
+    </div>
+    <a href="edit.html" class="edit"><img src="../img/edit.png" onclick='this.src="../img/editRed.png"'></a>
+</div>
+<div class="parrent">
     <div class="container">
         <div class="profile">
         	<p id="id" hidden th:text="${user.id}">
@@ -52,26 +59,26 @@
                 <input class="inputForm" id="userFilter" type="text" placeholder="Text" />
 				<input class="inputFormBut"type="button" id="test" value="Search">
             </div>
-
             <ul>
                 <li>
-                    <div class="createNews" >
+                    <form id="newNews"  method="POST" enctype="multipart/form-data" class="createNews" >
                         <div id="redLine">
                             <div id="name">ivanov ivan</div>
                             <div id="login">@lolalol</div>
                         </div>
                         
                         <div class="fieldNews">
-                            <textarea id="textNews" maxlength="300"></textarea>
+                        	<input type="text" id="idAuthor" name="idAuthor" hidden th:value="${user.id}"></input>
+                            <textarea name="newNewsText" id="textNews" maxlength="300"></textarea>
                             <div class="buttomsNews">
                                 
                                     <div class="radio-container">
                                         <div class="form-item radio-btn nth-2">
-                                            <input type="radio" name="option1" id="radio1" checked>
+                                            <input type="radio" name="radname1" id="radio1" checked>
                                             <label for="radio1">for everyone</label>
                                         </div>
                                         <div class="form-item radio-btn nth-2">
-                                            <input type="radio" name="option1" id="radio2">
+                                            <input type="radio" name="radname1"  id="radio2">
                                             <label for="radio2">for friends</label>
                                         </div>
                                     </div>
@@ -87,15 +94,15 @@
                                 </div>
 
                                 <div class="right">
-                                    <div class="create">
+                                    <div id="submitNewNews" class="create">
                                         <a id="crt" href="#">create</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </li>
-                <ul>
+                <ul id="newsList">
                     <li th:each="new1, st: ${news}">
                         <div th:id="${new1.id}" class="newsnews" >
                             <div id="redLine">
@@ -149,15 +156,7 @@
             </ul>
         </div>
     </div>
-
-    <header>
-        <div class="top">
-            <div class="logo">
-                <a href="profile.html"><img src="../img/logo.png"></a>
-            </div>
-                <a href="edit.html" class="edit"><img src="../img/edit.png" onclick='this.src="../img/editRed.png"'></a>
-        </div>
-    </header>
+    </div>
     <div class="bottom"></div>
 </body>
 </html>

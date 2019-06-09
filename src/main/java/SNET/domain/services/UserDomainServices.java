@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -30,6 +31,9 @@ public class UserDomainServices {
 	
     @Autowired
     private MailSender mailSender;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private HobbyDomainServices hobbyService;
@@ -74,6 +78,7 @@ public class UserDomainServices {
 		Set<Hobby> hobbies = hobbyService.getAllHobbyByName(hobby);
 		u.setUserHobbies(hobbies);
 		u.setEnabled(false);
+		u.setPassword(passwordEncoder.encode(u.getPassword()));
 		u.setToken(UUID.randomUUID().toString());
 		
 		if (!StringUtils.isEmpty(u.getEmail())) {

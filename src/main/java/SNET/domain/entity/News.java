@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
@@ -46,7 +47,7 @@ public class News implements Serializable {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="newsDate", nullable=false)
-	@LastModifiedDate
+	@CreatedDate
 	private Date newsDate;
 	
 	@Column(name="forFriends", nullable=false)
