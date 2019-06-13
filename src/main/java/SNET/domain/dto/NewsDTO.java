@@ -11,6 +11,7 @@ public class NewsDTO {
 	private String text;
 	private String date;
 	private boolean forFriends;
+	private String imageToken;
 	private List<CommentsDTO> comments;
 	private UserDTO author;
 	
@@ -49,5 +50,11 @@ public class NewsDTO {
 	}
 	public void setForFriends(boolean forFriends) {
 		this.forFriends = forFriends;
+	}
+	public String getImageToken() {
+		return imageToken;
+	}
+	public void setImageToken(String imageToken) {
+		this.imageToken = imageToken;
 	}
 }

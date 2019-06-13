@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +18,30 @@
     </div>
     <a href="edit.html" class="edit"><img src="../img/edit.png" onclick='this.src="../img/editRed.png"'></a>
 </div>
+
+<!---Разметка для модального окна---->	
+<div id="iw-modal" class="iw-modal">
+	<div class="iw-modal-wrapper">
+    	<form id="newMessage" class="message">
+        	<div class="redLineMes">
+            	<div class="nameLoginMessage">
+                <div class="to">to</div>
+                <div id="firstName" class="firstName" th:text="${user.firstName}">rrrrrrrrrrrrrrr</div>
+                <div id="lastName" th:text="${user.lastName}">rrrrrrrrrrrrrrr</div>
+            	</div>
+                <div id="login" class="login" th:text="@{@} + ${user.login}">@rrrrrrrrrrrrrrr</div>
+                <img id="cls" class="delete" src="../img/x.png"> 	
+            </div>
+            <div>
+            	<input type="text" class="subject" placeholder="Subject"> <span id="errorsMessage"></span>    
+                <textarea id="textMes" maxlength="300" placeholder="Text"></textarea>
+            </div>
+            <div class="butSentMes">
+            	<a id="butsentMes"  th:text="#{home.title}" href="#sent">sent message</a>
+        	</div>
+  		</form>
+  	</div>	
+</div>
 <div class="parrent">
     <div class="container">
         <div class="profile">
@@ -26,6 +50,7 @@
                     <img th:src="@{/avatar/big/} + ${user.login}" height="200" width="200" alt="wow" class="foto">
                     <div class="butMain">
                         <div class="butFriend"><a id="butFriend" href="friendList.html">.</a></div>
+                        <div id="iw-modal-btn" class="butFriend" style="overflow:hidden;">֍открыть</div>
                         <!--<div class="butFriend"><a id="butFriend" href="friendList.html">.</a></div>
                         <div class="butFriend"><a id="butFriend" href="friendList.html">.</a></div>-->
                     </div>
@@ -70,22 +95,24 @@
                         <div class="fieldNews">
                         	<input type="text" id="idAuthor" name="idAuthor" hidden th:value="${user.id}"></input>
                             <textarea name="newNewsText" id="textNews" maxlength="300"></textarea>
+                            <img id="newsCreateImg" src"" alt="" class="newsImg">
                             <div class="buttomsNews">
                                 
                                     <div class="radio-container">
                                         <div class="form-item radio-btn nth-2">
-                                            <input type="radio" name="radname1" id="radio1" checked>
+                                            <input type="radio" name="radname1" id="radio1" checked value="everyone">
                                             <label for="radio1">for everyone</label>
                                         </div>
                                         <div class="form-item radio-btn nth-2">
-                                            <input type="radio" name="radname1"  id="radio2">
+                                            <input type="radio" name="radname1"  id="radio2" value="friends">
                                             <label for="radio2">for friends</label>
                                         </div>
                                     </div>
                                 <div class="left">
-                                    <div class="addFoto">
-                                        <a id="sub" href="#">add photo</a>
-                                    </div>
+                                	<div class="input_file, addFoto">
+                    					<input type="file" name="files" class="hid">
+                    				</div>
+                                    
 
                                     <div class="tags">
                                         <div class="redTags">tags:</div>
@@ -94,6 +121,9 @@
                                 </div>
 
                                 <div class="right">
+                                	<div id="submitNewNews" class="dropNews">
+                                        <a id="crt" href="#">X</a>
+                                    </div>
                                     <div id="submitNewNews" class="create">
                                         <a id="crt" href="#">create</a>
                                     </div>
@@ -111,13 +141,16 @@
                                     <div id="login" th:text="@{@} + ${new1.author.login}">@lolalol</div>
                                 </div>
                                 <div class="buttonEditDelete" id="butEditDel">
-                                    <a id="butEditDel" href="#edit">edit</a><div>|</div>
-                                    <a id="butEditDel" class="deleteNews">delete<img src="../img/x.png"></a>
+                                    <a id="butEdit" href="#edit">edit</a><div>|</div>
+                                    <a id="butDel" class="deleteNews">delete<img class="newsIcon" src="../img/x.png"></a>
                                 </div>
                             </div>
 
-                            <div class="newsContent" th:text="${new1.text}">
-                                News
+                            <div class="newsContent" >
+                            	<pre th:text="${new1.text}">
+                           			News
+                            	</pre>
+                                <img th:src="@{/news/image/} + ${new1.imageToken}" class="newsImg" alt=" " onerror="this.style.visibility = 'hidden'">
                             </div>
 
                             <div class="bot">
@@ -128,18 +161,31 @@
                                         <div id="tags">#NEWS, #WOW</div>
                                     </div>
                                     <div class="buttomComment">
-                                            <a id="butCom" href="#comment">comment<img src="../img/circle.png"></a>
+                                            <a id="butCom" href="#comment">comment<img class="newsIcon" src="../img/circle.png"></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <ul>
+                        	<li style="display:none">
+                        		<div id="createNewComments" class="comments">
+                                    <div class="topCom">
+                                        <textarea class="textAreaComCont"></textarea>
+                                    </div>
+                                 
+                                <div class="botCom">
+                                    <div class="nameLogCom">
+                                        <div id="login" th:text="@{@} + ${user.login}">@Fail</div>
+                                    </div>
+                                    <a id="butComCreate">create<img class="newsIcon" src="../img/circle.png"></a>
+                                </div>
+                                </div> 
+                        	</li>
                             <li th:each="comment, st: ${new1.comments}">
                                 <div class="comments">
                                     <div class="topCom">
-                                        <div class="comCont"th:text="${comment.text}">
-                                        </div>
+                                        <div class="comCont"th:text="${comment.text}"></div>
                                     </div>  
                                     <div class="botCom">
                                         <div id="dateCom" th:text="${#dates.format(comment.commentDate, 'dd-MM-yyyy')}">10.01.20</div>

@@ -17,7 +17,7 @@ import SNET.domain.dto.UserDTO;
 import SNET.domain.services.UserDomainServices;
 
 @RestController
-public class SearchController {
+public class SearchUserController {
 
 	@Autowired
 	private UserDomainServices userService;

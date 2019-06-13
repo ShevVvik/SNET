@@ -22,4 +22,6 @@ public class FriendAcceptController {
 		friendsService.createFriendship(friendsService.getFriendsByToken(token));
 		return "redirect:/friendlist";
 	}
+	
+	
 }

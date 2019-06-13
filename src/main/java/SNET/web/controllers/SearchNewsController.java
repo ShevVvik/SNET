@@ -13,16 +13,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.HtmlUtils;
 
 import SNET.config.UserDetailsImpl;
 import SNET.domain.dto.NewsDTO;
 import SNET.domain.services.NewsDomainServices;
+import SNET.web.form.MessageForm;
 import SNET.web.form.NewNewsForm;
 
 @RestController
-public class NewsSearchController {
+public class SearchNewsController {
 	
 	@Autowired
 	private NewsDomainServices newsService;
@@ -37,10 +39,11 @@ public class NewsSearchController {
     												Long.parseLong(HtmlUtils.htmlEscape(id)), userDetails.getUser());
     }
 	
-	@RequestMapping(value="/news/add", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<?> addNews(@RequestBody NewNewsForm form, ModelAndView modelAndView) {
-		System.out.println("gg");
-		newsService.addNewNews(form.getNewNewsText(), form.getIdAuthor());
+	@RequestMapping(value="/news/add")
+	public ResponseEntity<?> addNews(@ModelAttribute NewNewsForm form,
+			ModelAndView modelAndView) {
+		
+		newsService.addNewNews(form);
 		
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}

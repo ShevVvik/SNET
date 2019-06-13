@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import SNET.domain.services.UserDomainServices;
 import SNET.web.form.ChangePaswordForm;
@@ -44,4 +45,10 @@ public class ForgotPasswordController {
 		userService.changePassword(passForm.getPassword(), passForm.getToken());
 		return "redirect:/login";
 	}
+	
+	@PostMapping("/ajax/forgotPassword")
+    public String forgotPassword(@RequestParam("login") String login, ModelAndView modelAndView) {
+		userService.forgotPassword(login);
+    	return "Succes";
+    }
 }

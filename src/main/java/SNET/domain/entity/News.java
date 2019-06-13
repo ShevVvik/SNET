@@ -50,8 +50,11 @@ public class News implements Serializable {
 	@CreatedDate
 	private Date newsDate;
 	
-	@Column(name="forFriends", nullable=false)
+	@Column(name="forFriends", nullable=true)
 	private boolean forFriends;
+	
+	@Column(name="image", nullable=true)
+	private String imageToken;
 	
 	public User getAuthor() {
 		return author;
@@ -113,10 +116,16 @@ public class News implements Serializable {
 	public void setForFriends(boolean forFriends) {
 		this.forFriends = forFriends;
 	}
-// ниже еще должно быть image и newsDate?
 	
-	
-	 @Override
+	 public String getImageToken() {
+		return imageToken;
+	}
+
+	public void setImageToken(String imageToken) {
+		this.imageToken = imageToken;
+	}
+
+	@Override
 	    public int hashCode() {
 	        return Objects.hash(id, author, text);
 	 }

@@ -21,6 +21,7 @@ import SNET.domain.entity.Hobby;
 import SNET.domain.entity.News;
 import SNET.domain.entity.User;
 import SNET.domain.entity.UserRole;
+import SNET.web.form.MessageForm;
 import SNET.web.form.UserRegistrationForm;
 
 @Service
@@ -92,6 +93,13 @@ public class UserDomainServices {
 	       // mailSender.send(u.getEmail(), "Activation code", message);
 		}
 		userDao.save(u);
+	}
+	
+	public void sendMessage(MessageForm form, User uFrom) {
+		User u = this.getById(form.getIdTo());
+		if (!StringUtils.isEmpty(u.getEmail())) {
+	        mailSender.send(u.getEmail(), form.getSubject(), form.getText(), uFrom.getEmail());
+		}
 	}
 	
 	public  boolean activateUser(String code) {
