@@ -214,8 +214,7 @@ function getNewsBlock(){
 }
 
 function fillTable(data) {
-	getNewsBlock(); alert("fix me");
-	var mainDIV0 = document.querySelector('.newsnews').parentNode;
+	var mainDIV0 = document.querySelector('#pressetNews').parentNode;
 	cleanNews();
     data.forEach(function(elem) {
     		var mainDIV = mainDIV0.children[0].cloneNode(true);
