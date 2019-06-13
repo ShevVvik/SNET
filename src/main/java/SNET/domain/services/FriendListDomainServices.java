@@ -1,12 +1,16 @@
 package SNET.domain.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import SNET.dao.FriendListRepository;
+import SNET.domain.dto.FriendDTO;
+import SNET.domain.dto.UserDTO;
 import SNET.domain.entity.FriendList;
 import SNET.domain.entity.User;
 
@@ -14,18 +18,56 @@ import SNET.domain.entity.User;
 public class FriendListDomainServices {
 
 	@Autowired
-	public FriendListRepository friendListDao;
+	public FriendListRepository friendListDao; 
 	
 	@Autowired
 	private UserDomainServices userService;
 	
-	public List<FriendList> getFriends(Long userId) {
-		return friendListDao.findByUser1IdOrUser2Id(userId, userId);
+	public List<FriendDTO> getRequestFriends(Long userId) {
+		List<FriendList> friendList = friendListDao.findByUser1IdAndFriendshipFalseOrUser2IdAndFriendshipFalse(userId, userId);
+		List<FriendDTO> friends = new ArrayList<FriendDTO>();
+		for (FriendList fr : friendList) {
+			UserDTO userDTO = new UserDTO();
+			FriendDTO friend = new FriendDTO();
+			if (userId == fr.getUser1().getId()) {
+				BeanUtils.copyProperties(fr.getUser2(), userDTO);
+				friend.setFriend(userDTO);
+				friend.setToken(fr.getToken());
+				friends.add(friend);
+			} else {
+				BeanUtils.copyProperties(fr.getUser1(), userDTO);
+				friend.setFriend(userDTO);
+				friend.setToken(fr.getToken());
+				friends.add(friend);
+			}
+		}
+		
+		return friends;
 	}
 	
-	public List<FriendList> getActiveFriends(Long userId) {
-		return friendListDao.findByUser1IdOrUser2IdAndFriendshipTrue(userId, userId);
+	public List<FriendDTO> getActiveFriends(Long userId) {
+		List<FriendList> friendList = friendListDao.findByUser1IdAndFriendshipTrueOrUser2IdAndFriendshipTrue(userId, userId);
+		List<FriendDTO> friends = new ArrayList<FriendDTO>();
+		for (FriendList fr : friendList) {
+			UserDTO userDTO = new UserDTO();
+			FriendDTO friend = new FriendDTO();
+			if (userId == fr.getUser1().getId()) {
+				BeanUtils.copyProperties(fr.getUser2(), userDTO);
+				friend.setFriend(userDTO);
+				friend.setToken(fr.getToken());
+				friends.add(friend);
+			} else {
+				BeanUtils.copyProperties(fr.getUser1(), userDTO);
+				friend.setFriend(userDTO);
+				friend.setToken(fr.getToken());
+				friends.add(friend);
+			}
+		}
+		
+		return friends;
 	}
+	
+	
 	
 	public FriendList getFriendsByToken(String token) {
 		return friendListDao.findByToken(token);

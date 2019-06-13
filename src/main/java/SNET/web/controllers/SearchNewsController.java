@@ -2,11 +2,15 @@ package SNET.web.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +24,7 @@ import org.springframework.web.util.HtmlUtils;
 import SNET.config.UserDetailsImpl;
 import SNET.domain.dto.NewsDTO;
 import SNET.domain.services.NewsDomainServices;
+import SNET.web.form.CommentForm;
 import SNET.web.form.MessageForm;
 import SNET.web.form.NewNewsForm;
 
@@ -45,6 +50,21 @@ public class SearchNewsController {
 		
 		newsService.addNewNews(form);
 		
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/news/comment/add")
+	public ResponseEntity<?> addComment(@Valid @ModelAttribute CommentForm form,
+    		BindingResult binding,
+    		HttpServletResponse response,
+    		Authentication auth){
+		
+		if(binding.hasErrors()) {
+			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
+		
+		UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
+		newsService.addComment(form, userDetails.getUser());
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 }

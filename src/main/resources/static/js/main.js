@@ -203,16 +203,6 @@ function cleanNews(){
 	
 }
 
-function getNewsBlock(){
-	$.ajax({
-		   url: '/utils/getNewsBlock',
-		   type:'GET',
-		   success: function(data){
-		       $('#newsList').html(data);
-		   }
-		});
-}
-
 function fillTable(data) {
 	var mainDIV0 = document.querySelector('#pressetNews').parentNode;
 	cleanNews();
@@ -221,7 +211,7 @@ function fillTable(data) {
     		mainDIV.id = elem.id;
     		var redLine = mainDIV.children[0];
     		var nameLog = redLine.children[0];
-    		nameLog.children[0].textContent = elem.author.firstName;
+    		nameLog.children[0].textContent = elem.author.lastName + ' ' + elem.author.firstName;
     		nameLog.children[1].textContent = '@' +  elem.author.login;
     		mainDIV.children[1].children[0].textContent = elem.text;
     		mainDIV.children[1].children[1].src = '/news/image/' + elem.imageToken;
@@ -235,12 +225,13 @@ function fillTable(data) {
     		var ulComment = document.createElement('ul');
     		var comment = mainDIV0.children[1];
     		elem.comments.forEach(function(elemCom) {
-    			var divCom = comment.children[0].children[0].cloneNode(true);
+    			var divCom = comment.children[1].children[0].cloneNode(true);
     			var topCom = divCom.children[0];
     			var botCom = divCom.children[1];
     			
     			topCom.children[0].textContent = elemCom.text;
-    			botCom.children[1].children[0].textContent = 'olololo';
+    			botCom.children[0].textContent = elemCom.date;
+    			botCom.children[1].children[0].textContent = '@' + elemCom.commentator.login;
     			
     			var newLiCom = document.createElement('li');
     			newLiCom.appendChild(divCom);
@@ -248,9 +239,8 @@ function fillTable(data) {
     		})
     		
     		newLi.appendChild(mainDIV);
-    		ull.appendChild(newLi);
-    		ull.appendChild(ulComment);
-            
+    		newLi.appendChild(ulComment);
+    		ull.appendChild(newLi);            
     });
 
 }
@@ -298,39 +288,57 @@ $('.buttomComment').on('click', function(event) {
 	
 });
 
-function sendNewCommentForm(event) {
+$('#newsList').on('click', '.butComCreate', function(event) {
     var data = new FormData();
     var idNews = $(this).parent().parent().parent().attr('id');
-    data.append("idAuthor", $("#idAuthor").val());
-    data.append("newNewsText", $("#textNews").val());
-    data.append("forFriends", ($('input[name=radname1]:checked').val() == 'friends') ? true : false);
-    if ($('input[type=file]')[0].files[0] != undefined)
-    	data.append("file", $('input[type=file]')[0].files[0]);
+    data.append("idNews", $(this).parent().parent().parent().parent().parent().children().attr('id'));
+    data.append("text", $(this).parent().parent().find('.textAreaComCont').val());
     var token = document.head.querySelector("meta[name='_csrf']").content;
-    var header = document.head.querySelector("meta[name='_csrf_header']").content;
-    $("#submitNewNews").prop("disabled", true);
- 
+    var header = document.head.querySelector("meta[name='_csrf_header']").content; 
     $.ajax({
     	headers: { 
     		"X-CSRF-TOKEN": token
         },
         type: 'POST',
         enctype: 'multipart/form-data',
-        url: '/news/add',
+        url: '/news/comment/add',
         data : data,
         contentType: false,
         processData: false,
         cache: false,
         timeout: 1000000,
         success: function() {
-            $("#submitNewNews").prop("disabled", false);
-            $('#newNews')[0].reset();
-            $('#newsCreateImg').val(null);
             newsSearch();
         },
-        error: function() {  
-            $("#submitNewNews").prop("disabled", false);
+        error: function() {   
+        }
+    });
  
+});
+
+function sendNewCommentForm(event) {
+    var data = new FormData();
+    var idNews = $(this).parent().parent().parent().attr('id');
+    data.append("id", $(this).parent().parent().parent().parent().children().attr('id'));
+    data.append("text", $(this).parent().parent().find('.textAreaComCont').val());
+    var token = document.head.querySelector("meta[name='_csrf']").content;
+    var header = document.head.querySelector("meta[name='_csrf_header']").content; 
+    $.ajax({
+    	headers: { 
+    		"X-CSRF-TOKEN": token
+        },
+        type: 'POST',
+        enctype: 'multipart/form-data',
+        url: '/news/comment/add',
+        data : data,
+        contentType: false,
+        processData: false,
+        cache: false,
+        timeout: 1000000,
+        success: function() {
+            newsSearch();
+        },
+        error: function() {   
         }
     });
  

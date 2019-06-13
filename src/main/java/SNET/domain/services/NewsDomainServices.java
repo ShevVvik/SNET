@@ -9,12 +9,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import SNET.dao.CommentsRepository;
 import SNET.dao.NewsRepository;
 import SNET.domain.dto.CommentsDTO;
 import SNET.domain.dto.NewsDTO;
@@ -23,6 +26,7 @@ import SNET.domain.entity.Comments;
 import SNET.domain.entity.News;
 import SNET.domain.entity.Role;
 import SNET.domain.entity.User;
+import SNET.web.form.CommentForm;
 import SNET.web.form.NewNewsForm;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
@@ -32,6 +36,9 @@ public class NewsDomainServices {
 
 	@Autowired
 	public NewsRepository newsDao;
+	
+	@Autowired
+	public CommentsRepository commentsDao;
 	
 	@Autowired
 	public UserDomainServices userService;
@@ -94,6 +101,10 @@ public class NewsDomainServices {
 					CommentsDTO comment = new CommentsDTO();
 					comment.setId(com.getId());
 					comment.setText(com.getText());
+					UserDTO userCommentDTO = new UserDTO();
+					BeanUtils.copyProperties(com.getCommentator(), userCommentDTO);
+					comment.setCommentator(userCommentDTO);
+					comment.setDate(dateFormat.format(com.getCommentDate()));
 					comments.add(comment);
 				}
 				
@@ -148,5 +159,17 @@ public class NewsDomainServices {
 	
 	public void deleteNews(Long id) {
 		newsDao.deleteById(id);
+	}
+
+
+	public void addComment(CommentForm form, User user) {
+		Comments comment = new Comments();
+		comment.setCommentator(user);
+		comment.setNews(newsDao.getOne(form.getIdNews()));
+		comment.setText(form.getText());
+		Calendar cal = Calendar.getInstance();
+        Date date=cal.getTime(); 
+        comment.setCommentDate(date);
+        commentsDao.save(comment);
 	}
 }

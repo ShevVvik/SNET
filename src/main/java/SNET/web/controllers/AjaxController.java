@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
@@ -49,39 +50,38 @@ public class AjaxController {
 	private NewsDomainServices newsService;
 
 	@PostMapping("/addFriend")
-    public String addFriend(@RequestParam("q") String pattern, ModelAndView modelAndView, Authentication auth) {
+    public ResponseEntity<String> addFriend(@RequestParam("q") String pattern, ModelAndView modelAndView, Authentication auth) {
     	
     	UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();		
 		friendsService.addFriend(userDetails.getUser(), (long)Integer.parseInt(pattern));
     	
-    	return "Succes";
+    	return new ResponseEntity<String>(HttpStatus.OK);
     }
 	
 	@PostMapping("/deleteNews")
-    public String deleteNews(@RequestParam("id") String idNews, ModelAndView modelAndView, Authentication auth) {
+    public ResponseEntity<String> deleteNews(@RequestParam("id") String idNews, ModelAndView modelAndView, Authentication auth) {
     	
     	UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
     	if (userDetails.getUser().getHighLevelRole() == Role.ROLE_ADMIN) {
     		newsService.deleteNews(Long.parseLong(idNews));
     	}
 		
-    	return "Succes";
+    	return new ResponseEntity<String>(HttpStatus.OK);
     }
 	
 	@PostMapping("/sendMessage")
-    public String addFriend(@Valid @ModelAttribute MessageForm form,
+    public ResponseEntity<String> addFriend(@Valid @ModelAttribute MessageForm form,
     		BindingResult binding,
     		HttpServletResponse response,
     		Model modelAndView, Authentication auth) throws IOException {
     	
 		if(binding.hasErrors()) {
-			response.sendError(HttpStatus.BAD_REQUEST.value(), "Invalid data");
-			return "Error";
+			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 		}
 		
     	UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();	
     	System.out.println(form.getIdTo());
     	userService.sendMessage(form, userDetails.getUser());
-    	return "Succes";
+    	return new ResponseEntity<String>(HttpStatus.OK);
     }
 }

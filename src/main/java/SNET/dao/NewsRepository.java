@@ -8,7 +8,6 @@ import SNET.domain.entity.News;
 import SNET.domain.entity.User;
 
 public interface NewsRepository extends JpaRepository<News, Long> {
-
 	List<News> findByAuthorIdOrderByIdDesc(Long id);
 	List<News> findByAuthorIdAndForFriendsFalseOrderByIdDesc(Long id);
 	List<News> findAllByTextContainingAndAuthorIdOrderByIdDesc(String text, Long id);

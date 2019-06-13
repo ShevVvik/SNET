@@ -49,7 +49,7 @@
                 <div class="profilePhoto">
                     <img th:src="@{/avatar/big/} + ${user.login}" height="200" width="200" alt="wow" class="foto">
                     <div class="butMain">
-                        <div class="butFriend"><a id="butFriend" href="friendList.html">.</a></div>
+                        <div class="butFriend"><a id="butFriend" th:href="@{/} + ${user.id} + @{/friendlist}">.</a></div>
                         <div id="iw-modal-btn" class="butFriend" style="overflow:hidden;">֍открыть</div>
                         <!--<div class="butFriend"><a id="butFriend" href="friendList.html">.</a></div>
                         <div class="butFriend"><a id="butFriend" href="friendList.html">.</a></div>-->
@@ -88,8 +88,8 @@
                 <li>
                     <form id="newNews"  method="POST" enctype="multipart/form-data" class="createNews" >
                         <div id="redLine">
-                            <div id="name">ivanov ivan</div>
-                            <div id="login">@lolalol</div>
+                            <div id="name" th:text="${user.lastName} + @{ } + ${user.firstName}">ivanov ivan</div>
+                            <div id="login" class="login">@lolalol</div>
                         </div>
                         
                         <div class="fieldNews">
@@ -137,7 +137,7 @@
                             <div id="redLine">
                                 <div class="nameLog">
                                     <div id="nameAuthor" >ivanov ivan</div>
-                                    <div id="loginAuthor">@lolalol</div>
+                                    <div id="loginAuthor" class="login">@lolalol</div>
                                 </div>
                                 <div class="buttonEditDelete" id="butEditDel">
                                     <a id="butEditDel" href="#edit">edit</a><div>|</div>
@@ -167,6 +167,20 @@
                         </div>
 
                         <ul>
+                        	<li style="display:none">
+                        		<div id="createNewComments" class="comments">
+                                    <div class="topCom">
+                                        <textarea class="textAreaComCont"></textarea>
+                                    </div>
+                                 
+                                <div class="botCom">
+                                    <div class="nameLogCom">
+                                        <div id="login" th:text="@{@} + ${user.login}">@Fail</div>
+                                    </div>
+                                    <a id="butComCreate">create<img class="newsIcon" src="../img/circle.png"></a>
+                                </div>
+                                </div> 
+                        	</li>
                             <li>
                                 <div class="comments">
                                     <div class="topCom">
@@ -176,7 +190,7 @@
                                     <div class="botCom">
                                         <div id="dateCom">10.01.20</div>
                                         <div class="nameLogCom">
-                                            <div id="login">@Fail</div>
+                                            <div id="login" class="login">@Fail</div>
                                         </div>
                                         <!-- <a id="butComCreate" href="#create">create<img src="../source/circle.png"></a> -->
                                     </div>
@@ -189,8 +203,8 @@
                         <div th:id="${new1.id}" class="newsnews" >
                             <div id="redLine">
                                 <div class="nameLog">
-                                    <div id="name" th:text="${new1.author.firstName}">ivanov ivan</div>
-                                    <div id="login" th:text="@{@} + ${new1.author.login}">@lolalol</div>
+                                    <div id="name" th:text="${user.lastName} + @{ } + ${user.firstName}">ivanov ivan</div>
+                                    <div id="login" class="login" th:text="@{@} + ${new1.author.login}">@lolalol</div>
                                 </div>
                                 <div class="buttonEditDelete" id="butEditDel">
                                     <a id="butEdit" href="#edit">edit</a><div>|</div>
@@ -226,12 +240,12 @@
                                         <textarea class="textAreaComCont"></textarea>
                                     </div>
                                  
-                                <div class="botCom">
-                                    <div class="nameLogCom">
-                                        <div id="login" th:text="@{@} + ${user.login}">@Fail</div>
-                                    </div>
-                                    <a id="butComCreate">create<img class="newsIcon" src="../img/circle.png"></a>
-                                </div>
+                                	<div class="botCom">
+                                    	<div class="nameLogCom">
+                                        	<div id="login" th:text="@{@} + ${user.login}">@Fail</div>
+                                    	</div>
+                                    <a id="butComCreate" class="butComCreate">create<img class="newsIcon" src="../img/circle.png"></a>
+                                	</div>
                                 </div> 
                         	</li>
                             <li th:each="comment, st: ${new1.comments}">

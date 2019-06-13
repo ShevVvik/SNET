@@ -57,8 +57,8 @@ public class ProfileController {
 		return "/user/profile";
 	}
 	
-	@GetMapping("/friendlist")
-	public String friendlist(Model model) {
+	@GetMapping("/{userId}/friendlist")
+	public String friendlist(Model model, @PathVariable Long userId) {
 		
 		UserDetailsImpl userDet = (UserDetailsImpl) SecurityContextHolder
 		        .getContext()
@@ -66,8 +66,13 @@ public class ProfileController {
 		        .getPrincipal();
 		User user = userDet.getUser();
 		
-		model.addAttribute("userFriends", friendsService.getFriends(user.getId()));
-		model.addAttribute("user", user);
+		model.addAttribute("friends", friendsService.getActiveFriends(userId));
+		model.addAttribute("user", userService.getById(userId));
+		if (user.getId() == userId) {
+			model.addAttribute("owner", true);
+		} else {
+			model.addAttribute("owner", false);
+		}
 		return "/user/friendlist";
 	}
 	
@@ -86,6 +91,7 @@ public class ProfileController {
 		model.addAttribute("user", user);
 		model.addAttribute("news", newsService.getNewsByAuthor(user.getId(), userX));
 		model.addAttribute("role", userX.getHighLevelRole());
+		model.addAttribute("hobby", user.getHobbiesList());
 		model.addAttribute("otherUser", true);
 		
 		return "/user/profile";
