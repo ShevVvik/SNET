@@ -24,6 +24,7 @@ import SNET.domain.entity.User;
 import SNET.domain.services.FriendListDomainServices;
 import SNET.domain.services.NewsDomainServices;
 import SNET.domain.services.UserDomainServices;
+import SNET.web.form.UserRegistrationForm;
 
 
 
@@ -98,5 +99,12 @@ public class ProfileController {
 	public String searchPage(Model model) {
 		
 		return "/user/search";
+	}
+	
+	@GetMapping("/edit")
+public String registration(Model model, UserRegistrationForm userForm) {
+		
+		model.addAttribute("userForm", userForm);
+		return "/user/edit";
 	}
 }
