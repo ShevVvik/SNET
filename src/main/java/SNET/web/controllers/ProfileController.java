@@ -38,10 +38,7 @@ public class ProfileController {
 	
 	@Autowired
 	private FriendListDomainServices friendsService;
-	/*
-	@Autowired
-	private CommentsDomainServices commentsService;
-	*/
+
 	@GetMapping("/profile")
 	public String profile(Model model) {
 		
@@ -97,4 +94,9 @@ public class ProfileController {
 		return "/user/profile";
 	}
 	
+	@GetMapping("/search")
+	public String searchPage(Model model) {
+		
+		return "/user/search";
+	}
 }

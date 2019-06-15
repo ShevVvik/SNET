@@ -14,6 +14,7 @@ public class NewsDTO {
 	private String imageToken;
 	private List<CommentsDTO> comments;
 	private UserDTO author;
+	private List<String> tags;
 	
 	public List<CommentsDTO> getComments() {
 		return comments;
@@ -56,5 +57,11 @@ public class NewsDTO {
 	}
 	public void setImageToken(String imageToken) {
 		this.imageToken = imageToken;
+	}
+	public List<String> getTags() {
+		return tags;
+	}
+	public void setTags(List<String> tags) {
+		this.tags = tags;
 	}
 }

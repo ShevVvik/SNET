@@ -1,0 +1,145 @@
+body{
+    background-color: #4a4a4a;
+    font-family: Calibri;
+    background-image: 
+        linear-gradient(to top, rgba(74, 74, 74, 0.2), rgba(74,74,74,0.2)),
+        url("../img/app.jpg");
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 20px;
+    color: #ffffff;
+    margin: 0px;
+}
+
+.top{
+    height: 80px;
+    background-color: #3d3d3d;
+    position: fixed;
+    top:0;
+    z-index: 9999;
+    width: 100%;
+}
+
+.logo{
+    padding: 25px;
+    padding-left: 70px;
+}
+
+.bottom{
+    height: 40px;
+    background-color: #3d3d3d;
+    position:fixed;
+    bottom:0;
+    width:100%;
+}
+
+.container{
+    width: 1000px;
+    height: 100%;
+    min-height: 90vh;
+    padding: 1px;
+    background-color: #635f5cde;
+    text-transform: uppercase;
+    margin: 80px auto 0 auto;
+}
+
+a{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.onePerson{
+    width: 650px;
+    background-color: #ffffff70;
+    border-radius: 40px;
+    margin: 10px 0px;
+    padding: 5px 20px;
+    position: relative;
+    display: flex;
+}
+
+.search{
+    margin-left: 5%;
+}
+
+.namePerson{
+    display: flex;
+    margin-right: 5px;
+}
+
+.firstName{
+    margin-right: 5px;
+}
+
+.login{
+    color: #ffffff70;
+}
+
+.searchLine{
+    margin: 30px;
+}
+
+.searchIn{
+    display: flex;
+    margin: 35px;
+}
+
+.redIn{
+    padding: 6px 6px 6px 12px;
+    border-radius: 15px 0px 0px 15px;
+    background-color: #ff3535;
+    margin-right: 5px;
+    cursor: pointer;
+    text-align: right;
+    text-align:center;
+}
+
+.notRedIn{
+    width: 720px;
+    padding: 6px 12px 6px 2px;
+    border-radius: 0px 15px 15px 0px;
+    background-color: #4b4b4b;
+    margin: 0px 0px;
+    cursor: pointer;
+    text-align: left;
+    text-decoration: none;
+    border-style: none;
+    color: #ffffff;
+    font-family: Calibri;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 20px;
+    border: none;
+}
+
+.radio-container{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin: 0px 5px;
+}
+.radio-container *{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+.radio-container .radio-btn.nth-2{width: auto;}
+.radio-container .radio-btn label{
+    color: #ffffff;
+    display: block;
+    padding: 0px 12px;
+    text-align: center;
+    border-right: 1px solid #ffffff;
+}
+.radio-container .radio-btn input{display: none;}
+.radio-container .radio-btn input:checked + label{
+    color: #ff3535;
+}

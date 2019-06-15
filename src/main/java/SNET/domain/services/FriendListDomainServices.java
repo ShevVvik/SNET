@@ -24,7 +24,7 @@ public class FriendListDomainServices {
 	private UserDomainServices userService;
 	
 	public List<FriendDTO> getRequestFriends(Long userId) {
-		List<FriendList> friendList = friendListDao.findByUser1IdAndFriendshipFalseOrUser2IdAndFriendshipFalse(userId, userId);
+		List<FriendList> friendList = friendListDao.findByUser2IdAndFriendshipFalse(userId);
 		List<FriendDTO> friends = new ArrayList<FriendDTO>();
 		for (FriendList fr : friendList) {
 			UserDTO userDTO = new UserDTO();
@@ -94,5 +94,15 @@ public class FriendListDomainServices {
 		newFriend.setFriendship(false);
 		newFriend.setToken(UUID.randomUUID().toString());
 		friendListDao.save(newFriend);
+	}
+
+	public void deleteFriend(Long idUser, User userAut) {
+		FriendList friend1 = friendListDao.findByUser1IdAndUser2IdAndFriendshipTrue(idUser, userAut.getId());
+		FriendList friend2 = friendListDao.findByUser1IdAndUser2IdAndFriendshipTrue(userAut.getId(), idUser);
+		if (friend1 != null) {
+			friendListDao.delete(friend1);
+		} else if (friend2 != null) {
+			friendListDao.delete(friend2);
+		}
 	}
 }

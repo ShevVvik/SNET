@@ -22,7 +22,7 @@ public class SearchUserController {
 	@Autowired
 	private UserDomainServices userService;
 	
-	@RequestMapping(value="/searchTest", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value="/search", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<UserDTO> newsFilter(@RequestParam("q") String pattern, 
     		@RequestParam("parametr") String parametr, 
     		ModelAndView modelAndView) {

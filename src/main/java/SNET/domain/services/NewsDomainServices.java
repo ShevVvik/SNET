@@ -6,7 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -19,12 +21,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import SNET.dao.CommentsRepository;
 import SNET.dao.NewsRepository;
+import SNET.dao.TagsRepository;
 import SNET.domain.dto.CommentsDTO;
 import SNET.domain.dto.NewsDTO;
 import SNET.domain.dto.UserDTO;
 import SNET.domain.entity.Comments;
 import SNET.domain.entity.News;
 import SNET.domain.entity.Role;
+import SNET.domain.entity.Tags;
 import SNET.domain.entity.User;
 import SNET.web.form.CommentForm;
 import SNET.web.form.NewNewsForm;
@@ -39,6 +43,9 @@ public class NewsDomainServices {
 	
 	@Autowired
 	public CommentsRepository commentsDao;
+	
+	@Autowired
+	public TagsRepository tagsDao;
 	
 	@Autowired
 	public UserDomainServices userService;
@@ -62,7 +69,6 @@ public class NewsDomainServices {
 		} else {
 			news = newsDao.findByAuthorIdAndForFriendsFalseOrderByIdDesc(id);
 		}
-		
 		return news;
 	}
 	
@@ -119,7 +125,9 @@ public class NewsDomainServices {
 
 	public void addNewNews(NewNewsForm form) {
         Calendar cal = Calendar.getInstance();
-        Date date=cal.getTime();        
+        Date date=cal.getTime();
+        Tags tagDao = tagsDao.findByTagsName("asd");
+        System.out.println(tagDao);
 		News news = new News();
 		news.setAuthor(userService.getById(form.getIdAuthor()));
 		news.setText(form.getNewNewsText());
@@ -129,6 +137,22 @@ public class NewsDomainServices {
 			news.setImageToken(UUID.randomUUID().toString());
 			saveImages(form.getFile(), news.getImageToken());
 		}
+		List<Tags> newsTags = new ArrayList<Tags>();
+		for(String tagName : form.getTags()) {
+			Tags tag = new Tags();
+			
+			
+			/*if (null) {
+				System.out.println("Check");
+				newsTags.add(tagDao);
+			} else {*/
+				System.out.println("Check" + tagName);
+				tag.setName(tagName);
+				newsTags.add(tag);
+			//}
+			
+		}
+		news.setTags(new HashSet<Tags>(newsTags));
 		newsDao.save(news);
 	}
 	

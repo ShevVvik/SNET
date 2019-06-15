@@ -45,7 +45,7 @@
         </ul>
         <ul id="friendList" class="friends">
         <li th:each="fr, st: ${friends}">
-            <div id="friend0" class="oneFriend">
+            <div th:id="${fr.friend.id}" class="oneFriend">
                 <div class="nameFriend">
                     <div id="firstNameFriend0" class="firstName"><p th:text="${fr.friend.firstName}">rrrrrrrrrrrrrrr</p></div>
                     <div id="lastNameFriend0"><p th:text="${fr.friend.lastName}">rrrrrrrrrrrrrrr</p></div>

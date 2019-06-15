@@ -48,4 +48,13 @@ public class FriendAcceptController {
     		ModelAndView modelAndView) {
     	return friendsService.getActiveFriends(Long.parseLong(idUser));
     }
+	
+	@RequestMapping(value="/friendList/delete", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<String> deleteFriends(@RequestParam("id") String idUser, 
+    		ModelAndView modelAndView, Authentication auth) {
+		
+		UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
+		friendsService.deleteFriend(Long.parseLong(idUser), userDetails.getUser());
+    	return new ResponseEntity<String>(HttpStatus.OK);
+    }
 }

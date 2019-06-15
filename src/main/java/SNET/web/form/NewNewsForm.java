@@ -1,5 +1,7 @@
 package SNET.web.form;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class NewNewsForm {
@@ -8,6 +10,7 @@ public class NewNewsForm {
 	private Long idAuthor;
 	private boolean forFriends;
 	private MultipartFile file;
+	private List<String> tags;
 	
 	public String getNewNewsText() {
 		return newNewsText;
@@ -32,5 +35,11 @@ public class NewNewsForm {
 	}
 	public void setFile(MultipartFile file) {
 		this.file = file;
+	}
+	public List<String> getTags() {
+		return tags;
+	}
+	public void setTags(List<String> tags) {
+		this.tags = tags;
 	}
 }

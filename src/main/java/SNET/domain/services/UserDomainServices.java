@@ -128,10 +128,10 @@ public class UserDomainServices {
 		
 		List<User> user = null;
 		switch(parametr) {
-		case "firstName": user = userDao.findAllByFirstNameContainingOrderByIdDesc(pattern);
-		case "lastName" : user = userDao.findAllByLastNameContainingOrderByIdDesc(pattern);
-		case "city"     : user = userDao.findAllByCityContainingOrderByIdDesc(pattern);
-		case "education": user = userDao.findAllByEducationContainingOrderByIdDesc(pattern);
+		case "name": user = userDao.findAllByFirstNameContainingOrderByIdDesc(pattern); break;
+		case "surname" : user = userDao.findAllByLastNameContainingOrderByIdDesc(pattern); break;
+		case "city"     : user = userDao.findAllByCityContainingOrderByIdDesc(pattern); break;
+		case "education": user = userDao.findAllByEducationContainingOrderByIdDesc(pattern); break;
 		}
 		
 		List<UserDTO> userJson = null;
@@ -146,7 +146,6 @@ public class UserDomainServices {
 				userJson.add(userDTO);
 			}
 		}
-		
 		return userJson;
 	}
 	

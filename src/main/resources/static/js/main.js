@@ -118,6 +118,8 @@ function ajaxSubmitForm() {
     data.append("forFriends", ($('input[name=radname1]:checked').val() == 'friends') ? true : false);
     if ($('input[type=file]')[0].files[0] != undefined)
     	data.append("file", $('input[type=file]')[0].files[0]);
+    var arrayTag = $('#tagsNewNews').val().split(', ');
+    data.append("tags", arrayTag);
     var token = document.head.querySelector("meta[name='_csrf']").content;
     var header = document.head.querySelector("meta[name='_csrf_header']").content;
     $("#submitNewNews").prop("disabled", true);
@@ -224,6 +226,8 @@ function fillTable(data) {
     		var newLi = document.createElement('li');
     		var ulComment = document.createElement('ul');
     		var comment = mainDIV0.children[1];
+    		var pressetComment = comment.children[0].cloneNode(true);
+    		ulComment.appendChild(pressetComment);
     		elem.comments.forEach(function(elemCom) {
     			var divCom = comment.children[1].children[0].cloneNode(true);
     			var topCom = divCom.children[0];
@@ -262,7 +266,7 @@ $( '#newsList' ).on( 'click', '#butEdit', function( event ) {
 	  $('#newsCreateImg').attr('src', src);
 });
 
-$('.deleteNews').on('click', function() {
+$('#newsList').on('click', '.deleteNews', function() {
     var id = $(this).parent().parent().parent().attr('id');
     var token = document.head.querySelector("meta[name='_csrf']").content;
     var header = document.head.querySelector("meta[name='_csrf_header']").content;
@@ -275,7 +279,7 @@ $('.deleteNews').on('click', function() {
     	if (xhr.readyState != 4) 
     		return;
     	if (xhr.status != 200) {
-    		alert(xhr.status + ': ' + xhr.statusText);
+    		console.log(xhr.status + ': ' + xhr.statusText);
     	} else {    		
     		newsSearch(true);
     	}
@@ -283,7 +287,7 @@ $('.deleteNews').on('click', function() {
     xhr.send("id=" + id); 
 });
 
-$('.buttomComment').on('click', function(event) {
+$('#newsList').on('click', '.buttomComment', function(event) {
 	$(this).parent().parent().parent().parent().find('#createNewComments').parent().css('display', 'block');
 	
 });

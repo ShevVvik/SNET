@@ -51,6 +51,7 @@
                     <div class="butMain">
                         <div class="butFriend"><a id="butFriend" th:href="@{/} + ${user.id} + @{/friendlist}">.</a></div>
                         <div id="iw-modal-btn" class="butFriend" style="overflow:hidden;">֍открыть</div>
+                        <div class="butFriend"><a id="butFriend" href="/search">.</a></div>
                         <!--<div class="butFriend"><a id="butFriend" href="friendList.html">.</a></div>
                         <div class="butFriend"><a id="butFriend" href="friendList.html">.</a></div>-->
                     </div>
@@ -116,14 +117,11 @@
 
                                     <div class="tags">
                                         <div class="redTags">tags:</div>
-                                        <div><input class="notRedTags" type="text" placeholder="#tags"></div>
+                                        <div><input id="tagsNewNews" class="notRedTags" type="text" placeholder="#tags"></div>
                                     </div>
                                 </div>
 
                                 <div class="right">
-                                	<div id="submitNewNews" class="dropNews">
-                                        <a id="crt" href="#">X</a>
-                                    </div>
                                     <div id="submitNewNews" class="create">
                                         <a id="crt" href="#">create</a>
                                     </div>
@@ -177,7 +175,7 @@
                                     <div class="nameLogCom">
                                         <div id="login" th:text="@{@} + ${user.login}">@Fail</div>
                                     </div>
-                                    <a id="butComCreate">create<img class="newsIcon" src="../img/circle.png"></a>
+                                    <a id="butComCreate" class="butComCreate">create<img class="newsIcon" src="../img/circle.png"></a>
                                 </div>
                                 </div> 
                         	</li>
@@ -207,8 +205,8 @@
                                     <div id="login" class="login" th:text="@{@} + ${new1.author.login}">@lolalol</div>
                                 </div>
                                 <div class="buttonEditDelete" id="butEditDel">
-                                    <a id="butEdit" href="#edit">edit</a><div>|</div>
-                                    <a id="butDel" class="deleteNews">delete<img class="newsIcon" src="../img/x.png"></a>
+                                    <a id="butEdit" href="">edit</a><div>|</div>
+                                    <a id="butDel" class="deleteNews" href="">delete<img class="newsIcon" src="../img/x.png"></a>
                                 </div>
                             </div>
 
@@ -224,7 +222,7 @@
                                     <div class="leftField">
                                         <div id="date" th:text="${#dates.format(new1.newsDate, 'dd-MM-yyyy')}">10.01.20</div>
                                         <div id="levelView" th:if="${new1.forFriends} == true" >for friends</div>
-                                        <div id="tags">#NEWS, #WOW</div>
+                                        <div id="tags" ><a th:each="tag : ${new1.tags}" th:text="@{#} + ${tag.name} + @{ }"></div>
                                     </div>
                                     <div class="buttomComment">
                                             <a id="butCom" href="#comment">comment<img class="newsIcon" src="../img/circle.png"></a>
@@ -258,7 +256,7 @@
                                         <div class="nameLogCom">
                                             <div id="login" th:text="@{@} + ${comment.commentator.firstName}">@Fail</div>
                                         </div>
-                                        <!-- <a id="butComCreate" href="#create">create<img src="../source/circle.png"></a> -->
+                                        <a id="butComCreate" style="display:none">save<img class="newsIcon" src="../img/circle.png"></a>
                                     </div>
                                 </div>
                             </li>

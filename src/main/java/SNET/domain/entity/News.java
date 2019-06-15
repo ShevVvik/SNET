@@ -15,6 +15,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -41,6 +43,15 @@ public class News implements Serializable {
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="news", orphanRemoval = true)
 	private Set<Comments> comments;
 	
+	@ManyToMany(fetch = FetchType.LAZY,
+		    cascade = {
+		        CascadeType.PERSIST,
+		        CascadeType.MERGE
+		    })
+			@JoinTable(name = "tagsnews",
+		    joinColumns = { @JoinColumn(name = "idNews") },
+		    inverseJoinColumns = { @JoinColumn(name = "idTags") })
+	private Set<Tags> tags;
 
 	@Column(name="newsText", length=255, nullable=false)
 	private String text;
@@ -125,6 +136,23 @@ public class News implements Serializable {
 		this.imageToken = imageToken;
 	}
 
+	public Set<Tags> getTags() {
+		return tags;
+	}
+
+	public void setTags(Set<Tags> tags) {
+		this.tags = tags;
+	}
+
+	public List<Tags> getTagsList() {
+	    List<Tags> list = new ArrayList<Tags>();
+
+	    for (Tags tag : this.getTags()) {
+            list.add(tag);
+        }
+	    return list;
+	}
+	
 	@Override
 	    public int hashCode() {
 	        return Objects.hash(id, author, text);

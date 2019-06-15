@@ -2,12 +2,12 @@ document.getElementById('butSearch').addEventListener('click', userSearch);
 
 function userSearch() {
     var pattern = document.getElementById('userFilter').value;
-    var parametr = document.querySelector('input[name="parametr"]:checked').value;
+    var parametr = document.querySelector('input[name="option1"]:checked').value;
     var token = document.head.querySelector("meta[name='_csrf']").content;
     var header = document.head.querySelector("meta[name='_csrf_header']").content;
     
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/searchTest', true);
+    xhr.open('POST', '/search', true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.setRequestHeader(header, token);
 
@@ -25,23 +25,19 @@ function userSearch() {
 }
 
 function fillTable(data) {
-	var myNode = document.getElementById('userList');
+	var myNode = document.getElementById('resultList');
 	while (myNode.children[0]) {
 	    myNode.removeChild(myNode.children[0]);
 	}
-	
+	var mainDIV0 = document.querySelector('#pressetMatch');
     data.forEach(function(elem) {
-            var newUl = document.createElement('ul');
-            newUl.id = elem.id;
-
+    		var mainDIV = mainDIV0.children[0].cloneNode(true);
+    		$(mainDIV).find('#firstNamePerson0').text(elem.firstName);
+    		$(mainDIV).find('#lastNamePerson0').text(elem.lastName);
+    		$(mainDIV).find('#loginPerson0').text('@' + elem.login);
             var newLi = document.createElement('li');
-            var p = document.createElement('p');
-            p.textContent = elem.email;
-
-            newLi.appendChild(p);
-            
-            newUl.appendChild(newLi);
-            document.getElementById('userList').appendChild(newUl);
+            newLi.appendChild(mainDIV);
+            document.getElementById('resultList').appendChild(newLi);
     });
 
 }

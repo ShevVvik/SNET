@@ -81,6 +81,7 @@ p {
 
 .oneFriend{
     width: 650px;
+    height: 28px;
     background-color: #ffffff70;
     border-radius: 40px;
     margin: 10px 0px;
@@ -111,4 +112,10 @@ p {
 
 .login{
     color: #ffffff70;
+}
+
+.link {
+	height: 100%; /* Высота на весь слой */
+	width: 100%;
+	z-index: 9999;
 }
