@@ -105,4 +105,11 @@ public class ProfileController {
 		
 		return "/user/search";
 	}
+	
+	@GetMapping("/edit")
+public String registration(Model model, UserRegistrationForm userForm) {
+		
+		model.addAttribute("userForm", userForm);
+		return "/user/edit";
+	}
 }

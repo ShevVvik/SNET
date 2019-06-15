@@ -1,0 +1,255 @@
+body{
+    background-color: #4a4a4a;
+    font-family: Calibri;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 20px;
+    color: #ffffff;
+    margin: 0px;
+}
+
+.top{
+    height: 80px;
+    background-color: #3d3d3d;
+    position: fixed;
+    top:0;
+    z-index: 9999;
+    width: 100%;
+}
+
+.logo{
+    padding: 25px;
+    padding-left: 70px;
+}
+
+a{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.logOutBox{
+    position:absolute;
+    left:80%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    max-width:100%;
+    max-height: 100%;
+    display: flex;
+}
+
+.logOut{
+    margin: 0px 5px;
+}
+
+.bottom{
+    height: 40px;
+    background-color: #3d3d3d;
+    position:fixed;
+    bottom:0;
+    width:100%;
+}
+
+.container{
+    width: 1000px;
+    height: 800px;
+    background-color: #867777de;
+    padding: 1px;
+    text-transform: uppercase;
+    margin: 80px auto 0 auto;
+}
+
+.profile{
+    padding-bottom: 20px;
+    display: flex;
+    margin: 5%;
+}
+
+.profilePhoto img{
+    width: 200px;
+    height: 200px;
+    background-color: #a7a7a77c;
+    border-radius: 20px 20px 0px 0px;
+    border: 2px solid #ff3535;
+    margin: auto;
+}
+
+.profilePhoto{
+    width: 220px;
+}
+
+.input_file {
+    position: relative;
+    top: -5px;
+}
+
+.input_file input[type=file] {
+    opacity: 0;
+    top: -5px;
+    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+    height: 34px;
+    width: 200px;
+}
+
+.fake_file {
+    position: absolute;
+    z-index: 1;
+    width: 200px;
+    border-radius: 0 0 20px 20px;
+    behavior: url(PIE.htc);
+    height: 34px;
+    background-color: #ff3535;
+    border: none;
+    font-family: Calibri;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 20px;
+    color: #ffffff;
+    cursor: pointer;
+    top: 0px;
+}
+
+.profileInfo{
+    padding: 0px 0px 0px 30px;
+    width: 800px;
+}
+
+.information{
+    color: #ffffff70;
+    margin-right: 10px;
+    border-top: 2px solid #414141;
+    padding-top: 10px;
+}
+
+.infoBlock{
+    margin: 10px 0px;
+    position: relative;
+}
+
+.InfErr{
+    display: flex;
+}
+
+.err{
+    position: absolute;
+    right: 10px;
+    color: #ff3535;
+    display: none;
+}
+
+input{
+    width:300px;
+    border-style: none;
+    background-color: transparent;
+    font-family: Calibri;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 20px;
+    color: #ffffff;
+    margin: 0px;
+}
+
+input::placeholder{
+    color: #ffffff;
+}
+
+*,
+*:after,
+*:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.wrapper-dropdown-4 {
+    position: relative;
+    width: 550px;
+    padding: 10px 0px 0px 0px;
+    margin: 5px auto 5px auto;
+    
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    }
+
+    .wrapper-dropdown-4:after {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -3px;
+    border-width: 6px 6px 0 6px;
+    border-style: solid;
+    border-color: #ff3535 transparent;
+    }
+
+    .wrapper-dropdown-4.active:after {
+    border-width: 0 6px 6px 6px;
+    }
+
+    .wrapper-dropdown-4 .dropdown {
+    position: absolute;
+    top: 100%;
+    margin-top: 1px;
+    left: -1px;
+    right: -1px;
+    
+    background: transparent;
+    border-top: none;
+    list-style: none;
+    transition: all 0.3s ease-out;
+    
+    opacity: 0;
+    pointer-events: none;
+    }
+
+    .wrapper-dropdown-4 .dropdown li {
+    position: relative;
+    }
+    
+    .wrapper-dropdown-4 .dropdown li label {
+    display: block;
+    padding: 5px 5px 5px 5px;
+    border-bottom: 2px solid #555555;
+    transition: all 0.3s ease-out;
+    }
+    
+    .wrapper-dropdown-4 .dropdown li:last-of-type label {
+    border: none;
+    }
+    
+    .wrapper-dropdown-4 .dropdown li input /* Чеки */ {
+    position: absolute;
+    display: none;
+    right: 10px;
+    top: 50%;
+    margin-top: -8px;
+    }
+    
+    /* При наведении курсора*/
+    
+    .wrapper-dropdown-4 .dropdown li:hover label {
+    background: #929292;
+    }
+    
+    .wrapper-dropdown-4 .dropdown li input:checked ~ label {
+    color: #ff3535;
+    }
+
+    .wrapper-dropdown-4.active .dropdown {
+        opacity: 1;
+        pointer-events: auto;
+    }
