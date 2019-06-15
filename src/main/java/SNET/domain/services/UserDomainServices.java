@@ -132,6 +132,7 @@ public class UserDomainServices {
 		case "surname" : user = userDao.findAllByLastNameContainingOrderByIdDesc(pattern); break;
 		case "city"     : user = userDao.findAllByCityContainingOrderByIdDesc(pattern); break;
 		case "education": user = userDao.findAllByEducationContainingOrderByIdDesc(pattern); break;
+		case "email": user = userDao.findAllByEmailContainingOrderByIdDesc(pattern); break;
 		}
 		
 		List<UserDTO> userJson = null;
@@ -151,7 +152,8 @@ public class UserDomainServices {
 	
 	public boolean forgotPassword(String login) {
 		User user = userDao.findByLogin(login);
-		
+		System.out.println(login);
+		System.out.println(user);
 		if (user != null) {
 			if(user.getToken() == null) {
 				user.setToken(UUID.randomUUID().toString());

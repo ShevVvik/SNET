@@ -67,5 +67,20 @@ public class SearchNewsController {
 		newsService.addComment(form, userDetails.getUser());
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/news/comment/update")
+	public ResponseEntity<?> updateComment(@Valid @ModelAttribute CommentForm form,
+    		BindingResult binding,
+    		HttpServletResponse response,
+    		Authentication auth){
+		
+		if(binding.hasErrors()) {
+			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
+		
+		UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
+		newsService.updateComment(form);
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
 }
 

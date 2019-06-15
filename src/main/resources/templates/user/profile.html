@@ -52,6 +52,7 @@
                         <div class="butFriend"><a id="butFriend" th:href="@{/} + ${user.id} + @{/friendlist}">.</a></div>
                         <div id="iw-modal-btn" class="butFriend" style="overflow:hidden;">֍открыть</div>
                         <div class="butFriend"><a id="butFriend" href="/search">.</a></div>
+                        <div class="butFriend"><a id="butFriend" href="/search">.</a></div>
                         <!--<div class="butFriend"><a id="butFriend" href="friendList.html">.</a></div>
                         <div class="butFriend"><a id="butFriend" href="friendList.html">.</a></div>-->
                     </div>
@@ -90,7 +91,7 @@
                     <form id="newNews"  method="POST" enctype="multipart/form-data" class="createNews" >
                         <div id="redLine">
                             <div id="name" th:text="${user.lastName} + @{ } + ${user.firstName}">ivanov ivan</div>
-                            <div id="login" class="login">@lolalol</div>
+                            <div id="login" class="login" th:text="${user.login}">@lolalol</div>
                         </div>
                         
                         <div class="fieldNews">
@@ -205,8 +206,8 @@
                                     <div id="login" class="login" th:text="@{@} + ${new1.author.login}">@lolalol</div>
                                 </div>
                                 <div class="buttonEditDelete" id="butEditDel">
-                                    <a id="butEdit" href="">edit</a><div>|</div>
-                                    <a id="butDel" class="deleteNews" href="">delete<img class="newsIcon" src="../img/x.png"></a>
+                                    <a id="butEdit" class="butEdit">edit</a><div>|</div>
+                                    <a id="butDel" class="deleteNews">delete<img class="newsIcon" src="../img/x.png"></a>
                                 </div>
                             </div>
 
@@ -247,16 +248,17 @@
                                 </div> 
                         	</li>
                             <li th:each="comment, st: ${new1.comments}">
-                                <div class="comments">
+                                <div th:id="${comment.id}" class="comments">
                                     <div class="topCom">
-                                        <div class="comCont"th:text="${comment.text}"></div>
+                                        <div class="comCont" th:text="${comment.text}"></div>
                                     </div>  
                                     <div class="botCom">
                                         <div id="dateCom" th:text="${#dates.format(comment.commentDate, 'dd-MM-yyyy')}">10.01.20</div>
                                         <div class="nameLogCom">
                                             <div id="login" th:text="@{@} + ${comment.commentator.firstName}">@Fail</div>
                                         </div>
-                                        <a id="butComCreate" style="display:none">save<img class="newsIcon" src="../img/circle.png"></a>
+                                        <a id="butComCreate" class="saveOldComment" style="display:none">save<img class="newsIcon" src="../img/circle.png"></a>
+                                        <a id="butComCreate" class="editOldComment" style="display:block">edit<img class="newsIcon" src="../img/circle.png"></a>
                                     </div>
                                 </div>
                             </li>

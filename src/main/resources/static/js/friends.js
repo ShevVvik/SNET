@@ -103,7 +103,7 @@ function fillTable(data, check) {
     	nameBlock.children[1].children[0].textContent = elem.friend.lastName;
     	mainDIV.children[1].children[0].textContent = '@' + elem.friend.login;
     	if (check) {
-    		mainDIV.children[2].children[0].style.display = 'none';
+    		mainDIV.children[2].children[0].remove();
     	} else {
     		mainDIV.children[2].children[0].style.display = 'block';
     		mainDIV.children[2].children[0].href = '/s/' + elem.token;

@@ -59,6 +59,7 @@ p {
     width: 15px;
     height: 15px;
     padding: 0px 10px;
+    margin-top: 7px;
 }
 
 .redLine{
@@ -104,6 +105,10 @@ p {
 .nameLogin, .nameFriend{
     display: flex;
     margin-right: 5px;
+}
+
+.friends a{
+    display: flex;
 }
 
 .firstName{

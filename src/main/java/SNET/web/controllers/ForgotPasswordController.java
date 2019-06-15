@@ -45,10 +45,4 @@ public class ForgotPasswordController {
 		userService.changePassword(passForm.getPassword(), passForm.getToken());
 		return "redirect:/login";
 	}
-	
-	@PostMapping("/ajax/forgotPassword")
-    public String forgotPassword(@RequestParam("login") String login, ModelAndView modelAndView) {
-		userService.forgotPassword(login);
-    	return "Succes";
-    }
 }

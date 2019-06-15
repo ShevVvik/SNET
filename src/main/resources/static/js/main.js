@@ -25,7 +25,6 @@ $(document).ready(function() {
     $(".butSentMes").click(function(event) {
         event.preventDefault();
         sendMessage();
- 
     });
  
 });
@@ -251,9 +250,14 @@ function fillTable(data) {
 
 //document.getElementById('newPost').addEventListener('click', openMenu);
 
-$( '#newsList' ).on( 'click', '#butEdit', function( event ) {
-	  var divNews = $( event.target ).parent().parent().parent().get(0);
-	  var text = $(divNews).children('.newsContent').children('pre').html();
+$( '#newsList' ).on( 'click', '.butEdit', function( event ) {
+	var divNews = $( event.target ).parent().parent().parent().get(0);
+	var botCreate = $('.buttomsNews').get(0).cloneNode(true);
+	$(divNews).find('.bot').remove();
+	if ($(divNews).find('.buttomsNews').get(0) == null)
+		$(divNews).append(botCreate); 
+	  
+	  /*var text = $(divNews).children('.newsContent').children('pre').html();
 	  $('#textNews').val(text);
 	  var src = $(divNews).children('.newsContent').children('img').attr('src');
 	  if($(divNews).children('.bot').children('.fieldInfo').children('.leftField').children('#levelView').get(0)){
@@ -263,10 +267,11 @@ $( '#newsList' ).on( 'click', '#butEdit', function( event ) {
 	  }
 	  
 	  
-	  $('#newsCreateImg').attr('src', src);
+	  $('#newsCreateImg').attr('src', src);*/
 });
 
 $('#newsList').on('click', '.deleteNews', function() {
+	var elem = $(this).parent().parent().parent().parent();
     var id = $(this).parent().parent().parent().attr('id');
     var token = document.head.querySelector("meta[name='_csrf']").content;
     var header = document.head.querySelector("meta[name='_csrf_header']").content;
@@ -281,7 +286,7 @@ $('#newsList').on('click', '.deleteNews', function() {
     	if (xhr.status != 200) {
     		console.log(xhr.status + ': ' + xhr.statusText);
     	} else {    		
-    		newsSearch(true);
+    		$(elem).remove();
     	}
     }
     xhr.send("id=" + id); 
@@ -290,6 +295,43 @@ $('#newsList').on('click', '.deleteNews', function() {
 $('#newsList').on('click', '.buttomComment', function(event) {
 	$(this).parent().parent().parent().parent().find('#createNewComments').parent().css('display', 'block');
 	
+});
+
+$('#newsList').on('click', '.editOldComment', function(event) {
+	$(this).css('display', 'none');
+	$(this).parent().find('.saveOldComment').css('display', 'block');
+	var pree = document.createElement('textarea');
+	$(pree).addClass('textAreaComCont');
+	$(pree).val($(this).parent().parent().find('.comCont').text());
+	$(this).parent().parent().find('.comCont').replaceWith(pree);
+});
+
+$('#newsList').on('click', '.saveOldComment', function(event) {
+	var data = new FormData();
+    var idComment = $(this).parent().parent().attr('id');
+    data.append("idComment", idComment);
+    data.append("idNews", $(this).parent().parent().parent().parent().parent().children().attr('id'));
+    data.append("text", $(this).parent().parent().find('.textAreaComCont').val());
+    var token = document.head.querySelector("meta[name='_csrf']").content;
+    var header = document.head.querySelector("meta[name='_csrf_header']").content; 
+    $.ajax({
+    	headers: { 
+    		"X-CSRF-TOKEN": token
+        },
+        type: 'POST',
+        enctype: 'multipart/form-data',
+        url: '/news/comment/update',
+        data : data,
+        contentType: false,
+        processData: false,
+        cache: false,
+        timeout: 1000000,
+        success: function() {
+            newsSearch();
+        },
+        error: function() {   
+        }
+    });
 });
 
 $('#newsList').on('click', '.butComCreate', function(event) {

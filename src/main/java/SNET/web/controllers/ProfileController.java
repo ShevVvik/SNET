@@ -24,8 +24,7 @@ import SNET.domain.entity.User;
 import SNET.domain.services.FriendListDomainServices;
 import SNET.domain.services.NewsDomainServices;
 import SNET.domain.services.UserDomainServices;
-
-
+import SNET.web.form.UserRegistrationForm;
 
 @Controller
 public class ProfileController {
@@ -52,6 +51,13 @@ public class ProfileController {
 		model.addAttribute("news", newsService.getNewsByAuthor(user.getId(), user));
 		model.addAttribute("hobby", user.getHobbiesList());
 		return "/user/profile";
+	}
+	
+	@GetMapping("/edit")
+	public String registration(Model model, UserRegistrationForm userForm) {
+		
+		model.addAttribute("userForm", userForm);
+		return "/user/edit";
 	}
 	
 	@GetMapping("/{userId}/friendlist")

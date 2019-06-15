@@ -22,4 +22,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	List<User> findAllByLastNameContainingOrderByIdDesc(String pattern);
 	List<User> findAllByCityContainingOrderByIdDesc(String pattern);
 	List<User> findAllByEducationContainingOrderByIdDesc(String pattern);
+	List<User> findAllByEmailContainingOrderByIdDesc(String pattern);
 }

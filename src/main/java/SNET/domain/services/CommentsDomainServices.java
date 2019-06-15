@@ -1,5 +1,5 @@
 package SNET.domain.services;
-/*
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,5 +19,8 @@ public class CommentsDomainServices {
 	public List<Comments> getCommentsByNews(Long id){
 		return commentsDao.findAll();
 	}
+	
+	public Comments getCommentById(Long id) {
+		return commentsDao.getOne(id);
+	}
 }
-*/

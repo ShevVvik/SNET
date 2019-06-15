@@ -32,9 +32,9 @@ public class FriendAcceptController {
 	private FriendListDomainServices friendsService;
 	
 	@GetMapping("/s/{token}")
-	public String profile(Model model, @PathVariable String token) {
+	public ResponseEntity<String> profile(Model model, @PathVariable String token) {
 		friendsService.createFriendship(friendsService.getFriendsByToken(token));
-		return "redirect:/friendlist";
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/friendList/request", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)

@@ -46,13 +46,14 @@
         <ul id="friendList" class="friends">
         <li th:each="fr, st: ${friends}">
             <div th:id="${fr.friend.id}" class="oneFriend">
+            	<a th:href="@{/u/} + ${fr.friend.id}">
                 <div class="nameFriend">
                     <div id="firstNameFriend0" class="firstName"><p th:text="${fr.friend.firstName}">rrrrrrrrrrrrrrr</p></div>
                     <div id="lastNameFriend0"><p th:text="${fr.friend.lastName}">rrrrrrrrrrrrrrr</p></div>
                 </div>
                 <div class="login" id="loginFriend0"><p th:text="@{@} + ${fr.friend.login}">@rrrrrrrrrrrrrrr</p></div>
+                </a>
                 <div th:if="${owner} == true">
-                	<a class="submit"><img src="../img/circleRed.png"></a>
                 	<a class="delete"><img src="../img/x.png"></a>
                 </div>
             </div>

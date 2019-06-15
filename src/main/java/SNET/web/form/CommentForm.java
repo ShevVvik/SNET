@@ -5,12 +5,15 @@ import javax.validation.constraints.NotNull;
 
 public class CommentForm {
 
+	private Long idComment;
+	
 	@NotNull
 	private Long idNews;
 	
 	@NotNull
 	@NotBlank
 	private String text;
+	
 	public Long getIdNews() {
 		return idNews;
 	}
@@ -22,6 +25,12 @@ public class CommentForm {
 	}
 	public void setText(String text) {
 		this.text = text;
+	}
+	public Long getIdComment() {
+		return idComment;
+	}
+	public void setIdComment(Long idComment) {
+		this.idComment = idComment;
 	}
 	
 		

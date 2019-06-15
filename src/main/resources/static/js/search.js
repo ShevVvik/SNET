@@ -17,7 +17,7 @@ function userSearch() {
     	if (xhr.status != 200) {
     		alert(xhr.status + ': ' + xhr.statusText);
     	} else {
-    		fillTable( JSON.parse(xhr.responseText) );
+    		if(xhr.responseText != '') fillTable( JSON.parse(xhr.responseText) );
     	}
     }
     var param = 'q='+pattern+'&parametr='+parametr;

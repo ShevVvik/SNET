@@ -64,9 +64,10 @@ public class AjaxController {
     	UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
     	if (userDetails.getUser().getHighLevelRole() == Role.ROLE_ADMIN) {
     		newsService.deleteNews(Long.parseLong(idNews));
+    		return new ResponseEntity<String>(HttpStatus.OK);
     	}
 		
-    	return new ResponseEntity<String>(HttpStatus.OK);
+    	return new ResponseEntity<String>(HttpStatus.ACCEPTED);
     }
 	
 	@PostMapping("/sendMessage")
@@ -83,5 +84,11 @@ public class AjaxController {
     	System.out.println(form.getIdTo());
     	userService.sendMessage(form, userDetails.getUser());
     	return new ResponseEntity<String>(HttpStatus.OK);
+    }
+	
+	@PostMapping("/forgotPassword")
+    public String forgotPassword(@RequestParam("login") String login, ModelAndView modelAndView) {
+		userService.forgotPassword(login);
+    	return "Succes";
     }
 }

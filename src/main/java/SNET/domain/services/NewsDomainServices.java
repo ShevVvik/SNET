@@ -16,6 +16,7 @@ import javax.validation.Valid;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -126,8 +127,6 @@ public class NewsDomainServices {
 	public void addNewNews(NewNewsForm form) {
         Calendar cal = Calendar.getInstance();
         Date date=cal.getTime();
-        Tags tagDao = tagsDao.findByTagsName("asd");
-        System.out.println(tagDao);
 		News news = new News();
 		news.setAuthor(userService.getById(form.getIdAuthor()));
 		news.setText(form.getNewNewsText());
@@ -182,7 +181,11 @@ public class NewsDomainServices {
 	}
 	
 	public void deleteNews(Long id) {
-		newsDao.deleteById(id);
+		try {
+			newsDao.deleteById(id);
+		} catch(EmptyResultDataAccessException err) {
+			
+		}
 	}
 
 
@@ -190,6 +193,16 @@ public class NewsDomainServices {
 		Comments comment = new Comments();
 		comment.setCommentator(user);
 		comment.setNews(newsDao.getOne(form.getIdNews()));
+		comment.setText(form.getText());
+		Calendar cal = Calendar.getInstance();
+        Date date=cal.getTime(); 
+        comment.setCommentDate(date);
+        commentsDao.save(comment);
+	}
+	
+	public void updateComment(CommentForm form) {
+		Comments comment = commentsDao.getOne(form.getIdComment());
+		System.out.println(form.getIdComment());
 		comment.setText(form.getText());
 		Calendar cal = Calendar.getInstance();
         Date date=cal.getTime(); 

@@ -511,6 +511,7 @@
 
     #butComCreate{
         position:absolute;
+        z-index: 0;
         right: 30px;
     }
     
