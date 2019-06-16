@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" th:href="@{/css/edit.css}">
+    <link rel="stylesheet" th:href="@{/css/edit.css}" type="text/css">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script th:src="@{/js/loadFoto.js}" defer="defer"></script>
     <title>edit</title>
 </head>
 <body>
-    <div class="container">
+    <form class="container" id="myForm" action="#" method="post" th:action="@{/edit}" th:object="${userForm}" enctype="multipart/form-data">
         <div class="profile">
             <div class="profilePhoto">
                 <img th:src="@{/avatar/big/} + ${user.login}" height="200" width="200" alt="wow" class="foto">
@@ -23,7 +23,7 @@
                 <div id="firstName" class="infoBlock">
                     <div class="information"><p>name: </p></div>
                     <div class="InfErr">
-                        <input type="text" name="name" placeholder="name" minlength="4" maxlength="15">
+                        <input type="text" name="name" placeholder="name" minlength="4" maxlength="15" th:field="*{firstName}">
                         <!--<div id="firstNameInf"><p>rrrrrrrrrrrrrrr</p></div>-->
                         <div class="err"><p>error</p></div>
                     </div>
@@ -31,7 +31,7 @@
                 <div id="lastName" class="infoBlock">
                     <div class="information"><p>surname: </p></div>
                     <div class="InfErr">
-                        <input type="text" name="surname" placeholder="surname" minlength="4" maxlength="15">
+                        <input type="text" name="surname" placeholder="surname" minlength="4" maxlength="15" th:field="*{lastName}">
                         <!--<div id="lastNameInf"><p>rrrrrrrrrrrrrrr</p></div>-->
                         <div class="err"><p>error</p></div>
                     </div>
@@ -40,19 +40,27 @@
                     <div class="information"><p>login: </p></div>
                     <div class="InfErr">
                         <div id="@"><p>@</p></div>
-                        <input type="text" name="login" placeholder="login" minlength="6" maxlength="15">
+                        <input type="text" name="login" placeholder="login" minlength="6" maxlength="15" th:field="*{login}">
                         <!--<div id="loginInf"><p>rrrrrrrrrrrrrrr</p></div>-->
                         <div class="err"><p>error</p></div>
                     </div>
                 </div>
                 
-                <div id="email" class="infoBlock"><div class="information"><p>email: </p></div><div id="cityInf"><p>loliva@gmail.com</p></div></div>
-                <div id="dateHB" class="infoBlock"><div class="information"><p>birthday: </p></div><div id="cityInf"><p>12.01.2001</p></div></div>
+                <div id="email" class="infoBlock">
+                	<div class="information"><p>email: </p></div>
+                	<div id="emailInf" th:text="${user.email}"><p>loliva@gmail.com</p></div>
+               	</div>
+                <div id="dateHB" class="infoBlock">
+	                <div class="information"><p>birthday: </p></div>
+	                <div id="birthdayInf" th:text="${#dates.format(user.dateBirthday, 'dd.MM.yyyy')}"><p>12.01.2001</p></div>
+                </div>
+                
+                
                 
                 <div id="city" class="infoBlock">
                     <div class="information"><p>city: </p></div>
                     <div class="InfErr">
-                        <input type="text" name="city" placeholder="city" minlength="4" maxlength="15">
+                        <input type="text" name="city" placeholder="city" minlength="4" maxlength="15" th:field="*{city}">
                         <!--<div id="cityInf"><p>saratov</p></div>-->
                         <div class="err"><p>error</p></div>
                     </div>
@@ -60,7 +68,7 @@
                 <div id="education" class="infoBlock">
                     <div class="information"><p>education: </p></div>
                     <div class="InfErr">
-                        <input type="text" name="education" placeholder="education" minlength="4" maxlength="15">
+                        <input type="text" name="education" placeholder="education" minlength="4" maxlength="15" th:field="*{education}">
                         <!--<div id="educationInf"><p>ssu</p></div>-->
                         <div class="err"><p>error</p></div>
                     </div>
@@ -68,13 +76,19 @@
                 <div id="hobby" class="infoBlock">
                     <div class="information"><p>hobby: </p></div>
                     <div class="InfErr">
+                    
+                    <li id="hobbyInf" 
+                    th:each="hob, st : ${hobby}">
+                    <p th:text="${hob.nameHobby} + @{, }">hobby</p></li>
+                    
                         <section class="main">
                             <div class="wrapper-demo">
                                 <div id="dd" class="wrapper-dropdown-4">hobby
                                     <ul class="dropdown">
-                                        <li><input type="checkbox" id="el-1" name="el-1" value="donut"><label for="el-1">Eat a donut</label></li>
-                                        <li><input type="checkbox" id="el-2" name="el-2" value="neighbour"><label for="el-2">Spy on my neighbours</label></li>
-                                        <li><input type="checkbox" id="el-3" name="el-3" value="T-rex"><label for="el-3">Feed my T-rex</label></li>
+                                        <li th:each="hob, st : ${allHobby}">
+                                        	<input type="checkbox" name="hobby" th:value="${hob.nameHobby}">
+                                        	<label th:text="${hob.nameHobby}"></label>
+                                        </li>
                                     </ul>
                                 </div>
                             ​</div>
@@ -85,13 +99,18 @@
                 </div>
             </div>
         </div>
-    </div>
+        
+        <div class="dws-submit" id="subret">
+        	<a class="submit">submit</a>
+        </div>
+        
+    </form>
 <div class="top">
 	<div class="logo">
-    	<a href="profile.html"><img src="../img/logo.png"></a>
+    	<a href="/profile"><img src="../img/logo.png"></a>
     </div>
     <div class="logOutBox">
-    	<div><a href="/login" class="logOut">log out</a></div>
+    	<div><a href="logout" class="logOut">log out</a></div>
     	<a href="/profile" class="edit"><img src="../img/editRed.png" onclick='this.src="../img/edit.png"'></a>
 	</div>
 </div>

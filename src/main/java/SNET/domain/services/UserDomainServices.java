@@ -1,6 +1,10 @@
 package SNET.domain.services;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -22,6 +26,7 @@ import SNET.domain.entity.News;
 import SNET.domain.entity.User;
 import SNET.domain.entity.UserRole;
 import SNET.web.form.MessageForm;
+import SNET.web.form.UserEditForm;
 import SNET.web.form.UserRegistrationForm;
 
 @Service
@@ -76,6 +81,14 @@ public class UserDomainServices {
 		User u = new User();
 		
 		BeanUtils.copyProperties(userForm, u);
+		DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+		Date date = new Date();
+		try {
+			date = format.parse(userForm.getDateBirthday());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		u.setDateBirthday(date);
 		Set<Hobby> hobbies = hobbyService.getAllHobbyByName(hobby);
 		u.setUserHobbies(hobbies);
 		u.setEnabled(false);
@@ -93,6 +106,15 @@ public class UserDomainServices {
 	       // mailSender.send(u.getEmail(), "Activation code", message);
 		}
 		userDao.save(u);
+	}
+	
+	public void updateUserFromRegistrationForm(UserEditForm userForm, List<String> hobby, User user) {
+		BeanUtils.copyProperties(userForm, user);
+		
+		Set<Hobby> hobbies = hobbyService.getAllHobbyByName(hobby);
+		user.setUserHobbies(hobbies);
+	
+		userDao.save(user);
 	}
 	
 	public void sendMessage(MessageForm form, User uFrom) {

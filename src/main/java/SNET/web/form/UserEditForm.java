@@ -12,12 +12,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.CreatedDate;
 
-public class UserRegistrationForm {
-	
-	@Email
-	@NotNull
-	@NotBlank
-	private String email;
+public class UserEditForm {
 	
 	@NotNull
 	@NotBlank
@@ -31,20 +26,9 @@ public class UserRegistrationForm {
 	@NotBlank
 	private String lastName;
 	
-	@NotNull
-	@NotBlank
-	private String password;
-	
-	@NotNull
-	@NotBlank
-	private String dateBirthday;
-	
 	private String city;
 	
 	private String education;
-	
-	@NotNull
-	private String passwordConfirm;
 
 	private List<String> hobby;
 	
@@ -66,39 +50,7 @@ public class UserRegistrationForm {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	
-	public String getDateBirthday() {
-		return dateBirthday;
-	}
-	public void setDateBirthday(String dateBirthday) {
-		this.dateBirthday = dateBirthday;
-	}
-	
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getPasswordConfirm() {
-		return passwordConfirm;
-	}
-	
-	public void setPasswordConfirm(String passwordConfirm) {
-		this.passwordConfirm = passwordConfirm;
-		
-		if(!this.password.equals(this.passwordConfirm)) {
-			this.passwordConfirm = null;
-		}
-		
-	}
+
 	public String getCity() {
 		return city;
 	}
