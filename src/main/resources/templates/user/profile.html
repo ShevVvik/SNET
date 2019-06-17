@@ -25,19 +25,19 @@
     	<form id="newMessage" class="message">
         	<div class="redLineMes">
             	<div class="nameLoginMessage">
-                <div class="to">to</div>
-                <div id="firstName" class="firstName" th:text="${user.firstName}">rrrrrrrrrrrrrrr</div>
-                <div id="lastName" th:text="${user.lastName}">rrrrrrrrrrrrrrr</div>
+                <div class="to" th:text="#{to}"></div>
+                <div id="firstName" class="firstName" th:text="${user.firstName}"></div>
+                <div id="lastName" th:text="${user.lastName}"></div>
             	</div>
-                <div id="login" class="login" th:text="@{@} + ${user.login}">@rrrrrrrrrrrrrrr</div>
+                <div id="login" class="login" th:text="@{@} + ${user.login}"></div>
                 <img id="cls" class="delete" src="../img/x.png"> 	
             </div>
             <div>
-            	<input type="text" class="subject" placeholder="Subject"> <span id="errorsMessage"></span>    
-                <textarea id="textMes" maxlength="300" placeholder="Text"></textarea>
+            	<input type="text" class="subject" th:placeholder="#{subject.holder}"> <span id="errorsMessage"></span>    
+                <textarea id="textMes" maxlength="300" th:placeholder="#{text.holder}"></textarea>
             </div>
             <div class="butSentMes">
-            	<a id="butsentMes"  th:text="#{profile.message.sent}" href="#sent">sent message</a>
+            	<a id="butsentMes"  th:text="#{buttom.sent}" href="#sent"></a>
         	</div>
   		</form>
   	</div>	
@@ -47,32 +47,32 @@
         <div class="profile">
         	<p id="id" hidden th:text="${user.id}">
                 <div class="profilePhoto">
-                    <img th:src="@{/avatar/big/} + ${user.login}" height="200" width="200" alt="wow" class="foto">
+                    <img th:src="@{/avatar/big/} + ${user.login}" height="200" width="200" class="foto">
                     <div class="butMain">
                         <div class="butFriend"><a id="butFriend" th:href="@{/} + ${user.id} + @{/friendlist}">.</a></div>
-                        <div th:if="${otherUser} == true" id="iw-modal-btn" class="butFriend" style="overflow:hidden;">֍открыть</div>
+                        <div th:if="${otherUser} == true" id="iw-modal-btn" class="butFriend" style="overflow:hidden;" th:text="#{buttom.message}"></div>
                         <div class="butFriend"><a id="butFriend" href="/search">.</a></div>
                         <div th:if="${friends} == false" id="addFriend" class="butFriend" style="overflow:hidden;">добавить</div>
                     </div>
                 </div>
                 <div class="profileInfo">
                     <div class="nameLogin">
-                        <div id="name" th:text="${user.firstName} + @{ } + ${user.lastName}">ivanov ivan</div>
-                        <div id="login" class="login" th:text="@{@} + ${user.login}">@lolalol</div>
+                        <div id="name" th:text="${user.firstName} + @{ } + ${user.lastName}"></div>
+                        <div id="login" class="login" th:text="@{@} + ${user.login}"></div>
                     </div>
                     <div class="emailDate">
-                        <div id="email" th:text="${user.email}">loliva@gmail.com</div>
-                        <div id="dateHB" th:text="${#dates.format(user.dateBirthday, 'dd.MM.yyyy')}">12.01.2001</div>
+                        <div id="email" th:text="${user.email}"></div>
+                        <div id="dateHB" th:text="${#dates.format(user.dateBirthday, 'dd.MM.yyyy')}"></div>
                     </div>
                     <div class="moreInfo">
                         <div style="display:none" id="blockInfo">
-                            <div id="city"><div id="information">city: </div><div id="cityInf" th:text="${user.city}">saratov</div></div>
-                            <div id="education"><div id="information">education: </div><div id="educationInf" th:text="${user.education}">ssu</div></div>
-                            <div id="hobby"><p id="information">hobby: </p><li id="hobbyInf" 
+                            <div id="city"><div id="information" th:text="#{city.holder} + @{:}"></div><div id="cityInf" th:text="${user.city}"></div></div>
+                            <div id="education"><div id="information" th:text="#{education.holder} + @{:}"></div><div id="educationInf" th:text="${user.education}"></div></div>
+                            <div id="hobby"><p id="information" th:text="#{hobby.holder} + @{:}"></p><li id="hobbyInf" 
                             												th:each="hob, st : ${user.userHobbies}">
-                            												<p th:text="${hob.nameHobby} + @{, }">hobby</p></li></div>
+                            												<p th:text="${hob.nameHobby} + @{, }"></p></li></div>
                         </div>
-                        <label id="openInfo" class="hideInf">more info:</label>
+                        <label id="openInfo" class="hideInf" th:text="#{profile.moreInfo}"></label>
                         <br/>
                         <br/>
                     </div>
@@ -81,15 +81,15 @@
 
         <div class="news">
             <div class="search">
-                <input class="inputForm" id="userFilter" type="text" placeholder="Text" />
-				<input class="inputFormBut"type="button" id="test" value="Search">
+                <input class="inputForm" id="userFilter" type="text" th:placeholder="#{text.holder}">
+				<input class="inputFormBut"type="button" id="test" value="search">
             </div>
             <ul>
                 <li th:if="${otherUser} == false">
                     <form id="newNews"  method="POST" enctype="multipart/form-data" class="createNews" >
                         <div id="redLine">
-                            <div id="name" th:text="${user.lastName} + @{ } + ${user.firstName}">ivanov ivan</div>
-                            <div id="login" class="login" th:text="@{@} + ${user.login}">@lolalol</div>
+                            <div id="name" th:text="${user.lastName} + @{ } + ${user.firstName}"></div>
+                            <div id="login" class="login" th:text="@{@} + ${user.login}"></div>
                         </div>
                         
                         <div class="fieldNews">
@@ -102,11 +102,11 @@
                                     <div class="radio-container">
                                         <div class="form-item radio-btn nth-2">
                                             <input type="radio" name="radname1" id="radio1" checked value="everyone">
-                                            <label id="labelRadio1" for="radio1">for everyone</label>
+                                            <label id="labelRadio1" for="radio1" th:text="#{buttom.forEveryone}"></label>
                                         </div>
                                         <div class="form-item radio-btn nth-2">
                                             <input type="radio" name="radname1"  id="radio2" value="friends">
-                                            <label id="labelRadio2" for="radio2">for friends</label>
+                                            <label id="labelRadio2" for="radio2" th:text="#{buttom.forFriends}"></label>
                                         </div>
                                     </div>
                                 <div class="left">
@@ -116,14 +116,14 @@
                                     
 
                                     <div class="tags">
-                                        <div class="redTags">tags:</div>
-                                        <div><input id="tagsNewNews" class="notRedTags" type="text" placeholder="#tags"></div>
+                                        <div class="redTags" th:text="#{tags.holder} + @{:}"></div>
+                                        <div><input id="tagsNewNews" class="notRedTags" type="text" th:placeholder="@{#} + #{tags.holder}"></div>
                                     </div>
                                 </div>
 
                                 <div class="right">
                                     <div id="submitNewNews" class="create">
-                                        <a id="crt" href="#">create</a>
+                                        <a id="crt" href="#" th:text="#{buttom.create}"></a>
                                     </div>
                                 </div>
                             </div>
@@ -134,18 +134,18 @@
                         <div id="pressetNews" class="newsnews" >
                             <div id="redLine">
                                 <div class="nameLog">
-                                    <div id="nameAuthor" >ivanov ivan</div>
-                                    <div id="loginAuthor" class="login">@lolalol</div>
+                                    <div id="nameAuthor" ></div>
+                                    <div id="loginAuthor" class="login"></div>
                                 </div>
                                 <div th:if="${otherUser} == false" class="buttonEditDelete" id="butEditDel">
-                                    <a id="butEditDel" class="butEdit">edit</a><div>|</div>
-                                    <a id="butEditDel" class="deleteNews">delete<img class="newsIcon" src="../img/x.png"></a>
+                                    <a id="butEditDel" class="butEdit" th:text="#{buttom.edit} + @{|}"></a>
+                                    <a id="butEditDel" class="deleteNews" th:text="#{buttom.delete}"><img class="newsIcon" src="../img/x.png"></a>
                                 </div>
                             </div>
 
                             <div class="newsContent">
                                 <pre>
-                           			News
+                           			
                             	</pre>
                             	<img class="newsImg" alt=" ">
                             </div>
@@ -153,12 +153,12 @@
                             <div class="bot">
                                 <div class="fieldInfo">
                                     <div class="leftField">
-                                        <div id="date">10.01.20</div>
-                                        <div id="levelView" >for friends</div>
+                                        <div id="date"></div>
+                                        <div id="levelView" ></div>
                                         <div id="tags"></div>
                                     </div>
                                     <div class="buttomComment">
-                                            <a id="butCom" href="#comment">comment<img class="newsIcon" src="../img/circle.png"></a>
+                                            <a id="butCom" href="#comment" th:text="#{buttom.comment}"><img class="newsIcon" src="../img/circle.png"></a>
                                     </div>
                                 </div>
                             </div>
@@ -173,9 +173,9 @@
                                  
                                 <div class="botCom">
                                     <div class="nameLogCom">
-                                        <div id="login" th:text="@{@} + ${user.login}">@Fail</div>
+                                        <div id="login" th:text="@{@} + ${user.login}"></div>
                                     </div>
-                                    <a id="butComCreate" class="butComCreate">create<img class="newsIcon" src="../img/circle.png"></a>
+                                    <a id="butComCreate" class="butComCreate" th:text="#{buttom.create}"><img class="newsIcon" src="../img/circle.png"></a>
                                 </div>
                                 </div> 
                         	</li>
@@ -186,13 +186,13 @@
                                         </div>
                                     </div>  
                                     <div class="botCom">
-                                        <div id="dateCom">10.01.20</div>
+                                        <div id="dateCom"></div>
                                         <div class="nameLogCom">
-                                            <div id="loginCom" class="login">@Fail</div>
+                                            <div id="loginCom" class="login"></div>
                                         </div>
                                         <div>
-                                        <a id="butComCreate" class="saveOldComment" style="display:none">save<img class="newsIcon" src="../img/circle.png"></a>
-                                        <a id="butComCreate" class="editOldComment" style="display:block">edit<img class="newsIcon" src="../img/circle.png"></a>
+                                        <a id="butComCreate" class="saveOldComment" style="display:none" th:text="#{buttom.save}"><img class="newsIcon" src="../img/circle.png"></a>
+                                        <a id="butComCreate" class="editOldComment" style="display:block" th:text="#{buttom.edit}"><img class="newsIcon" src="../img/circle.png"></a>
                                         </div>
                                     </div>
                                 </div>
@@ -204,18 +204,18 @@
                         <div th:id="${new1.id}" class="newsnews" >
                             <div id="redLine">
                                 <div class="nameLog">
-                                    <div id="name" th:text="${user.lastName} + @{ } + ${user.firstName}">ivanov ivan</div>
-                                    <div id="login" class="login" th:text="@{@} + ${new1.author.login}">@lolalol</div>
+                                    <div id="name" th:text="${user.lastName} + @{ } + ${user.firstName}"></div>
+                                    <div id="login" class="login" th:text="@{@} + ${new1.author.login}"></div>
                                 </div>
                                 <div th:if="${otherUser} == false" class="buttonEditDelete" id="butEditDel">
-                                    <a id="butEdit" class="butEdit">edit</a><div>|</div>
-                                    <a id="butDel" class="deleteNews">delete<img class="newsIcon" src="../img/x.png"></a>
+                                    <a id="butEdit" class="butEdit" th:text="#{buttom.edit} + @{|}"></a>
+                                    <a id="butDel" class="deleteNews" th:text="#{buttom.delete}"><img class="newsIcon" src="../img/x.png"></a>
                                 </div>
                             </div>
 
                             <div class="newsContent" >
                             	<pre th:text="${new1.text}">
-                           			News
+                           			
                             	</pre>
                                 <img th:src="@{/news/image/} + ${new1.imageToken}" class="newsImg" alt=" " onerror="this.style.visibility = 'hidden'">
                             </div>
@@ -223,12 +223,12 @@
                             <div class="bot">
                                 <div class="fieldInfo">
                                     <div class="leftField">
-                                        <div id="date" th:text="${#dates.format(new1.newsDate, 'dd.MM.yy')}">10.01.20</div>
-                                        <div id="levelView" th:if="${new1.forFriends} == true" >for friends</div>
+                                        <div id="date" th:text="${#dates.format(new1.newsDate, 'dd.MM.yy')}"></div>
+                                        <div id="levelView" th:if="${new1.forFriends} == true" th:text="#{buttom.forFriends}"></div>
                                         <div id="tags" ><a th:each="tag : ${new1.tags}" th:text="@{#} + ${tag.name} + @{ }"></div>
                                     </div>
                                     <div class="buttomComment">
-                                            <a id="butCom" href="#comment">comment<img class="newsIcon" src="../img/circle.png"></a>
+                                            <a id="butCom" href="#comment" th:text="#{buttom.comment}"><img class="newsIcon" src="../img/circle.png"></a>
                                     </div>
                                 </div>
                             </div>
@@ -243,9 +243,9 @@
                                  
                                 	<div class="botCom">
                                     	<div class="nameLogCom">
-                                        	<div id="login" th:text="@{@} + ${userAut.login}">@Fail</div>
+                                        	<div id="login" th:text="@{@} + ${userAut.login}"></div>
                                     	</div>
-                                    <a id="butComCreate" class="butComCreate">create<img class="newsIcon" src="../img/circle.png"></a>
+                                    <a id="butComCreate" class="butComCreate" th:text="#{buttom.create}"><img class="newsIcon" src="../img/circle.png"></a>
                                 	</div>
                                 </div> 
                         	</li>
@@ -255,13 +255,13 @@
                                         <div class="comCont" th:text="${comment.text}"></div>
                                     </div>  
                                     <div class="botCom">
-                                        <div id="dateCom" th:text="${#dates.format(comment.commentDate, 'dd.MM.yy')}">10.01.20</div>
+                                        <div id="dateCom" th:text="${#dates.format(comment.commentDate, 'dd.MM.yy')}"></div>
                                         <div class="nameLogCom">
-                                            <div id="login" th:text="@{@} + ${comment.commentator.firstName}">@Fail</div>
+                                            <div id="login" th:text="@{@} + ${comment.commentator.firstName}"></div>
                                         </div>
                                         <div th:if="${userAut.id} == ${comment.commentator.id}">
-                                        <a id="butComCreate" class="saveOldComment" style="display:none">save<img class="newsIcon" src="../img/circle.png"></a>
-                                        <a id="butComCreate" class="editOldComment" style="display:block">edit<img class="newsIcon" src="../img/circle.png"></a>
+                                        <a id="butComCreate" class="saveOldComment" style="display:none" th:text="#{buttom.save}"><img class="newsIcon" src="../img/circle.png"></a>
+                                        <a id="butComCreate" class="editOldComment" style="display:block" th:text="#{buttom.edit}"><img class="newsIcon" src="../img/circle.png"></a>
                                         </div>
                                     </div>
                                 </div>

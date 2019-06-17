@@ -13,7 +13,7 @@
     <form class="container" id="myForm" action="#" method="post" th:action="@{/edit}" th:object="${userForm}" enctype="multipart/form-data">
         <div class="profile">
             <div class="profilePhoto">
-                <img th:src="@{/avatar/big/} + ${user.login}" height="200" width="200" alt="wow" class="foto">
+                <img th:src="@{/avatar/big/} + ${user.login}" height="200" width="200" class="foto">
                 <div class="input_file">
                     <input type="file" name="files" class="hid">
                     <input type="button" class="fake_file" value="upload" id="sub">
@@ -21,21 +21,21 @@
             </div>
             <div class="profileInfo">
                 <div id="firstName" class="infoBlock">
-                    <div class="information"><p>name: </p></div>
+                    <div class="information" th:text="#{name.holder} + @{:}"></div>
                     <div class="InfErr">
                         <input type="text" name="name" placeholder="name" minlength="4" maxlength="15" th:field="*{firstName}">
                         <span th:errors="*{firstName}"></span>
                     </div>
                 </div>
                 <div id="lastName" class="infoBlock">
-                    <div class="information"><p>surname: </p></div>
+                    <div class="information" th:text="#{surname.holder} + @{:}"></div>
                     <div class="InfErr">
                         <input type="text" name="surname" placeholder="surname" minlength="4" maxlength="15" th:field="*{lastName}">
                         <span th:errors="*{lastName}"></span>
                     </div>
                 </div>
                 <div id="login" class="infoBlock">
-                    <div class="information"><p>login: </p></div>
+                    <div class="information" th:text="#{login.holder} + @{:}"></div>
                     <div class="InfErr">
                         <div id="@"><p>@</p></div>
                         <input type="text" name="login" placeholder="login" minlength="6" maxlength="15" th:field="*{login}">
@@ -44,34 +44,33 @@
                 </div>
                 
                 <div id="email" class="infoBlock">
-                	<div class="information"><p>email: </p></div>
-                	<div id="emailInf" th:text="${user.email}"><p>loliva@gmail.com</p></div>
+                	<div class="information" th:text="#{email.holder} + @{:}"></div>
+                	<div id="emailInf" th:text="${user.email}"><p></p></div>
                	</div>
                 <div id="dateHB" class="infoBlock">
-	                <div class="information"><p>birthday: </p></div>
-	                <div id="birthdayInf" th:text="${#dates.format(user.dateBirthday, 'dd.MM.yyyy')}"><p>12.01.2001</p></div>
+	                <div class="information" th:text="#{birthday.holder} + @{:}"></div>
+	                <div id="birthdayInf" th:text="${#dates.format(user.dateBirthday, 'dd.MM.yyyy')}"><p></p></div>
                 </div>
                 
                 
                 
                 <div id="city" class="infoBlock">
-                    <div class="information"><p>city: </p></div>
+                    <div class="information" th:text="#{city.holder} + @{:}"></div>
                     <div class="InfErr">
                         <input type="text" name="city" placeholder="city" minlength="4" maxlength="15" th:field="*{city}">
                         <span th:errors="*{city}"></span>
                     </div>
                 </div>
                 <div id="education" class="infoBlock">
-                    <div class="information"><p>education: </p></div>
+                    <div class="information" th:text="#{education.holder} + @{:}"></div>
                     <div class="InfErr">
                         <input type="text" name="education" placeholder="education" minlength="4" maxlength="15" th:field="*{education}">
                         <span th:errors="*{education}"></span>
                     </div>
                 </div>
                 <div id="hobby" class="infoBlock">
-                    <div class="information"><p>hobby: </p></div>
+                    <div class="information" th:text="#{hobby.holder} + @{:}"></div>
                     <div class="InfErr">
-                    
                     <div><input id="tagsNewNews" th:field="*{hobby}" class="notRedTags" type="text" placeholder="#tags"></div>
                     </div>
                 </div>
@@ -79,7 +78,7 @@
         </div>
         
         <div class="dws-submit" id="subret">
-        	<a class="submit">submit</a>
+        	<a class="submit" th:text="#{buttom.submit}"></a>
         </div>
     </form>
 <div class="top">
@@ -87,7 +86,7 @@
     	<a href="/profile"><img src="../img/logo.png"></a>
     </div>
     <div class="logOutBox">
-    	<div><a href="logout" class="logOut">log out</a></div>
+    	<div><a href="logout" class="logOut" th:text="#{logOut}"></a></div>
     	<a href="/profile" class="edit"><img src="../img/editRed.png" onclick='this.src="../img/edit.png"'></a>
 	</div>
 </div>

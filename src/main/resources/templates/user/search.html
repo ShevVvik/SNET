@@ -25,45 +25,46 @@
                 <div class="radio-container">
                     <div class="form-item radio-btn nth-2">
                         <input type="radio" name="option1" id="radio1" checked value="email">
-                        <label for="radio1">email</label>
+                        <label for="radio1" th:text="#{email.holder}"></label>
                     </div>
                     <div class="form-item radio-btn nth-2">
                         <input type="radio" name="option1" id="radio2" value="city">
-                        <label for="radio2">city</label>
+                        <label for="radio2" th:text="#{city.holder}"></label>
                     </div>
                     <div class="form-item radio-btn nth-2">
                         <input type="radio" name="option1" id="radio3" value="education">
-                        <label for="radio3">education</label>
+                        <label for="radio3" th:text="#{education.holder}"></label>
                     </div>
                     <div class="form-item radio-btn nth-2">
-                        <input type="radio" name="option1" id="radio4" value="interest">
-                        <label for="radio4">interest</label>
+                        <input type="radio" name="option1" id="radio4" value="hobby}">
+                        <label for="radio4" th:text="#{hobby.holder}"></label>
                     </div>
                     <div class="form-item radio-btn nth-2">
                         <input type="radio" name="option1" id="radio5" value="name">
-                        <label for="radio5">name</label>
+                        <label for="radio5" th:text="#{name.holder}"></label>
                     </div>
                     <div class="form-item radio-btn nth-2">
                         <input type="radio" name="option1" id="radio6" value="surname">
-                        <label for="radio6">surname</label>
+                        <label for="radio6" th:text="#{surname.holder}"></label>
                     </div>
                 </div>
             </div>
             <div class="searchIn">
-                <div id="butSearch" class="redIn"><p>search</p></div>
-                <div><input id="userFilter" class="notRedIn" type="text" placeholder="text"></div>
+                <div id="butSearch" class="redIn" th:text="#{buttom.search}"></div>
+                <div><input id="userFilter" class="notRedIn" type="text" th:placeholder="#{text.holder}"></div>
             </div>
             <div class="searchFind">
-                <div class="match"><p>matching:</p></div>
+                <div class="match" th:text="#{search.matching}"></div>
                 <li id="pressetMatch" hidden>
                 	<div class="findPeople">
                     	<div id="person0" class="onePerson">
                     		<a id="href" href="profile">
                         	<div class="namePerson">
-                            	<div id="firstNamePerson0" class="firstName"><p>rrrrrrrrrrrrrrr</p></div>
-                            	<div id="lastNamePerson0"><p>rrrrrrrrrrrrrrr</p></div>
-                        	</div>
-                        	<div class="login" id="loginPerson0"><p>@rrrrrrrrrrrrrrr</p></div>
+                            	<div id="firstNamePerson0" class="firstName"></div>
+                            	<div id="lastNamePerson0"></div>
+                            </div>
+                            
+                        	<div class="login" id="loginPerson0"></div>
                         	</a>
                     	</div>
                 	</div>
