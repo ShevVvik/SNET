@@ -74,9 +74,6 @@ input[type="text"],input[type="password"]{
     background-color: transparent;
     border: none;
     border-bottom: 2px solid #ff3535;
-}
-
-input[type="text"]{
     text-transform: uppercase;
 }
 

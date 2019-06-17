@@ -13,17 +13,17 @@
 <body>
 	<div class="containerLogin">
         <form id="myform" th:action="@{/login}" method="post"> 
-            <input type="text" name="username" placeholder="login" minlength="6" maxlength="15">
-            <input type="password" name="password" placeholder="PASSWORD" minlength="8" maxlength="20">
-            <a class="dws-link" id="forgot">forgot password?</a>
+            <input type="text" name="username" th:placeholder="#{login.holder}" minlength="6" maxlength="15">
+            <input type="password" name="password" th:placeholder="#{password.holder}" minlength="8" maxlength="20">
+            <a class="dws-link" id="forgot" th:text="#{password.forgot}"></a>
             <div href="" id="subret" class="dws-submit">
-                <a class="submit">submit</a>
+                <a class="submit" th:text="#{buttom.submit}"></a>
             </div>
         </form>
         <div id="forgotPassword" hidden>
 			<input type="text" id="loginPass" placeholder="login" minlength="6" maxlength="15">
 			<div id="requestPassword" class="dws-submit">
-				<a>submit</a>
+				<a class="submit" th:text="#{buttom.submit}"></a>
 			</div>
     	</div>
     </div>
@@ -31,7 +31,7 @@
         <div class="logo">
             <img src="../img/logo.png">
         </div>
-            <a href="/registration" class="signup">sign up</a>
+            <a href="/registration" class="signup" th:text="#{signUp}"></a>
     </div>
     <div class="bottom"></div>
 </body>

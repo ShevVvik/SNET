@@ -14,31 +14,31 @@
         <form id="myForm" action="#" method="post" th:action="@{/registration}" th:object="${userForm}" enctype="multipart/form-data">
             <table id="tab" class="containerRegistation"><tr>
                 <td id="left">
-                    <input required type="text" name="login" placeholder="login" minlength="6" maxlength="15" th:field="*{login}">
-                    <input required type="password" name="password0" placeholder="PASSWORD" minlength="8" maxlength="20" th:field="*{password}">
-                    <input required type="password" name="password1" placeholder="PASSWORD" minlength="8" maxlength="20" th:field="*{passwordConfirm}"> 
-                    <input required type="email" name="email" placeholder="email" th:field="*{email}">
-                    <input required type="text" name="name" placeholder="name" minlength="4" maxlength="15" th:field="*{firstName}">
-                    <input required type="text" name="surname" placeholder="surname" minlength="4" maxlength="15" th:field="*{lastName}">
+                    <input required type="text" name="login" th:placeholder="#{login.holder}" th:field="*{login}">
+                    <input required type="password" name="password0"  th:placeholder="#{password.holder}" th:field="*{password}">
+                    <input required type="password" name="password1"  th:placeholder="#{password.holder}" th:field="*{passwordConfirm}"> 
+                    <input required type="email" name="email"  th:placeholder="#{email.holder}" th:field="*{email}">
+                    <input required type="text" name="name"  th:placeholder="#{name.holder}" th:field="*{firstName}">
+                    <input required type="text" name="surname"  th:placeholder="#{surname.holder}"  th:field="*{lastName}">
                     
-                    <input required type="date" name="date" placeholder="date" th:field="*{dateBirthday}">
-                    <input type="text" name="city" placeholder="city" minlength="4" maxlength="15" th:field="*{city}">
-                    <input type="text" name="education" placeholder="education" minlength="4" maxlength="15" th:field="*{education}">
+                    <input required type="date" name="date" th:field="*{dateBirthday}">
+                    <input type="text" name="city"  th:placeholder="#{city.holder}" th:field="*{city}">
+                    <input type="text" name="education"  th:placeholder="#{education.holder}" th:field="*{education}">
                 </td>
 
                 <td id="right">
                     <div class="upload foto">
-                        <img src="" height="200" alt="your photo" class="foto">
+                        <img src="" height="200"  th:alt="#{Photo}" class="foto">
                     </div>
 
                     <div class="input_file">
                     	<input type="file" name="files" class="hid">
-                       	<input type="button" class="fake_file" value="upload" id="sub">
+                       	<input type="button" class="fake_file" th:value="#{buttom.upload}" id="sub">
                     </div>
                     <div>
                         <section class="main">
                             <div class="wrapper-demo">
-                                <div id="dd" class="wrapper-dropdown-4">hobby
+                                <div id="dd" class="wrapper-dropdown-4" th:text="#{hobby.holder}">
                                     <ul class="dropdown">
                                         <li th:each="hob, st : ${allHobby}">
                                         	<input type="checkbox" name="hobby" th:value="${hob.nameHobby}">
@@ -51,7 +51,7 @@
                     </div>
 
                     <div class="dws-submit" id="subret">
-                    	<a class="submit">submit</a>
+                    	<a class="submit" th:text="#{buttom.submit}"></a>
                     </div>
                 </td>
             </tr></table>
@@ -65,7 +65,7 @@
         <div class="logo">
             <img src="../img/logo.png">
         </div>
-            <a href="/login" class="signin">sign in</a>
+            <a href="/login" class="signin" th:text="#{signIn}"></a>
     </div>
     <div class="bottom"></div>
 </body>

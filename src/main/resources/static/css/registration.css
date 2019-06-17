@@ -63,10 +63,12 @@ a7a7a7 - light-grey         //comments/newnews
     	behavior: url(PIE.htc);
     	height: 34px;
     	background-color: #ff3535;
+    	font-family: Calibri;
+	    text-transform: uppercase;
+	    letter-spacing: 2px;
+	    font-size: 20px;
+	    color: #ffffff;
     	border: none;
-    	color: #fff;
-    	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
-    	font-size: 14px;
     	cursor: pointer;
 	}
     

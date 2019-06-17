@@ -22,20 +22,20 @@
     <div class="container">
         <div class="redLine">
                 <div class="nameLogin">
-                	<p id="idUser" hidden th:text="${user.id}"></p>
-                    <div id="firstName" class="firstName"><p th:text="${user.lastName}">ivanov</p></div>
-                    <div id="lastName"><p th:text="${user.firstName}">ivan</p></div>
+                	<div id="idUser" hidden th:text="${user.id}"></div>
+                    <div id="firstName" class="firstName" th:text="${user.lastName}"></div>
+                    <div id="lastName" th:text="${user.firstName}"></div>
                 </div>
-                    <div id="login" class="login"><p th:text="@{@} + ${user.login}">@lolalol<p></div>
-                    <a th:if="${owner} == true" class="butFriendReq">friend requests</a>
+                    <div id="login" class="login" th:text="@{@} + ${user.login}"></div>
+                    <a th:if="${owner} == true" class="butFriendReq" th:text="#{friend.requests}"></a>
         </div>
         <li id="pressetFriend" style="display:none">
             <div id="friend0" class="oneFriend">
                 <div class="nameFriend">
-                    <div id="firstNameFriend0" class="firstName"><p>rrrrrrrrrrrrrrr</p></div>
-                    <div id="lastNameFriend0"><p>rrrrrrrrrrrrrrr</p></div>
+                    <div id="firstNameFriend0" class="firstName"><p></p></div>
+                    <div id="lastNameFriend0"><p></p></div>
                 </div>
-                <div class="login" id="loginFriend0"><p>@rrrrrrrrrrrrrrr</p></div>
+                <div class="login" id="loginFriend0"><p></p></div>
                 <div th:if="${owner} == true">
                 	<a  class="submit"><img src="../img/circleRed.png"></a>
                 	<a class="delete"><img src="../img/x.png"></a>
@@ -48,10 +48,10 @@
             <div th:id="${fr.friend.id}" class="oneFriend">
             	<a th:href="@{/u/} + ${fr.friend.id}">
                 <div class="nameFriend">
-                    <div id="firstNameFriend0" class="firstName"><p th:text="${fr.friend.firstName}">rrrrrrrrrrrrrrr</p></div>
-                    <div id="lastNameFriend0"><p th:text="${fr.friend.lastName}">rrrrrrrrrrrrrrr</p></div>
+                    <div id="firstNameFriend0" class="firstName" th:text="${fr.friend.firstName}"></div>
+                    <div id="lastNameFriend0" th:text="${fr.friend.lastName}"></div>
                 </div>
-                <div class="login" id="loginFriend0"><p th:text="@{@} + ${fr.friend.login}">@rrrrrrrrrrrrrrr</p></div>
+                <div class="login" id="loginFriend0" th:text="@{@} + ${fr.friend.login}"></div>
                 </a>
                 <div th:if="${owner} == true">
                 	<a class="delete"><img src="../img/x.png"></a>
