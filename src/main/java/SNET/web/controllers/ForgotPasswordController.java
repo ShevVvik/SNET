@@ -10,13 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import SNET.domain.services.UserDomainServices;
 import SNET.web.form.ChangePaswordForm;
-import SNET.web.form.UserRegistrationForm;
 
 @Controller
 public class ForgotPasswordController {

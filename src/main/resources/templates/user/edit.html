@@ -24,16 +24,14 @@
                     <div class="information"><p>name: </p></div>
                     <div class="InfErr">
                         <input type="text" name="name" placeholder="name" minlength="4" maxlength="15" th:field="*{firstName}">
-                        <!--<div id="firstNameInf"><p>rrrrrrrrrrrrrrr</p></div>-->
-                        <div class="err"><p>error</p></div>
+                        <span th:errors="*{firstName}"></span>
                     </div>
                 </div>
                 <div id="lastName" class="infoBlock">
                     <div class="information"><p>surname: </p></div>
                     <div class="InfErr">
                         <input type="text" name="surname" placeholder="surname" minlength="4" maxlength="15" th:field="*{lastName}">
-                        <!--<div id="lastNameInf"><p>rrrrrrrrrrrrrrr</p></div>-->
-                        <div class="err"><p>error</p></div>
+                        <span th:errors="*{lastName}"></span>
                     </div>
                 </div>
                 <div id="login" class="infoBlock">
@@ -41,8 +39,7 @@
                     <div class="InfErr">
                         <div id="@"><p>@</p></div>
                         <input type="text" name="login" placeholder="login" minlength="6" maxlength="15" th:field="*{login}">
-                        <!--<div id="loginInf"><p>rrrrrrrrrrrrrrr</p></div>-->
-                        <div class="err"><p>error</p></div>
+                        <span th:errors="*{login}"></span>
                     </div>
                 </div>
                 
@@ -61,40 +58,21 @@
                     <div class="information"><p>city: </p></div>
                     <div class="InfErr">
                         <input type="text" name="city" placeholder="city" minlength="4" maxlength="15" th:field="*{city}">
-                        <!--<div id="cityInf"><p>saratov</p></div>-->
-                        <div class="err"><p>error</p></div>
+                        <span th:errors="*{city}"></span>
                     </div>
                 </div>
                 <div id="education" class="infoBlock">
                     <div class="information"><p>education: </p></div>
                     <div class="InfErr">
                         <input type="text" name="education" placeholder="education" minlength="4" maxlength="15" th:field="*{education}">
-                        <!--<div id="educationInf"><p>ssu</p></div>-->
-                        <div class="err"><p>error</p></div>
+                        <span th:errors="*{education}"></span>
                     </div>
                 </div>
                 <div id="hobby" class="infoBlock">
                     <div class="information"><p>hobby: </p></div>
                     <div class="InfErr">
                     
-                    <li id="hobbyInf" 
-                    th:each="hob, st : ${hobby}">
-                    <p th:text="${hob.nameHobby} + @{, }">hobby</p></li>
-                    
-                        <section class="main">
-                            <div class="wrapper-demo">
-                                <div id="dd" class="wrapper-dropdown-4">hobby
-                                    <ul class="dropdown">
-                                        <li th:each="hob, st : ${allHobby}">
-                                        	<input type="checkbox" name="hobby" th:value="${hob.nameHobby}">
-                                        	<label th:text="${hob.nameHobby}"></label>
-                                        </li>
-                                    </ul>
-                                </div>
-                            ​</div>
-                        </section>
-                        <!--<div id="hobbyInf"><p>hobby</p></div>-->
-                        <div class="err"><p>error</p></div>
+                    <div><input id="tagsNewNews" th:field="*{hobby}" class="notRedTags" type="text" placeholder="#tags"></div>
                     </div>
                 </div>
             </div>

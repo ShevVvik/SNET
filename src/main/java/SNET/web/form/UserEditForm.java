@@ -30,7 +30,7 @@ public class UserEditForm {
 	
 	private String education;
 
-	private List<String> hobby;
+	private String hobby;
 	
 	public String getLogin() {
 		return login;
@@ -63,10 +63,10 @@ public class UserEditForm {
 	public void setEducation(String education) {
 		this.education = education;
 	}
-	public List<String> getHobby() {
+	public String getHobby() {
 		return hobby;
 	}
-	public void setHobby(List<String> hobby) {
+	public void setHobby(String hobby) {
 		this.hobby = hobby;
 	}	
 }

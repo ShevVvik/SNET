@@ -19,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class ImageController {
 
     public static String BIG_AVATAR_POSTFIX = "_big_thumb.png";
-    public static String SMALL_AVATAR_POSTFIX = "_small_thumb.png";
 
     @Value("C:\\Folder")
     private String avatarDirPath;
@@ -32,13 +31,6 @@ public class ImageController {
     public FileSystemResource bigAvatar(ModelAndView modelAndView, @PathVariable String login) {
     	
         return this.getAvatar(login, BIG_AVATAR_POSTFIX);
-    }
-    
-    
-    @GetMapping(value="/avatar/small/{login}", produces=MediaType.IMAGE_PNG_VALUE)
-    @ResponseBody
-    public FileSystemResource smallAvatar(ModelAndView modelAndView, @PathVariable String login, HttpServletResponse response) {
-        return this.getAvatar(login, SMALL_AVATAR_POSTFIX);
     }
         
     private FileSystemResource getAvatar(String login, String postfix) {

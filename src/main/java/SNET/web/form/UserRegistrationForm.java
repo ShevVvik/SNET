@@ -1,16 +1,9 @@
 package SNET.web.form;
 
-import java.util.Date;
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.data.annotation.CreatedDate;
 
 public class UserRegistrationForm {
 	
@@ -43,12 +36,10 @@ public class UserRegistrationForm {
 	
 	private String education;
 	
-	private String dateBirthday;
-	
 	@NotNull
 	private String passwordConfirm;
 
-	private List<String> hobby;
+	private String hobby;
 	
 	public String getLogin() {
 		return login;
@@ -69,10 +60,10 @@ public class UserRegistrationForm {
 		this.lastName = lastName;
 	}
 	
-	public String getDateBirthday() {
+	public String getDateBirthday1() {
 		return dateBirthday;
 	}
-	public void setDateBirthday(String dateBirthday) {
+	public void setDateBirthday1(String dateBirthday) {
 		this.dateBirthday = dateBirthday;
 	}
 	
@@ -113,10 +104,10 @@ public class UserRegistrationForm {
 	public void setEducation(String education) {
 		this.education = education;
 	}
-	public List<String> getHobby() {
+	public String getHobby() {
 		return hobby;
 	}
-	public void setHobby(List<String> hobby) {
+	public void setHobby(String hobby) {
 		this.hobby = hobby;
 	}
 	public String getDateBirthday() {

@@ -6,12 +6,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -24,6 +26,7 @@ import SNET.domain.dto.UserDTO;
 import SNET.domain.entity.Comments;
 import SNET.domain.entity.Hobby;
 import SNET.domain.entity.News;
+import SNET.domain.entity.Tags;
 import SNET.domain.entity.User;
 import SNET.domain.entity.UserHobby;
 import SNET.domain.entity.UserRole;
@@ -34,6 +37,9 @@ import SNET.web.form.UserRegistrationForm;
 @Service
 public class UserDomainServices {
 
+	@Autowired
+    private MessageSource messageSource;
+	
 	@Autowired
 	private UserRepository userDao;
 	
@@ -82,7 +88,7 @@ public class UserDomainServices {
 	}
 
 	
-	public void createUserFromRegistrationForm(UserRegistrationForm userForm, List<String> hobby) {
+	public void createUserFromRegistrationForm(UserRegistrationForm userForm) {
 		User u = new User();
 		
 		BeanUtils.copyProperties(userForm, u);
@@ -94,31 +100,27 @@ public class UserDomainServices {
 			e.printStackTrace();
 		}
 		u.setDateBirthday(date);
-		Set<Hobby> hobbies = hobbyService.getAllHobbyByName(hobby);
 		u.setDateBirthday(u.getDateBirthday());
-		u.setUserHobbies(hobbies);
 		u.setEnabled(false);
 		u.setPassword(passwordEncoder.encode(u.getPassword()));
 		u.setToken(UUID.randomUUID().toString());
-		
+		u.setUserHobbies(hobbyService.getAllHobbyListUser(userForm.getHobby()));		
 		if (!StringUtils.isEmpty(u.getEmail())) {
 	        String message = String.format(
-	                "Hello, %s! \n" +
-	                		"Welcome to SNET. Please, visit next link and activated you profile: http://localhost:8080/activate/%s",
+	        		messageSource.getMessage("message.activate", null, Locale.ENGLISH),
 	                u.getFirstName(),
 	                u.getToken()
 	        );
 
-	       // mailSender.send(u.getEmail(), "Activation code", message);
+	       mailSender.send(u.getEmail(), "Activation code", message);
 		}
 		userDao.save(u);
 	}
 	
-	public void updateUserFromRegistrationForm(UserEditForm userForm, List<String> hobby, User user) {
+	public void updateUserFromRegistrationForm(UserEditForm userForm, User user) {
 		BeanUtils.copyProperties(userForm, user);
 		
-		Set<Hobby> hobbies = hobbyService.getAllHobbyByName(hobby);
-		user.setUserHobbies(hobbies);
+		user.setUserHobbies(hobbyService.getAllHobbyListUser(userForm.getHobby()));
 	
 		userDao.save(user);
 	}
@@ -195,12 +197,11 @@ public class UserDomainServices {
 				userDao.save(user);
 			}
 			String message = String.format(
-	                "Hello, %s! \n" +
-	                		"Welcome to SNET. Please, visit next link and change your password: http://localhost:8080/p/%s",
+					messageSource.getMessage("message.change", null, Locale.ENGLISH),
 	                user.getFirstName(),
 	                user.getToken()
 	        );
-			//mailSender.send(user.getEmail(), "Password", message);
+			mailSender.send(user.getEmail(), "Password", message);
 			return true;
 		}
 		
@@ -213,11 +214,23 @@ public class UserDomainServices {
 			if (!user.isEnabled()) {
 				user.setEnabled(true);
 			}
-			user.setPassword(password);
+			user.setPassword(passwordEncoder.encode(password));
 			user.setToken(null);
 			userDao.save(user);
 			return true;
 		}
 		return false;
+	}
+
+	public UserEditForm getCompleteUserEditForm(User user) {
+		UserEditForm form = new UserEditForm();
+		BeanUtils.copyProperties(user, form);
+		String hobbyForm = "";
+		for (Hobby hobby : user.getHobbiesList()) {
+			hobbyForm += ", " + hobby.getNameHobby();
+		}
+		if (hobbyForm != "") hobbyForm.substring(2);
+		form.setHobby(hobbyForm);
+		return form;
 	}
 }

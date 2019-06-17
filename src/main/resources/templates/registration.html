@@ -34,22 +34,7 @@
                     	<input type="file" name="files" class="hid">
                        	<input type="button" class="fake_file" value="upload" id="sub">
                     </div>
-                    <div>
-                    	
-                        <section class="main">
-                            <div class="wrapper-demo">
-                                <div id="dd" class="wrapper-dropdown-4">hobby
-                                    <ul class="dropdown">
-                                        <li th:each="hob, st : ${allHobby}">
-                                        	<input type="checkbox" hidden name="hobby" value=" " checked>
-                                        	<input type="checkbox" name="hobby" th:value="${hob.nameHobby}">
-                                        	<label th:text="${hob.nameHobby}"></label>
-                                        </li>
-                                    </ul>
-                                </div>
-                            ​</div>
-                        </section>
-                    </div>
+                    <div><input id="tagsNewNews" th:field="*{hobby}" class="notRedTags" type="text" placeholder="#tags"></div>
 
                     <div class="dws-submit" id="subret">
                     	<a class="submit">submit</a>

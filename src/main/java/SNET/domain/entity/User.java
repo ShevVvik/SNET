@@ -242,7 +242,6 @@ public class User implements Serializable {
 	    List<String> list = new ArrayList<>();
 
 	    for (UserRole role : this.getUserRoles()) {
-	    	System.out.println(role.getRole());
             list.add(role.getRole());
         }
 
@@ -251,11 +250,11 @@ public class User implements Serializable {
 
 	public List<Hobby> getHobbiesList() {
 	    List<Hobby> list = new ArrayList<>();
-
-	    for (Hobby hobby : this.getUserHobbies()) {
-            list.add(hobby);
-        }
-
+	    if (userHobbies != null) {
+	    	for (Hobby hobby : this.getUserHobbies()) {
+            	list.add(hobby);
+        	}
+	    };
 	    return list;
 	}
 	

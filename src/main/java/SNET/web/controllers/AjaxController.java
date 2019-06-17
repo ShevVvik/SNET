@@ -1,32 +1,27 @@
 package SNET.web.controllers;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.util.HtmlUtils;
 
 import SNET.config.UserDetailsImpl;
-import SNET.domain.entity.FriendList;
 import SNET.domain.entity.Role;
 import SNET.domain.services.FriendListDomainServices;
 import SNET.domain.services.NewsDomainServices;
@@ -37,9 +32,11 @@ import SNET.web.form.MessageForm;
 
 @RestController
 @RequestMapping("/ajax")
-@Validated
 public class AjaxController {
 
+	@Autowired
+    private MessageSource messageSource;
+	
 	@Autowired
 	private FriendListDomainServices friendsService;
 	
@@ -72,16 +69,13 @@ public class AjaxController {
 	
 	@PostMapping("/sendMessage")
     public ResponseEntity<String> addFriend(@Valid @ModelAttribute MessageForm form,
-    		BindingResult binding,
-    		HttpServletResponse response,
-    		Model modelAndView, Authentication auth) throws IOException {
+    		BindingResult binding, Authentication auth) throws IOException {
     	
 		if(binding.hasErrors()) {
-			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(messageSource.getMessage("profile.message.error", null, Locale.ENGLISH), HttpStatus.BAD_REQUEST);
 		}
 		
     	UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();	
-    	System.out.println(form.getIdTo());
     	userService.sendMessage(form, userDetails.getUser());
     	return new ResponseEntity<String>(HttpStatus.OK);
     }

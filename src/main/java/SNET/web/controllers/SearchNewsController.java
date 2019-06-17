@@ -1,23 +1,22 @@
 package SNET.web.controllers;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.HtmlUtils;
 
@@ -25,11 +24,13 @@ import SNET.config.UserDetailsImpl;
 import SNET.domain.dto.NewsDTO;
 import SNET.domain.services.NewsDomainServices;
 import SNET.web.form.CommentForm;
-import SNET.web.form.MessageForm;
 import SNET.web.form.NewNewsForm;
 
 @RestController
 public class SearchNewsController {
+	
+	@Autowired
+    private MessageSource messageSource;
 	
 	@Autowired
 	private NewsDomainServices newsService;
@@ -50,7 +51,7 @@ public class SearchNewsController {
 			ModelAndView modelAndView) {
 		
 		if(binding.hasErrors()) {
-			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(messageSource.getMessage("news.add.blank.text", null, Locale.ENGLISH), HttpStatus.BAD_REQUEST);
 		}
 		newsService.addNewNews(form);
 		
@@ -58,9 +59,12 @@ public class SearchNewsController {
 	}
 	
 	@RequestMapping(value="/news/update")
-	public ResponseEntity<?> updateNews(@ModelAttribute NewNewsForm form,
+	public ResponseEntity<?> updateNews(@Valid @ModelAttribute NewNewsForm form,
+			BindingResult binding,
 			ModelAndView modelAndView) {
-		
+		if(binding.hasErrors()) {
+			return new ResponseEntity<>(messageSource.getMessage("news.add.blank.text", null, Locale.ENGLISH), HttpStatus.BAD_REQUEST);
+		}
 		newsService.updateNewNews(form);
 		
 		return new ResponseEntity<String>(HttpStatus.OK);
@@ -73,7 +77,7 @@ public class SearchNewsController {
     		Authentication auth){
 		
 		if(binding.hasErrors()) {
-			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(messageSource.getMessage("comment.add.blank.text", null, Locale.ENGLISH), HttpStatus.BAD_REQUEST);
 		}
 		
 		UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
@@ -88,10 +92,8 @@ public class SearchNewsController {
     		Authentication auth){
 		
 		if(binding.hasErrors()) {
-			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(messageSource.getMessage("comment.add.blank.text", null, Locale.ENGLISH), HttpStatus.BAD_REQUEST);
 		}
-		
-		UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
 		newsService.updateComment(form);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
