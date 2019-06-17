@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import SNET.dao.UserHobbiesRepository;
 import SNET.dao.UserRepository;
 import SNET.domain.dto.CommentsDTO;
 import SNET.domain.dto.NewsDTO;
@@ -24,6 +25,7 @@ import SNET.domain.entity.Comments;
 import SNET.domain.entity.Hobby;
 import SNET.domain.entity.News;
 import SNET.domain.entity.User;
+import SNET.domain.entity.UserHobby;
 import SNET.domain.entity.UserRole;
 import SNET.web.form.MessageForm;
 import SNET.web.form.UserEditForm;
@@ -34,6 +36,9 @@ public class UserDomainServices {
 
 	@Autowired
 	private UserRepository userDao;
+	
+	@Autowired
+	private UserHobbiesRepository userHobbiesDao;
 	
     @Autowired
     private MailSender mailSender;
@@ -90,6 +95,7 @@ public class UserDomainServices {
 		}
 		u.setDateBirthday(date);
 		Set<Hobby> hobbies = hobbyService.getAllHobbyByName(hobby);
+		u.setDateBirthday(u.getDateBirthday());
 		u.setUserHobbies(hobbies);
 		u.setEnabled(false);
 		u.setPassword(passwordEncoder.encode(u.getPassword()));
@@ -148,13 +154,20 @@ public class UserDomainServices {
 	
 	public List<UserDTO> searchUsertByPatternAsJson(String pattern, String parametr) {
 		
-		List<User> user = null;
+		List<User> user = new ArrayList<User>();
 		switch(parametr) {
 		case "name": user = userDao.findAllByFirstNameContainingOrderByIdDesc(pattern); break;
 		case "surname" : user = userDao.findAllByLastNameContainingOrderByIdDesc(pattern); break;
 		case "city"     : user = userDao.findAllByCityContainingOrderByIdDesc(pattern); break;
 		case "education": user = userDao.findAllByEducationContainingOrderByIdDesc(pattern); break;
 		case "email": user = userDao.findAllByEmailContainingOrderByIdDesc(pattern); break;
+		case "interest": {
+			Hobby hobby = hobbyService.getHobbyByName(pattern);
+			List<UserHobby> listHobby = userHobbiesDao.findByHobby(hobby);
+			for (UserHobby hob : listHobby) {
+				user.add(hob.getUser());
+			};
+		}; break;
 		}
 		
 		List<UserDTO> userJson = null;

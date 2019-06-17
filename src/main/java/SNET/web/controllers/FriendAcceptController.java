@@ -31,12 +31,12 @@ public class FriendAcceptController {
 	@Autowired
 	private FriendListDomainServices friendsService;
 	
-	@GetMapping("/s/{token}")
-	public ResponseEntity<String> profile(Model model, @PathVariable String token) {
+	@PostMapping("/friendList/addFriend")
+	public ResponseEntity<String> profile(Model model, @RequestParam("token") String token) {
 		friendsService.createFriendship(friendsService.getFriendsByToken(token));
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
-
+	
 	@RequestMapping(value="/friendList/request", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<FriendDTO> getRequestFriends(@RequestParam("id") String idUser, 
     		ModelAndView modelAndView) {

@@ -13,8 +13,14 @@
 <body>
 	<div class="containerLogin">
         <form id="myform" th:action="@{/login}" method="post"> 
-            <input type="text" name="username" th:placeholder="#{login.holder}" minlength="6" maxlength="15">
-            <input type="password" name="password" th:placeholder="#{password.holder}" minlength="8" maxlength="20">
+
+        	<div th:if="${param.error}">
+            	<div class="alert alert-danger">
+                	Invalid username or password.
+            	</div>
+        	</div>
+            <input type="text" name="username" th:placeholder="#{login.holder}">
+            <input type="password" name="password" th:placeholder="#{password.holder}">
             <a class="dws-link" id="forgot" th:text="#{password.forgot}"></a>
             <div href="" id="subret" class="dws-submit">
                 <a class="submit" th:text="#{buttom.submit}"></a>

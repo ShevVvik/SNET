@@ -8,10 +8,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import SNET.domain.entity.News;
 import SNET.domain.entity.Tags;
 
-public interface TagsRepository extends JpaRepository<News, Long>{
+public interface TagsRepository extends JpaRepository<Tags, Long>{
 
-	Set<Tags> findByTagsNameIn(List<String> tagsName);
+	Set<Tags> findByNameIn(List<String> name);
 
-	Tags findByTagsName(String tagsName);
+	Tags findByName(String tagsName);
 	
 }

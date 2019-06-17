@@ -1,5 +1,4 @@
 package SNET.web.controllers;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -63,11 +62,7 @@ public class ProfileController {
 		        .getAuthentication()
 		        .getPrincipal();
 		User user = userDet.getUser();
-		
-		model.addAttribute("user", user);
-		model.addAttribute("news", newsService.getNewsByAuthor(user.getId(), user));
-		model.addAttribute("hobby", user.getHobbiesList());
-		return "/user/profile";
+		return "redirect:/u/" + user.getId();
 	}
 	
 	@GetMapping("/edit")
@@ -155,14 +150,12 @@ public class ProfileController {
 		        .getPrincipal();
 		User userX = userDet.getUser();
 		User user = userService.getById(userId);
-		
-		if (userX.equals(user)) return "redirect:/profile";
 
 		model.addAttribute("user", user);
+		model.addAttribute("userAut", userX);
 		model.addAttribute("news", newsService.getNewsByAuthor(user.getId(), userX));
-		model.addAttribute("role", userX.getHighLevelRole());
-		model.addAttribute("hobby", user.getHobbiesList());
-		model.addAttribute("otherUser", true);
+		model.addAttribute("friends", (friendsService.isFriendsRequest(userX, user)) ? true : false);
+		model.addAttribute("otherUser", (user.equals(userX) || (userX.getHighLevelRole().equals("ROLE_ADMIN"))) ? false : true);
 		
 		return "/user/profile";
 	}

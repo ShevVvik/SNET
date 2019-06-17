@@ -208,7 +208,7 @@
         padding: 3px 30px;
     }
 
-    .fieldNews textarea {
+    .newNewsTextArea {
         overflow: auto;
         resize: none;
         width: 937px;
@@ -266,6 +266,7 @@
     }
 
     .right{
+    	right: 5%;
         width: 154px;
     }
 

@@ -43,6 +43,8 @@ public class UserRegistrationForm {
 	
 	private String education;
 	
+	private String dateBirthday;
+	
 	@NotNull
 	private String passwordConfirm;
 
@@ -116,5 +118,11 @@ public class UserRegistrationForm {
 	}
 	public void setHobby(List<String> hobby) {
 		this.hobby = hobby;
+	}
+	public String getDateBirthday() {
+		return dateBirthday;
+	}
+	public void setDateBirthday(String dateBirthday) {
+		this.dateBirthday = dateBirthday;
 	}	
 }

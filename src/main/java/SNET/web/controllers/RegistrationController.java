@@ -32,9 +32,6 @@ import net.coobird.thumbnailator.geometry.Positions;
 
 @Controller
 public class RegistrationController {
-
-	public static String BIG_AVATAR_POSTFIX = "_big_thumb.png";
-    public static String SMALL_AVATAR_POSTFIX = "_small_thumb.png";
 	
 	@Autowired
 	private UserDomainServices userService;
@@ -63,8 +60,10 @@ public class RegistrationController {
 				BindingResult binding, @RequestParam("files") MultipartFile[] files,
 				@RequestParam List<String> hobby) {
 		
+		
 		if(binding.hasErrors()) {
 			model.addAttribute("userForm", userForm);
+			model.addAttribute("allHobby", hobbyService.getAllHobby());
 			return "registration";
 		}
 
@@ -84,9 +83,6 @@ public class RegistrationController {
         
                 File dest = new File(fullFilePath);
                 multipartFile.transferTo(dest);
-            
-                Thumbnails.of(dest).size(80, 80).crop(Positions.CENTER).toFile(new File(filePath + userForm.getLogin() + BIG_AVATAR_POSTFIX));
-                Thumbnails.of(dest).size(35, 35).crop(Positions.CENTER).toFile(new File(filePath + userForm.getLogin() + SMALL_AVATAR_POSTFIX));
                 
             } catch (IllegalStateException e) {
                 System.out.println(e);

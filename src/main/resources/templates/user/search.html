@@ -12,6 +12,13 @@
     <script th:src="@{/js/search.js}" defer="defer"></script>
 </head>
 <body>
+<div>
+        <div class="top">
+            <div class="logo">
+                <a href="profile.html"><img src="../img/logo.png"></a>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <div class="search">
             <div class="searchLine">
@@ -51,11 +58,14 @@
                 <li id="pressetMatch" hidden>
                 	<div class="findPeople">
                     	<div id="person0" class="onePerson">
+                    		<a id="href" href="profile">
                         	<div class="namePerson">
                             	<div id="firstNamePerson0" class="firstName"></div>
                             	<div id="lastNamePerson0"></div>
-                        	</div>
+                            </div>
+                            
                         	<div class="login" id="loginPerson0"></div>
+                        	</a>
                     	</div>
                 	</div>
                 </li>
@@ -65,14 +75,6 @@
             </div>
         </div>
     </div>
-
-    <header>
-        <div class="top">
-            <div class="logo">
-                <a href="profile.html"><img src="../img/logo.png"></a>
-            </div>
-        </div>
-    </header>
     <div class="bottom"></div>
 </body>
 </html>

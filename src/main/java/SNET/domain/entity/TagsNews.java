@@ -13,22 +13,27 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tags")
-public class Tags implements Serializable {
+@Table(name="tagsnews")
+public class TagsNews implements Serializable {
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1348663901700405232L;
+	private static final long serialVersionUID = -3669236798007801435L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private Long id;
-		
-	@Column(name="tagsName")
- 	private String name;
+
+	@ManyToOne
+    @JoinColumn(name="idNews", nullable=false)
+	private News news;
 	
+	@ManyToOne
+    @JoinColumn(name="idTags", nullable=false)
+	private Tags tag;
+
 	public Long getId() {
 		return id;
 	}
@@ -37,17 +42,25 @@ public class Tags implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public News getNews() {
+		return news;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNews(News news) {
+		this.news = news;
 	}
 
+	public Tags getTag() {
+		return tag;
+	}
+
+	public void setTag(Tags tags) {
+		this.tag = tags;
+	}
+	
 	@Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id, news, tag);
 	}
 	
 	@Override
@@ -58,12 +71,12 @@ public class Tags implements Serializable {
         if (obj == this)
             return true;
 
-        if (!(obj instanceof News))
+        if (!(obj instanceof TagsNews))
         return false;
 
-        News news = (News)obj;
+        TagsNews tagsNews = (TagsNews)obj;
 
-        if (news.hashCode() == this.hashCode())
+        if (tagsNews.hashCode() == this.hashCode())
             return true;
 
         return false;

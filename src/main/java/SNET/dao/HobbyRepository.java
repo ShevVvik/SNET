@@ -10,4 +10,5 @@ import SNET.domain.entity.Hobby;
 public interface HobbyRepository extends JpaRepository<Hobby, Long> {
 
 	Set<Hobby> findByNameHobbyIn(List<String> hobbies);
+	Hobby findByNameHobby(String Hobby);
 }
