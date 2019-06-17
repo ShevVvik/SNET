@@ -173,6 +173,10 @@ public class User implements Serializable {
 		return userRoles;
 	}
 
+	public void setUserRole(Set<UserRole> role) {
+		this.userRoles = role;
+	}
+	
 	public Set<Hobby> getUserHobbies() {
 		if (userHobbies == null) {
 			userHobbies = new HashSet<>();

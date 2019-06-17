@@ -57,12 +57,12 @@
                 </div>
                 <div class="profileInfo">
                     <div class="nameLogin">
-                        <div id="name" th:text="${user.firstName}">ivanov ivan</div>
-                        <div id="login" th:text="@{@} + ${user.login}">@lolalol</div>
+                        <div id="name" th:text="${user.firstName} + @{ } + ${user.lastName}">ivanov ivan</div>
+                        <div id="login" class="login" th:text="@{@} + ${user.login}">@lolalol</div>
                     </div>
                     <div class="emailDate">
                         <div id="email" th:text="${user.email}">loliva@gmail.com</div>
-                        <div id="dateHB" th:text="${user.dateBirthday}">12.01.2001</div>
+                        <div id="dateHB" th:text="${#dates.format(user.dateBirthday, 'dd.MM.yyyy')}">12.01.2001</div>
                     </div>
                     <div class="moreInfo">
                         <div style="display:none" id="blockInfo">
@@ -72,7 +72,7 @@
                             												th:each="hob, st : ${user.userHobbies}">
                             												<p th:text="${hob.nameHobby} + @{, }">hobby</p></li></div>
                         </div>
-                        <label id="openInfo">more info:</label>
+                        <label id="openInfo" class="hideInf">more info:</label>
                         <br/>
                         <br/>
                     </div>
@@ -89,7 +89,7 @@
                     <form id="newNews"  method="POST" enctype="multipart/form-data" class="createNews" >
                         <div id="redLine">
                             <div id="name" th:text="${user.lastName} + @{ } + ${user.firstName}">ivanov ivan</div>
-                            <div id="login" class="login" th:text="${user.login}">@lolalol</div>
+                            <div id="login" class="login" th:text="@{@} + ${user.login}">@lolalol</div>
                         </div>
                         
                         <div class="fieldNews">

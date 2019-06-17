@@ -28,6 +28,7 @@ import SNET.domain.entity.User;
 import SNET.domain.entity.UserHobby;
 import SNET.domain.entity.UserRole;
 import SNET.web.form.MessageForm;
+import SNET.web.form.UserEditForm;
 import SNET.web.form.UserRegistrationForm;
 
 @Service
@@ -111,6 +112,15 @@ public class UserDomainServices {
 	       // mailSender.send(u.getEmail(), "Activation code", message);
 		}
 		userDao.save(u);
+	}
+	
+	public void updateUserFromRegistrationForm(UserEditForm userForm, List<String> hobby, User user) {
+		BeanUtils.copyProperties(userForm, user);
+		
+		Set<Hobby> hobbies = hobbyService.getAllHobbyByName(hobby);
+		user.setUserHobbies(hobbies);
+	
+		userDao.save(user);
 	}
 	
 	public void sendMessage(MessageForm form, User uFrom) {
