@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import SNET.dao.CommentsRepository;
 import SNET.dao.NewsRepository;
+import SNET.dao.TagsNewsRepository;
 import SNET.dao.TagsRepository;
 import SNET.domain.dto.CommentsDTO;
 import SNET.domain.dto.NewsDTO;
@@ -30,6 +31,7 @@ import SNET.domain.entity.Comments;
 import SNET.domain.entity.News;
 import SNET.domain.entity.Role;
 import SNET.domain.entity.Tags;
+import SNET.domain.entity.TagsNews;
 import SNET.domain.entity.User;
 import SNET.web.form.CommentForm;
 import SNET.web.form.NewNewsForm;
@@ -47,6 +49,9 @@ public class NewsDomainServices {
 	
 	@Autowired
 	public TagsRepository tagsDao;
+	
+	@Autowired
+	public TagsNewsRepository tagsNewsDao;
 	
 	@Autowired
 	public UserDomainServices userService;
@@ -75,19 +80,33 @@ public class NewsDomainServices {
 	
 	public List<NewsDTO> searchNewsByPatternAsJson(String pattern, Long id, User userAut) {
 		
-		List<News> news = null;
+		List<News> news = new ArrayList<News>();
 		
-		if ((userAut.getHighLevelRole() == Role.ROLE_ADMIN) || 
-				(friendsService.isFriends(userService.getById(id), userAut)) ||
-				(id == userAut.getId())){
-			news = newsDao.findAllByTextContainingAndAuthorIdOrderByIdDesc(pattern, id);
+		char tagMarker = ' ';
+		if (pattern.length() != 0) tagMarker = pattern.charAt(0);
+		
+		if (tagMarker == '#') {
+			Tags tag = tagsDao.findByName(pattern.substring(1));
+			List<TagsNews> tagsNews = tagsNewsDao.findByTag(tag);
+			for (TagsNews tagNews : tagsNews) {
+				news.add(tagNews.getNews());
+			}
 		} else {
-			news = newsDao.findAllByTextContainingAndAuthorIdAndForFriendsFalseOrderByIdDesc(pattern, id);
+			if ((userAut.getHighLevelRole() == Role.ROLE_ADMIN) || 
+					(friendsService.isFriends(userService.getById(id), userAut)) ||
+					(id == userAut.getId())){
+				news = newsDao.findAllByTextContainingAndAuthorIdOrderByIdDesc(pattern, id);
+			} else {
+				news = newsDao.findAllByTextContainingAndAuthorIdAndForFriendsFalseOrderByIdDesc(pattern, id);
+			}
 		}
-		if (news == null) news = new ArrayList<News>();
+		return transformToDTO(news, id);
+	}
+
+	private List<NewsDTO> transformToDTO(List<News> news, Long id) {
 		List<NewsDTO> newsJson = null;
 		UserDTO userDTO = new UserDTO();
-		BeanUtils.copyProperties(userAut, userDTO);
+		BeanUtils.copyProperties(userService.getById(id), userDTO);
 		
 		if (news != null && news.size() > 0) {
 			newsJson = new ArrayList<>();
@@ -98,12 +117,16 @@ public class NewsDomainServices {
 				newsDTO.setId((long)u.getId());
 				newsDTO.setText(u.getText());
 				newsDTO.setAuthor(userDTO);
-				SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy");
 				newsDTO.setDate(dateFormat.format(u.getNewsDate()));
 				newsDTO.setForFriends(u.isForFriends());
 				newsDTO.setImageToken(u.getImageToken());
-				List<CommentsDTO> comments = new ArrayList<>();
-				
+				List<String> tags = new ArrayList<String>();
+				for (Tags tagName : u.getTagsList()) {
+					tags.add(tagName.getName());
+				}
+				newsDTO.setTags(tags);
+				List<CommentsDTO> comments = new ArrayList<CommentsDTO>();
 				for (Comments com : u.getCommentsList()) {
 					CommentsDTO comment = new CommentsDTO();
 					comment.setId(com.getId());
@@ -114,16 +137,13 @@ public class NewsDomainServices {
 					comment.setDate(dateFormat.format(com.getCommentDate()));
 					comments.add(comment);
 				}
-				
 				newsDTO.setComments(comments);
 				newsJson.add(newsDTO);
 			}
 		}
-		
 		return newsJson;
 	}
-
-
+	
 	public void addNewNews(NewNewsForm form) {
         Calendar cal = Calendar.getInstance();
         Date date=cal.getTime();
@@ -138,17 +158,16 @@ public class NewsDomainServices {
 		}
 		List<Tags> newsTags = new ArrayList<Tags>();
 		for(String tagName : form.getTags()) {
-			Tags tag = new Tags();
+			Tags tag = tagsDao.findByName(tagName);
 			
 			
-			/*if (null) {
-				System.out.println("Check");
-				newsTags.add(tagDao);
-			} else {*/
-				System.out.println("Check" + tagName);
-				tag.setName(tagName);
+			if (tag == null) {
+				Tags newTag = new Tags();
+				newTag.setName(tagName);
+				newsTags.add(newTag);
+			} else {
 				newsTags.add(tag);
-			//}
+			}
 			
 		}
 		news.setTags(new HashSet<Tags>(newsTags));
@@ -208,5 +227,16 @@ public class NewsDomainServices {
         Date date=cal.getTime(); 
         comment.setCommentDate(date);
         commentsDao.save(comment);
+	}
+
+
+	public void updateNewNews(NewNewsForm form) {
+		News newNews = newsDao.getOne(form.getIdNews());
+		newNews.setText(form.getNewNewsText());
+		if (form.getFile() != null) {
+			newNews.setImageToken(UUID.randomUUID().toString());
+			saveImages(form.getFile(), newNews.getImageToken());
+		}
+		newsDao.save(newNews);
 	}
 }

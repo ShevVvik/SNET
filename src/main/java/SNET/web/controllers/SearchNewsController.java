@@ -45,10 +45,23 @@ public class SearchNewsController {
     }
 	
 	@RequestMapping(value="/news/add")
-	public ResponseEntity<?> addNews(@ModelAttribute NewNewsForm form,
+	public ResponseEntity<?> addNews(@Valid @ModelAttribute NewNewsForm form,
+			BindingResult binding,
 			ModelAndView modelAndView) {
 		
+		if(binding.hasErrors()) {
+			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
 		newsService.addNewNews(form);
+		
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/news/update")
+	public ResponseEntity<?> updateNews(@ModelAttribute NewNewsForm form,
+			ModelAndView modelAndView) {
+		
+		newsService.updateNewNews(form);
 		
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}

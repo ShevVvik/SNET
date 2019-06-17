@@ -1,5 +1,6 @@
 package SNET.web.form;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.constraints.Email;
@@ -32,6 +33,8 @@ public class UserRegistrationForm {
 	private String city;
 	
 	private String education;
+	
+	private String dateBirthday;
 	
 	@NotNull
 	private String passwordConfirm;
@@ -97,5 +100,11 @@ public class UserRegistrationForm {
 	}
 	public void setHobby(List<String> hobby) {
 		this.hobby = hobby;
+	}
+	public String getDateBirthday() {
+		return dateBirthday;
+	}
+	public void setDateBirthday(String dateBirthday) {
+		this.dateBirthday = dateBirthday;
 	}	
 }

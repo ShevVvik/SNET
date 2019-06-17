@@ -2,10 +2,17 @@ package SNET.web.form;
 
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class NewNewsForm {
 	
+	
+	private Long idNews;
+	@NotNull
+	@NotBlank
 	private String newNewsText;
 	private Long idAuthor;
 	private boolean forFriends;
@@ -41,5 +48,11 @@ public class NewNewsForm {
 	}
 	public void setTags(List<String> tags) {
 		this.tags = tags;
+	}
+	public Long getIdNews() {
+		return idNews;
+	}
+	public void setIdNews(Long idNews) {
+		this.idNews = idNews;
 	}
 }

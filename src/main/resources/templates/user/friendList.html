@@ -31,11 +31,14 @@
         </div>
         <li id="pressetFriend" style="display:none">
             <div id="friend0" class="oneFriend">
-                <div class="nameFriend">
-                    <div id="firstNameFriend0" class="firstName"><p>rrrrrrrrrrrrrrr</p></div>
-                    <div id="lastNameFriend0"><p>rrrrrrrrrrrrrrr</p></div>
-                </div>
-                <div class="login" id="loginFriend0"><p>@rrrrrrrrrrrrrrr</p></div>
+            	<a href="profile">
+                	<div class="nameFriend">
+                		<p class="friendToken" hidden>
+                    	<div id="firstNameFriend0" class="firstName"><p>rrrrrrrrrrrrrrr</p></div>
+                    	<div id="lastNameFriend0"><p>rrrrrrrrrrrrrrr</p></div>
+                	</div>
+                	<div class="login" id="loginFriend0"><p>@rrrrrrrrrrrrrrr</p></div>
+                </a>
                 <div th:if="${owner} == true">
                 	<a  class="submit"><img src="../img/circleRed.png"></a>
                 	<a class="delete"><img src="../img/x.png"></a>

@@ -22,4 +22,8 @@ public class HobbyDomainServices {
 	public Set<Hobby> getAllHobbyByName(List<String> hobbies){
 		return hobbyDao.findByNameHobbyIn(hobbies);
 	}
+	
+	public Hobby getHobbyByName(String name){
+		return hobbyDao.findByNameHobby(name);
+	}
 }

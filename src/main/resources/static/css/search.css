@@ -4,6 +4,9 @@ body{
     background-image: 
         linear-gradient(to top, rgba(74, 74, 74, 0.2), rgba(74,74,74,0.2)),
         url("../img/app.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     text-transform: uppercase;
     letter-spacing: 2px;
     font-size: 20px;
@@ -38,6 +41,7 @@ body{
     height: 100%;
     min-height: 90vh;
     padding: 1px;
+    padding-bottom: 3%;
     background-color: #635f5cde;
     text-transform: uppercase;
     margin: 80px auto 0 auto;
@@ -142,4 +146,8 @@ p {
 .radio-container .radio-btn input{display: none;}
 .radio-container .radio-btn input:checked + label{
     color: #ff3535;
+}
+
+.findPeople a{
+    display: flex;
 }

@@ -87,6 +87,15 @@ public class FriendListDomainServices {
 		return false;
 	}
 	
+	public boolean isFriendsRequest(User user1, User user2) {
+		FriendList friend1 = friendListDao.findByUser1IdAndUser2Id(user1.getId(), user2.getId());
+		FriendList friend2 = friendListDao.findByUser1IdAndUser2Id(user2.getId(), user1.getId());
+		if ((friend1 != null) || (friend2 != null)) {
+			return true;
+		}
+		return false;
+	}
+	
 	public void addFriend(User userFrom, long idUserTo) {
 		FriendList newFriend = new FriendList();
 		newFriend.setUser1(userFrom);
@@ -97,11 +106,13 @@ public class FriendListDomainServices {
 	}
 
 	public void deleteFriend(Long idUser, User userAut) {
-		FriendList friend1 = friendListDao.findByUser1IdAndUser2IdAndFriendshipTrue(idUser, userAut.getId());
-		FriendList friend2 = friendListDao.findByUser1IdAndUser2IdAndFriendshipTrue(userAut.getId(), idUser);
+		FriendList friend1 = friendListDao.findByUser1IdAndUser2Id(idUser, userAut.getId());
+		FriendList friend2 = friendListDao.findByUser1IdAndUser2Id(userAut.getId(), idUser);
 		if (friend1 != null) {
+			System.out.println("Check1");
 			friendListDao.delete(friend1);
 		} else if (friend2 != null) {
+			System.out.println("Check2");
 			friendListDao.delete(friend2);
 		}
 	}

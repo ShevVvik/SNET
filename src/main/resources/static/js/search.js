@@ -35,6 +35,7 @@ function fillTable(data) {
     		$(mainDIV).find('#firstNamePerson0').text(elem.firstName);
     		$(mainDIV).find('#lastNamePerson0').text(elem.lastName);
     		$(mainDIV).find('#loginPerson0').text('@' + elem.login);
+    		$(mainDIV).find('#href').attr('href', '/u/' + elem.id);
             var newLi = document.createElement('li');
             newLi.appendChild(mainDIV);
             document.getElementById('resultList').appendChild(newLi);

@@ -1,8 +1,9 @@
 package SNET.web.controllers;
-
+ 
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,18 +47,7 @@ public class ProfileController {
 		        .getAuthentication()
 		        .getPrincipal();
 		User user = userDet.getUser();
-		
-		model.addAttribute("user", user);
-		model.addAttribute("news", newsService.getNewsByAuthor(user.getId(), user));
-		model.addAttribute("hobby", user.getHobbiesList());
-		return "/user/profile";
-	}
-	
-	@GetMapping("/edit")
-	public String registration(Model model, UserRegistrationForm userForm) {
-		
-		model.addAttribute("userForm", userForm);
-		return "/user/edit";
+		return "redirect:/u/" + user.getId();
 	}
 	
 	@GetMapping("/{userId}/friendlist")
@@ -88,14 +78,12 @@ public class ProfileController {
 		        .getPrincipal();
 		User userX = userDet.getUser();
 		User user = userService.getById(userId);
-		
-		if (userX.equals(user)) return "redirect:/profile";
 
 		model.addAttribute("user", user);
+		model.addAttribute("userAut", userX);
 		model.addAttribute("news", newsService.getNewsByAuthor(user.getId(), userX));
-		model.addAttribute("role", userX.getHighLevelRole());
-		model.addAttribute("hobby", user.getHobbiesList());
-		model.addAttribute("otherUser", true);
+		model.addAttribute("friends", (friendsService.isFriendsRequest(userX, user)) ? true : false);
+		model.addAttribute("otherUser", (user.equals(userX) || (userX.getHighLevelRole().equals("ROLE_ADMIN"))) ? false : true);
 		
 		return "/user/profile";
 	}
@@ -107,8 +95,13 @@ public class ProfileController {
 	}
 	
 	@GetMapping("/edit")
-public String registration(Model model, UserRegistrationForm userForm) {
-		
+	public String edit(Model model, UserRegistrationForm userForm) {
+		UserDetailsImpl userDet = (UserDetailsImpl) SecurityContextHolder
+		        .getContext()
+		        .getAuthentication()
+		        .getPrincipal();
+		User userX = userDet.getUser();
+		model.addAttribute("user", userX);
 		model.addAttribute("userForm", userForm);
 		return "/user/edit";
 	}

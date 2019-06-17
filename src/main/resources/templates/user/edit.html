@@ -10,7 +10,7 @@
     <title>edit</title>
 </head>
 <body>
-    <div class="container">
+<form class="container" id="myForm" action="#" method="post" th:action="@{/edit}" th:object="${userForm}" enctype="multipart/form-data">
         <div class="profile">
             <div class="profilePhoto">
                 <img th:src="@{/avatar/big/} + ${user.login}" height="200" width="200" alt="wow" class="foto">
@@ -23,7 +23,7 @@
                 <div id="firstName" class="infoBlock">
                     <div class="information"><p>name: </p></div>
                     <div class="InfErr">
-                        <input type="text" name="name" placeholder="name" minlength="4" maxlength="15">
+                        <input type="text" name="name" placeholder="name" minlength="4" maxlength="15" th:field="*{firstName}" >
                         <!--<div id="firstNameInf"><p>rrrrrrrrrrrrrrr</p></div>-->
                         <div class="err"><p>error</p></div>
                     </div>
@@ -85,7 +85,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 <div class="top">
 	<div class="logo">
     	<a href="profile.html"><img src="../img/logo.png"></a>
