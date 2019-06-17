@@ -4,6 +4,9 @@ body{
     background-image: 
         linear-gradient(to top, rgba(74, 74, 74, 0.2), rgba(74,74,74,0.2)),
         url("../img/app.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     text-transform: uppercase;
     letter-spacing: 2px;
     font-size: 20px;

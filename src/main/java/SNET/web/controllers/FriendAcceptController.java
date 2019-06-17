@@ -32,8 +32,10 @@ public class FriendAcceptController {
 	
 	@RequestMapping(value="/friendList/request", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<FriendDTO> getRequestFriends(@RequestParam("id") String idUser, 
-    		ModelAndView modelAndView) {
-    	return friendsService.getRequestFriends(Long.parseLong(idUser));
+    		ModelAndView modelAndView, Authentication auth) {
+		UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
+		
+    	return friendsService.getRequestFriends(Long.parseLong(idUser), userDetails.getUser());
     }
 	
 	@RequestMapping(value="/friendList/active", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)

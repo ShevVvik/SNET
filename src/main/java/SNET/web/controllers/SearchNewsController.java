@@ -48,25 +48,26 @@ public class SearchNewsController {
 	@RequestMapping(value="/news/add")
 	public ResponseEntity<?> addNews(@Valid @ModelAttribute NewNewsForm form,
 			BindingResult binding,
-			ModelAndView modelAndView) {
+			ModelAndView modelAndView, Authentication auth) {
 		
 		if(binding.hasErrors()) {
 			return new ResponseEntity<>(messageSource.getMessage("news.add.blank.text", null, Locale.ENGLISH), HttpStatus.BAD_REQUEST);
 		}
-		newsService.addNewNews(form);
-		
+		UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
+		newsService.addNewNews(form, userDetails.getUser());
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/news/update")
 	public ResponseEntity<?> updateNews(@Valid @ModelAttribute NewNewsForm form,
 			BindingResult binding,
-			ModelAndView modelAndView) {
+			ModelAndView modelAndView, Authentication auth) {
 		if(binding.hasErrors()) {
 			return new ResponseEntity<>(messageSource.getMessage("news.add.blank.text", null, Locale.ENGLISH), HttpStatus.BAD_REQUEST);
-		}
-		newsService.updateNewNews(form);
-		
+		};
+		UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
+		if (!newsService.updateNewNews(form, userDetails.getUser()))
+			return new ResponseEntity<>(messageSource.getMessage("profile.news.update.author.error", null, Locale.ENGLISH), HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 	
@@ -87,14 +88,13 @@ public class SearchNewsController {
 	
 	@RequestMapping(value="/news/comment/update")
 	public ResponseEntity<?> updateComment(@Valid @ModelAttribute CommentForm form,
-    		BindingResult binding,
-    		HttpServletResponse response,
-    		Authentication auth){
-		
+    		BindingResult binding, Authentication auth){
 		if(binding.hasErrors()) {
 			return new ResponseEntity<>(messageSource.getMessage("comment.add.blank.text", null, Locale.ENGLISH), HttpStatus.BAD_REQUEST);
 		}
-		newsService.updateComment(form);
+		UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
+		if (newsService.updateComment(form, userDetails.getUser())) 
+			return new ResponseEntity<>(messageSource.getMessage("profile.news.update.author.error", null, Locale.ENGLISH), HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 }

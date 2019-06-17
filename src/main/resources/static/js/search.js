@@ -17,6 +17,7 @@ function userSearch() {
     	if (xhr.status != 200) {
     		alert(xhr.status + ': ' + xhr.statusText);
     	} else {
+    		cleanList();
     		if(xhr.responseText != '') fillTable( JSON.parse(xhr.responseText) );
     	}
     }
@@ -24,11 +25,15 @@ function userSearch() {
     xhr.send(param);    
 }
 
-function fillTable(data) {
+function cleanList() {
 	var myNode = document.getElementById('resultList');
 	while (myNode.children[0]) {
 	    myNode.removeChild(myNode.children[0]);
 	}
+}
+
+
+function fillTable(data) {
 	var mainDIV0 = document.querySelector('#pressetMatch');
     data.forEach(function(elem) {
     		var mainDIV = mainDIV0.children[0].cloneNode(true);

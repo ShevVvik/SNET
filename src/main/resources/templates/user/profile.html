@@ -49,9 +49,9 @@
                 <div class="profilePhoto">
                     <img th:src="@{/avatar/big/} + ${user.login}" height="200" width="200" class="foto">
                     <div class="butMain">
-                        <div class="butFriend"><a id="butFriend" th:href="@{/} + ${user.id} + @{/friendlist}">.</a></div>
-                        <div th:if="${otherUser} == true" id="iw-modal-btn" class="butFriend" style="overflow:hidden;" th:text="#{buttom.message}"></div>
-                        <div class="butFriend"><a id="butFriend" href="/search">.</a></div>
+                        <div class="butFriend"><a id="butFriend" th:href="@{/} + ${user.id} + @{/friendlist}">friend list</a></div>
+                        <div th:if="${createNews} == true" id="iw-modal-btn" class="butFriend" style="overflow:hidden;" th:text="#{buttom.message}"></div>
+                        <div class="butFriend"><a id="butFriend" href="/search">search</a></div>
                         <div th:if="${friends} == false" id="addFriend" class="butFriend" style="overflow:hidden;">добавить</div>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                             <div id="education"><div id="information" th:text="#{education.holder} + @{:}"></div><div id="educationInf" th:text="${user.education}"></div></div>
                             <div id="hobby"><p id="information" th:text="#{hobby.holder} + @{:}"></p><li id="hobbyInf" 
                             												th:each="hob, st : ${user.userHobbies}">
-                            												<p th:text="${hob.nameHobby} + @{, }"></p></li></div>
+                            												<p th:text="${hob.nameHobby} + @{ }"></p></li></div>
                         </div>
                         <label id="openInfo" class="hideInf" th:text="#{profile.moreInfo}"></label>
                         <br/>
@@ -85,7 +85,7 @@
 				<input class="inputFormBut"type="button" id="test" value="search">
             </div>
             <ul>
-                <li th:if="${otherUser} == false">
+                <li th:if="${createNews} == false">
                     <form id="newNews"  method="POST" enctype="multipart/form-data" class="createNews" >
                         <div id="redLine">
                             <div id="name" th:text="${user.lastName} + @{ } + ${user.firstName}"></div>
@@ -111,6 +111,7 @@
                                     </div>
                                 <div class="left">
                                 	<div class="input_file, addFoto">
+                                		<p>ADD PHOTO</p>
                     					<input type="file" name="files" class="hid">
                     				</div>
                                     
@@ -144,8 +145,8 @@
                             </div>
 
                             <div class="newsContent">
-                                <pre>
-                           			
+                            <span id="errorSpan"></span>
+                                <pre>	
                             	</pre>
                             	<img class="newsImg" alt=" ">
                             </div>
@@ -154,7 +155,7 @@
                                 <div class="fieldInfo">
                                     <div class="leftField">
                                         <div id="date"></div>
-                                        <div id="levelView" ></div>
+                                        <div id="levelView" th:text="#{buttom.forFriends}"></div>
                                         <div id="tags"></div>
                                     </div>
                                     <div class="buttomComment">
@@ -182,6 +183,7 @@
                             <li id="pressetComment">
                                 <div class="comments">
                                     <div class="topCom">
+                                    	<span id="errorSpan"></span><br>
                                         <div class="comCont">
                                         </div>
                                     </div>  
@@ -214,6 +216,7 @@
                             </div>
 
                             <div class="newsContent" >
+                            	<span id="errorSpan"></span>
                             	<pre th:text="${new1.text}">
                            			
                             	</pre>
@@ -238,6 +241,7 @@
                         	<li style="display:none">
                         		<div id="createNewComments" class="comments">
                                     <div class="topCom">
+                                    	<span id="errorSpan"></span>
                                         <textarea class="textAreaComCont"></textarea>
                                     </div>
                                  
@@ -252,6 +256,7 @@
                             <li th:each="comment, st: ${new1.comments}">
                                 <div th:id="${comment.id}" class="comments">
                                     <div class="topCom">
+                                    	<span id="errorSpan"></span>
                                         <div class="comCont" th:text="${comment.text}"></div>
                                     </div>  
                                     <div class="botCom">

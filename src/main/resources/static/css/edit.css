@@ -1,6 +1,12 @@
 body{
     background-color: #4a4a4a;
     font-family: Calibri;
+    background-image: 
+        linear-gradient(to top, rgba(74, 74, 74, 0.2), rgba(74,74,74,0.2)),
+        url("../img/app.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     text-transform: uppercase;
     letter-spacing: 2px;
     font-size: 20px;
@@ -59,7 +65,7 @@ p {
 .container{
     width: 1000px;
     min-height: 90vh;
-    background-color: #867777de;
+    background-color: #635f5cde;
     padding: 1px;
     text-transform: uppercase;
     margin: 80px auto 0 auto;

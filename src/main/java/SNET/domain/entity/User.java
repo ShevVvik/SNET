@@ -93,13 +93,6 @@ public class User implements Serializable {
 	public void setDateBirthday(Date dateBirthday) {
 		this.dateBirthday = dateBirthday;
 	}
-	/*
-	@ManyToMany
-	@JoinTable(name = "friend_list", 
-	    joinColumns = @JoinColumn(name = "user2Id", referencedColumnName = "idUser", nullable = false), 
-	    inverseJoinColumns = @JoinColumn(name = "user1Id", referencedColumnName = "idUser", nullable = false))
-	private Set<User> friends;
-	*/
 	
 	public Long getId() {
 		return id;
@@ -194,14 +187,7 @@ public class User implements Serializable {
 		}
 		return news;
 	}
-/*
-	public Set<User> getFriends() {
-		if (friends == null) {
-			friends = new HashSet<>();
-		}
-		return friends;
-	}
-*/
+
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -251,7 +237,7 @@ public class User implements Serializable {
 	public List<Hobby> getHobbiesList() {
 	    List<Hobby> list = new ArrayList<>();
 	    if (userHobbies != null) {
-	    	for (Hobby hobby : this.getUserHobbies()) {
+	    	for (Hobby hobby : userHobbies) {
             	list.add(hobby);
         	}
 	    };
@@ -267,17 +253,7 @@ public class User implements Serializable {
 
 	    return list;
 	}
-/*
-	public List<User> getFriendsList() {
-	    List<User> list = new ArrayList<>();
 
-	    for (User user : this.getFriends()) {
-            list.add(user);
-        }
-
-	    return list;
-	}
-*/
     public String getFullName() {
         return this.firstName + " " + this.lastName;
     }

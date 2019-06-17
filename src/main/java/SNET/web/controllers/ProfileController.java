@@ -32,7 +32,7 @@ import net.coobird.thumbnailator.geometry.Positions;
 @Controller
 public class ProfileController {
 	
-	@Value("C:\\Folder")
+	@Value("${project.manager.avatar.dir.path}")
     private String avatarDirPath;
 	
 	public static String BIG_AVATAR_POSTFIX = "_big_thumb.png";
@@ -104,14 +104,12 @@ public class ProfileController {
             }
         }
 		}
-		userService.updateUserFromRegistrationForm(userForm, userDetails.getUser());
-		
+		userService.updateUser(userForm, userDetails.getUser());
 		return "redirect:/u/" + userDetails.getUser().getId();
 	}
 	
 	@GetMapping("/{userId}/friendlist")
 	public String friendlist(Model model, @PathVariable Long userId) {
-		
 		UserDetailsImpl userDet = (UserDetailsImpl) SecurityContextHolder
 		        .getContext()
 		        .getAuthentication()
@@ -143,13 +141,13 @@ public class ProfileController {
 		model.addAttribute("news", newsService.getNewsByAuthor(user.getId(), userX));
 		model.addAttribute("friends", (friendsService.isFriendsRequest(userX, user)) ? true : false);
 		model.addAttribute("otherUser", (user.equals(userX) || (userX.getHighLevelRole().equals(Role.ROLE_ADMIN))) ? false : true);
+		model.addAttribute("createNews", (user.equals(userX)) ? false : true);
 		
 		return "/user/profile";
 	}
 	
 	@GetMapping("/search")
 	public String searchPage(Model model) {
-		
 		return "/user/search";
 	}
 }

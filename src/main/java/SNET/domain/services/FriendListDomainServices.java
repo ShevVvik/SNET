@@ -23,25 +23,26 @@ public class FriendListDomainServices {
 	@Autowired
 	private UserDomainServices userService;
 	
-	public List<FriendDTO> getRequestFriends(Long userId) {
-		List<FriendList> friendList = friendListDao.findByUser2IdAndFriendshipFalse(userId);
+	public List<FriendDTO> getRequestFriends(Long userId, User user) {
 		List<FriendDTO> friends = new ArrayList<FriendDTO>();
-		for (FriendList fr : friendList) {
-			UserDTO userDTO = new UserDTO();
-			FriendDTO friend = new FriendDTO();
-			if (userId == fr.getUser1().getId()) {
-				BeanUtils.copyProperties(fr.getUser2(), userDTO);
-				friend.setFriend(userDTO);
-				friend.setToken(fr.getToken());
-				friends.add(friend);
-			} else {
-				BeanUtils.copyProperties(fr.getUser1(), userDTO);
-				friend.setFriend(userDTO);
-				friend.setToken(fr.getToken());
-				friends.add(friend);
+		if (user.getId() == userId) {
+			List<FriendList> friendList = friendListDao.findByUser2IdAndFriendshipFalse(userId);
+			for (FriendList fr : friendList) {
+				UserDTO userDTO = new UserDTO();
+				FriendDTO friend = new FriendDTO();
+				if (userId == fr.getUser1().getId()) {
+					BeanUtils.copyProperties(fr.getUser2(), userDTO);
+					friend.setFriend(userDTO);
+					friend.setToken(fr.getToken());
+					friends.add(friend);
+				} else {
+					BeanUtils.copyProperties(fr.getUser1(), userDTO);
+					friend.setFriend(userDTO);
+					friend.setToken(fr.getToken());
+					friends.add(friend);
+				}
 			}
 		}
-		
 		return friends;
 	}
 	
@@ -63,12 +64,9 @@ public class FriendListDomainServices {
 				friends.add(friend);
 			}
 		}
-		
 		return friends;
 	}
-	
-	
-	
+
 	public FriendList getFriendsByToken(String token) {
 		return friendListDao.findByToken(token);
 	}
@@ -96,23 +94,25 @@ public class FriendListDomainServices {
 		return false;
 	}
 	
-	public void addFriend(User userFrom, long idUserTo) {
-		FriendList newFriend = new FriendList();
-		newFriend.setUser1(userFrom);
-		newFriend.setUser2(userService.getById(idUserTo));
-		newFriend.setFriendship(false);
-		newFriend.setToken(UUID.randomUUID().toString());
-		friendListDao.save(newFriend);
+	public boolean addFriend(User userFrom, long idUserTo) {
+		if (!isFriendsRequest(userFrom, userService.getById(idUserTo))) {
+			FriendList newFriend = new FriendList();
+			newFriend.setUser1(userFrom);
+			newFriend.setUser2(userService.getById(idUserTo));
+			newFriend.setFriendship(false);
+			newFriend.setToken(UUID.randomUUID().toString());
+			friendListDao.save(newFriend);
+			return true;
+		}
+		return false;
 	}
 
 	public void deleteFriend(Long idUser, User userAut) {
 		FriendList friend1 = friendListDao.findByUser1IdAndUser2Id(idUser, userAut.getId());
 		FriendList friend2 = friendListDao.findByUser1IdAndUser2Id(userAut.getId(), idUser);
 		if (friend1 != null) {
-			System.out.println("Check1");
 			friendListDao.delete(friend1);
 		} else if (friend2 != null) {
-			System.out.println("Check2");
 			friendListDao.delete(friend2);
 		}
 	}

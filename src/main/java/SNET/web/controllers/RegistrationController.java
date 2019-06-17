@@ -33,7 +33,7 @@ import net.coobird.thumbnailator.geometry.Positions;
 @Controller
 public class RegistrationController {
 	
-	@Value("C:\\Folder")
+	@Value("${project.manager.avatar.dir.path}")
     private String avatarDirPath;
 	
 	public static String BIG_AVATAR_POSTFIX = "_big_thumb.png";
@@ -102,7 +102,6 @@ public class RegistrationController {
         }
 		}
 		userService.createUserFromRegistrationForm(userForm);
-		
 		return "redirect:/";
 	}
 	  

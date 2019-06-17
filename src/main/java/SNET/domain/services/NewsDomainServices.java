@@ -8,14 +8,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
-
-import javax.validation.Valid;
 
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,12 +33,13 @@ import SNET.domain.entity.TagsNews;
 import SNET.domain.entity.User;
 import SNET.web.form.CommentForm;
 import SNET.web.form.NewNewsForm;
-import net.coobird.thumbnailator.Thumbnails;
-import net.coobird.thumbnailator.geometry.Positions;
 
 @Service
 public class NewsDomainServices {
 
+	@Value("${project.manager.news.dir.path}")
+    private String newsDirPath;
+	
 	@Autowired
 	public NewsRepository newsDao;
 	
@@ -63,11 +62,8 @@ public class NewsDomainServices {
 		return newsDao.findAll();
 	}
 	
-	
 	public List<News> getNewsByAuthor(Long id, User userAut){
-		
 		List<News> news = null;
-		
 		if ((userAut.getHighLevelRole() == Role.ROLE_ADMIN) || 
 				(friendsService.isFriends(userService.getById(id), userAut)) ||
 				(id == userAut.getId())){
@@ -79,22 +75,31 @@ public class NewsDomainServices {
 	}
 	
 	public List<NewsDTO> searchNewsByPatternAsJson(String pattern, Long id, User userAut) {
-		
 		List<News> news = new ArrayList<News>();
-		
+		boolean all = true;
+		if ((userAut.getHighLevelRole() == Role.ROLE_ADMIN) || 
+				(friendsService.isFriends(userService.getById(id), userAut)) ||
+				(id == userAut.getId())){
+			all = true;
+		} else {
+			all = false;
+		}
 		char tagMarker = ' ';
 		if (pattern.length() != 0) tagMarker = pattern.charAt(0);
-		
 		if (tagMarker == '#') {
 			Tags tag = tagsDao.findByName(pattern.substring(1));
 			List<TagsNews> tagsNews = tagsNewsDao.findByTag(tag);
 			for (TagsNews tagNews : tagsNews) {
-				news.add(tagNews.getNews());
+				if(all) {
+					news.add(tagNews.getNews());
+				} else {
+					if (!tagNews.getNews().isForFriends()) {
+						news.add(tagNews.getNews());
+					}
+				}
 			}
 		} else {
-			if ((userAut.getHighLevelRole() == Role.ROLE_ADMIN) || 
-					(friendsService.isFriends(userService.getById(id), userAut)) ||
-					(id == userAut.getId())){
+			if (all){
 				news = newsDao.findAllByTextContainingAndAuthorIdOrderByIdDesc(pattern, id);
 			} else {
 				news = newsDao.findAllByTextContainingAndAuthorIdAndForFriendsFalseOrderByIdDesc(pattern, id);
@@ -144,11 +149,11 @@ public class NewsDomainServices {
 		return newsJson;
 	}
 	
-	public void addNewNews(NewNewsForm form) {
+	public void addNewNews(NewNewsForm form, User user) {
         Calendar cal = Calendar.getInstance();
         Date date=cal.getTime();
 		News news = new News();
-		news.setAuthor(userService.getById(form.getIdAuthor()));
+		news.setAuthor(user);
 		news.setText(form.getNewNewsText());
 		news.setForFriends(form.isForFriends());
 		news.setNewsDate(date);
@@ -159,8 +164,6 @@ public class NewsDomainServices {
 		List<Tags> newsTags = new ArrayList<Tags>();
 		for(String tagName : form.getTags()) {
 			Tags tag = tagsDao.findByName(tagName);
-			
-			
 			if (tag == null) {
 				Tags newTag = new Tags();
 				newTag.setName(tagName);
@@ -168,43 +171,39 @@ public class NewsDomainServices {
 			} else {
 				newsTags.add(tag);
 			}
-			
 		}
 		news.setTags(new HashSet<Tags>(newsTags));
 		newsDao.save(news);
 	}
 	
-	public void saveImages(MultipartFile file, String id) {
-	            String filePath = "C:\\Folder\\News" + File.separator + id + File.separator;
-	    
-	            if(! new File(filePath).exists()) {
-	                new File(filePath).mkdirs();
-	            }
-	            
-	            try {
-	                FileUtils.cleanDirectory(new File(filePath));
-	        
-	                String orgName = file.getOriginalFilename();
-	                String fullFilePath = filePath + id + ".png";
-	        
-	                File dest = new File(fullFilePath);
-	                file.transferTo(dest);
-	                
-	            } catch (IllegalStateException e) {
-	                System.out.println(e);
-	                e.printStackTrace();
-	            } catch (IOException e) {
-	                System.out.println(e);
-	                e.printStackTrace();
-	            }
+	public void saveImages(MultipartFile file, String token) {
+		String filePath = newsDirPath + File.separator + token + File.separator;
+		if(! new File(filePath).exists()) {
+			new File(filePath).mkdirs();
+		}     
+		try {
+			FileUtils.cleanDirectory(new File(filePath));
+			String fullFilePath = filePath + token + ".png";
+			File dest = new File(fullFilePath);
+	        file.transferTo(dest);      
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	public void deleteNews(Long id) {
-		try {
-			newsDao.deleteById(id);
-		} catch(EmptyResultDataAccessException err) {
-			
+	public boolean deleteNews(Long id, User user) {
+		News newNews = newsDao.getOne(id);
+		if ((user.getHighLevelRole().equals(Role.ROLE_ADMIN)) || newNews.getAuthor().equals(user)) {
+			try {
+				newsDao.deleteById(id);
+				return true;
+			} catch(EmptyResultDataAccessException err) {
+				return false;
+			}
 		}
+		return false;
 	}
 
 
@@ -219,24 +218,31 @@ public class NewsDomainServices {
         commentsDao.save(comment);
 	}
 	
-	public void updateComment(CommentForm form) {
+	public boolean updateComment(CommentForm form, User user) {
 		Comments comment = commentsDao.getOne(form.getIdComment());
-		System.out.println(form.getIdComment());
-		comment.setText(form.getText());
-		Calendar cal = Calendar.getInstance();
-        Date date=cal.getTime(); 
-        comment.setCommentDate(date);
-        commentsDao.save(comment);
+		if (comment.getCommentator().equals(user)) {
+			comment.setText(form.getText());
+			Calendar cal = Calendar.getInstance();
+        	Date date=cal.getTime(); 
+        	comment.setCommentDate(date);
+        	commentsDao.save(comment);
+        	return true;
+		}
+		return false;
 	}
 
 
-	public void updateNewNews(NewNewsForm form) {
+	public boolean updateNewNews(NewNewsForm form, User user) {
 		News newNews = newsDao.getOne(form.getIdNews());
-		newNews.setText(form.getNewNewsText());
-		if (form.getFile() != null) {
-			newNews.setImageToken(UUID.randomUUID().toString());
-			saveImages(form.getFile(), newNews.getImageToken());
+		if (newNews.getAuthor().equals(user)) {
+			newNews.setText(form.getNewNewsText());
+			if (form.getFile() != null) {
+				newNews.setImageToken(UUID.randomUUID().toString());
+				saveImages(form.getFile(), newNews.getImageToken());
+			}
+			newsDao.save(newNews);
+			return true;
 		}
-		newsDao.save(newNews);
+		return false;
 	}
 }

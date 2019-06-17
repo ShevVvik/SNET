@@ -135,8 +135,8 @@ function ajaxSubmitForm() {
             $('#newsCreateImg').val(null);
             newsSearch();
         },
-        error: function() {
-        	errorSpan.textContent = 'Error';
+        error: function(xhr) {
+        	errorSpan.textContent = xhr.responseText;
             $("#submitNewNews").prop("disabled", false);
         }
     });
@@ -150,7 +150,6 @@ function previewFile(file, preview) {
       preview.src = reader.result;
       
     }
-  
     if (file) {
       reader.readAsDataURL(file);
     } else {
@@ -248,6 +247,7 @@ $( '#newsList' ).on( 'click', '.butEdit', function( event ) {
 });
 
 $('#newsList').on('click', '.sendEditNews', function(event) {
+	var element = $(this).parent().parent().parent().get(0);
 	var data = new FormData();
     data.append("idNews", $(this).parent().parent().parent().attr('id'));
     data.append("newNewsText", $(this).parent().parent().parent().find('.newNewsTextArea').val());
@@ -268,9 +268,11 @@ $('#newsList').on('click', '.sendEditNews', function(event) {
         cache: false,
         timeout: 1000000,
         success: function() {
+        	$(element).find("#errorSpan").text('');
             newsSearch();
         },
-        error: function() {   
+        error: function(xhr) {
+        	$(element).find("#errorSpan").text(xhr.responseText);
         }
     });
 });
@@ -289,7 +291,7 @@ $('#newsList').on('click', '.deleteNews', function() {
     	if (xhr.readyState != 4) 
     		return;
     	if (xhr.status != 200) {
-    		console.log(xhr.status + ': ' + xhr.statusText);
+    		alert(xhr.responseText);
     	} else {    		
     		$(elem).remove();
     	}
@@ -313,7 +315,8 @@ $('#newsList').on('click', '.editOldComment', function(event) {
 
 $('#newsList').on('click', '.saveOldComment', function(event) {
 	var data = new FormData();
-    var idComment = $(this).parent().parent().parent().attr('id');
+	var element = $(this).parent().parent().parent().get(0);
+    var idComment = $(element).attr('id');
     data.append("idComment", idComment);
     data.append("idNews", $(this).parent().parent().parent().parent().parent().parent().children().attr('id'));
     data.append("text", $(this).parent().parent().parent().find('.textAreaComCont').val());
@@ -332,15 +335,18 @@ $('#newsList').on('click', '.saveOldComment', function(event) {
         cache: false,
         timeout: 1000000,
         success: function() {
+        	$(element).find('#errorSpan').text('');
             newsSearch();
         },
-        error: function() {   
+        error: function(xhr) {  
+        	$(element).find('#errorSpan').text(xhr.responseText);
         }
     });
 });
 
 $('#newsList').on('click', '.butComCreate', function(event) {
     var data = new FormData();
+    var element = $(this).parent().parent().parent().get(0);
     var idNews = $(this).parent().parent().parent().attr('id');
     data.append("idNews", $(this).parent().parent().parent().parent().parent().children().attr('id'));
     data.append("text", $(this).parent().parent().find('.textAreaComCont').val());
@@ -359,37 +365,12 @@ $('#newsList').on('click', '.butComCreate', function(event) {
         cache: false,
         timeout: 1000000,
         success: function() {
+        	$(element).find('#errorSpan').text('');
             newsSearch();
         },
-        error: function() {   
+        error: function(xhr) {   
+        	$(element).find('#errorSpan').text(xhr.responseText);
         }
     });
  
 });
-
-function sendNewCommentForm(event) {
-    var data = new FormData();
-    var idNews = $(this).parent().parent().parent().attr('id');
-    data.append("id", $(this).parent().parent().parent().parent().children().attr('id'));
-    data.append("text", $(this).parent().parent().find('.textAreaComCont').val());
-    var token = document.head.querySelector("meta[name='_csrf']").content;
-    var header = document.head.querySelector("meta[name='_csrf_header']").content; 
-    $.ajax({
-    	headers: { 
-    		"X-CSRF-TOKEN": token
-        },
-        type: 'POST',
-        enctype: 'multipart/form-data',
-        url: '/news/comment/add',
-        data : data,
-        contentType: false,
-        processData: false,
-        cache: false,
-        timeout: 1000000,
-        success: function() {
-            newsSearch();
-        },
-        error: function() {   
-        }
-    });
-}
