@@ -195,7 +195,7 @@ public class UserDomainServices {
 		}
 		if (hobbyForm != "") {
 			StringBuffer sb = new StringBuffer(hobbyForm);
-			sb.delete(sb.length()-3, sb.length()-1);
+			sb.delete(sb.length()-2, sb.length()-1);
 			hobbyForm = sb.toString();
 		}
 		form.setHobby(hobbyForm);

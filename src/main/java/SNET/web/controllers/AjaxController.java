@@ -73,7 +73,7 @@ public class AjaxController {
 	
 	@PostMapping("/forgotPassword")
     public ResponseEntity<String> forgotPassword(@RequestParam("login") String login, ModelAndView modelAndView) {
-		if (userService.forgotPassword(login)) 
+		if (!userService.forgotPassword(login)) 
 			return new ResponseEntity<>(messageSource.getMessage("profile.forgot.password.error", null, Locale.ENGLISH), HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<String>(HttpStatus.OK);
     }

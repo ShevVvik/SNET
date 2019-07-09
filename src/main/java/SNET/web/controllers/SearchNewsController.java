@@ -93,7 +93,7 @@ public class SearchNewsController {
 			return new ResponseEntity<>(messageSource.getMessage("comment.add.blank.text", null, Locale.ENGLISH), HttpStatus.BAD_REQUEST);
 		}
 		UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
-		if (newsService.updateComment(form, userDetails.getUser())) 
+		if (!newsService.updateComment(form, userDetails.getUser())) 
 			return new ResponseEntity<>(messageSource.getMessage("profile.news.update.author.error", null, Locale.ENGLISH), HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}

@@ -37,7 +37,8 @@ import SNET.web.form.NewNewsForm;
 @Service
 public class NewsDomainServices {
 
-	@Value("${project.manager.news.dir.path}")
+	//@Value("${project.manager.news.dir.path}")
+	@Value("C:\\Folder\\News")
     private String newsDirPath;
 	
 	@Autowired

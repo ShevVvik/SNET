@@ -32,7 +32,8 @@ import net.coobird.thumbnailator.geometry.Positions;
 @Controller
 public class ProfileController {
 	
-	@Value("${project.manager.avatar.dir.path}")
+	//@Value("${project.manager.avatar.dir.path}")
+	@Value("C:\\Folder")
     private String avatarDirPath;
 	
 	public static String BIG_AVATAR_POSTFIX = "_big_thumb.png";
@@ -93,8 +94,9 @@ public class ProfileController {
                 String fullFilePath = filePath + orgName;
         
                 File dest = new File(fullFilePath);
-                Thumbnails.of(dest).size(200, 200).crop(Positions.CENTER).toFile(new File(filePath + userForm.getLogin() + BIG_AVATAR_POSTFIX));
                 multipartFile.transferTo(dest);
+                Thumbnails.of(dest).size(200, 200).crop(Positions.CENTER).toFile(new File(filePath + userForm.getLogin() + BIG_AVATAR_POSTFIX));
+
             } catch (IllegalStateException e) {
                 System.out.println(e);
                 e.printStackTrace();
@@ -139,7 +141,7 @@ public class ProfileController {
 		model.addAttribute("user", user);
 		model.addAttribute("userAut", userX);
 		model.addAttribute("news", newsService.getNewsByAuthor(user.getId(), userX));
-		model.addAttribute("friends", (friendsService.isFriendsRequest(userX, user)) ? true : false);
+		model.addAttribute("friends", ((friendsService.isFriendsRequest(userX, user)) || (user.getId() == userX.getId())) ? true : false);
 		model.addAttribute("otherUser", (user.equals(userX) || (userX.getHighLevelRole().equals(Role.ROLE_ADMIN))) ? false : true);
 		model.addAttribute("createNews", (user.equals(userX)) ? false : true);
 		

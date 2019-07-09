@@ -33,7 +33,8 @@ import net.coobird.thumbnailator.geometry.Positions;
 @Controller
 public class RegistrationController {
 	
-	@Value("${project.manager.avatar.dir.path}")
+	//@Value("${project.manager.avatar.dir.path}")
+	@Value("C:\\Folder")
     private String avatarDirPath;
 	
 	public static String BIG_AVATAR_POSTFIX = "_big_thumb.png";
@@ -89,8 +90,8 @@ public class RegistrationController {
                 String fullFilePath = filePath + orgName;
         
                 File dest = new File(fullFilePath);
-                Thumbnails.of(dest).size(200, 200).crop(Positions.CENTER).toFile(new File(filePath + userForm.getLogin() + BIG_AVATAR_POSTFIX));
                 multipartFile.transferTo(dest);
+                Thumbnails.of(dest).size(200, 200).crop(Positions.CENTER).toFile(new File(filePath + userForm.getLogin() + BIG_AVATAR_POSTFIX));
                 
             } catch (IllegalStateException e) {
                 System.out.println(e);

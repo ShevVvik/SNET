@@ -132,7 +132,7 @@ function ajaxSubmitForm() {
         success: function() {
             $("#submitNewNews").prop("disabled", false);
             $('#newNews')[0].reset();
-            $('#newsCreateImg').val(null);
+            $('#newsCreateImg').attr("src", "");
             newsSearch();
         },
         error: function(xhr) {

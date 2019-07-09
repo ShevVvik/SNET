@@ -10,6 +10,7 @@ document.getElementById('forgot').addEventListener('click', () => {
 })
 
 document.getElementById('requestPassword').addEventListener('click', () => {
+	alert();
 	var login = document.getElementById('loginPass').value;
     var token = document.head.querySelector("meta[name='_csrf']").content;
     var header = document.head.querySelector("meta[name='_csrf_header']").content;

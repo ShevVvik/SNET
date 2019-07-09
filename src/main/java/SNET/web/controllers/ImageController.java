@@ -20,10 +20,10 @@ public class ImageController {
 
     public static String BIG_AVATAR_POSTFIX = "_big_thumb.png";
 
-    @Value("${project.manager.avatar.dir.path}")
+    @Value("C:\\Folder")
     private String avatarDirPath;
     
-    @Value("${project.manager.news.dir.path}")
+    @Value("C:\\Folder\\News")
     private String newsImageDirPath;
 
     @GetMapping(value="/avatar/big/{login}", produces=MediaType.IMAGE_PNG_VALUE)
