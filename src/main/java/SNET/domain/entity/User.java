@@ -86,6 +86,12 @@ public class User implements Serializable {
 	@LastModifiedDate
 	private Date dateBirthday;
 	
+	public User(Long id) {
+		this.id = id;
+	}
+	
+	public User() {	}
+
 	public Date getDateBirthday() {
 		return dateBirthday;
 	}

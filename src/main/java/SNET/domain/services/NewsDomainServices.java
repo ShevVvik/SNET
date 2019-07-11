@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.apache.tomcat.util.http.fileupload.FileUtils;
@@ -23,6 +24,7 @@ import SNET.dao.NewsRepository;
 import SNET.dao.TagsNewsRepository;
 import SNET.dao.TagsRepository;
 import SNET.domain.dto.CommentsDTO;
+import SNET.domain.dto.FriendDTO;
 import SNET.domain.dto.NewsDTO;
 import SNET.domain.dto.UserDTO;
 import SNET.domain.entity.Comments;
@@ -245,5 +247,23 @@ public class NewsDomainServices {
 			return true;
 		}
 		return false;
+	}
+
+	public List<News> getAllFriendsNews(User user) {
+		List<News> news = new ArrayList<News>();
+		List<Long> friendsIdArray = new ArrayList<Long>();
+		for(FriendDTO friends : friendsService.getActiveFriends(user.getId())) {
+			friendsIdArray.add(friends.getFriend().getId());
+		}
+		
+		Set<News> newsSet = newsDao.findByAuthorIdIn(friendsIdArray);
+		
+		if (newsSet != null) { 
+			for(News newsElem : newsSet) {
+				news.add(newsElem);
+			}
+		}
+		
+		return news;
 	}
 }

@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import SNET.domain.entity.FriendList;
 import SNET.domain.entity.Tags;
 import SNET.domain.entity.TagsNews;
 
