@@ -91,7 +91,7 @@ public class User implements Serializable {
 	}
 	
 	public User() {	}
-
+	
 	public Date getDateBirthday() {
 		return dateBirthday;
 	}

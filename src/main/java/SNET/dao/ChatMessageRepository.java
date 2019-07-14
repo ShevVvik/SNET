@@ -19,7 +19,12 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
 	@Query(" FROM ChatMessage m"
 	        + "  WHERE m.authorUser.id IN (:userIdOne, :userIdTwo)"
 	        + "  AND m.recipientUser.id IN (:userIdOne, :userIdTwo)"
-	        + "  ORDER BY m.timeSent DESC")
+	        + "  ORDER BY m.id DESC")
 	public List<ChatMessage> getExistingChatMessages(@Param("userIdOne") long userIdOne, @Param("userIdTwo") long userIdTwo, Pageable pageable);
 	
+	@Query(" FROM ChatMessage c"
+		      + "  WHERE c.authorUser.id IN (:userIdOne, :userIdTwo)"
+		      + "  AND c.recipientUser.id IN (:userIdOne, :userIdTwo)"
+		      + "  ORDER BY c.id DESC")
+	public List<ChatMessage> getLastMessage(@Param("userIdOne") long userIdOne, @Param("userIdTwo") long userIdTwo, Pageable pageable);
 }

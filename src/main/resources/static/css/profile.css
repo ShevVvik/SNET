@@ -47,10 +47,11 @@
 
     .container{
         width: 1000px;
+        max-weight: 1000px;
         height: 100%;
         min-height: 90vh;
         background-color: #635f5cde;
-        padding: 3%;
+        padding: 35px;
         text-transform: uppercase;
         margin: 80px auto 0 auto;
         
@@ -64,6 +65,8 @@
 	}
     .profile{
         padding-bottom: 20px;
+        width: 100%;
+
         display: flex;
     }
 
@@ -81,28 +84,32 @@
     }
 
     .butMain {  
-    display: flex;
+    	display: block;
+    	margin-left: auto;
+    	margin-right: -35px;
     }
 
     .butFriend{   
-        width: 25px;
+        width: 150px;
+        height: 35px;
         overflow: hidden;
-        border-radius: 20px;
-        background-color: #ff3535;
-        margin: 0px 3px;
+        background-color: #b1b1b1;
+        border-radius: 0 0 0 50px;
+        border-left: 5px solid #ff3535;
+        border-bottom: 5px solid #ff3535;
+        margin-bottom: 10px;
         cursor: pointer;
         text-decoration: none;
         text-transform: uppercase;
         font-family: Calibri;
         letter-spacing: 2px;
-        border-style: none;
         text-align: center;
-        -webkit-transition: top 1s ease-out 0.5s;
-     	-moz-transition: top 1s ease-out 0.5s;
-     	-o-transition: top 1s ease-out 0.5s;
-     	transition: top 1s ease-out 0.5s;
+        -webkit-transition: 0.5s linear;
+     	-moz-transition: 0.5s linear;
+     	-o-transition: 0.5s linear;
+     	transition: 0.5s linear;
     }
-
+	
     #butFriend{
         color: #ff3535;
     }
@@ -112,9 +119,9 @@
         color: #ff3535;
     }
 
-    .butFriend:hover{
-        width: 150px;
-        color: #ffffff;
+	.butFriend:hover{   
+        background-color: #fafafa;
+        color: #ff3535;
     }
 
     A{
@@ -124,7 +131,8 @@
 
     .profileInfo{
         padding: 0px 0px 0px 30px;
-        width: 800px;
+        width: 600px;
+        min-width: 550px;
     }
 
     .nameLogin, #city, #education, #hobby{

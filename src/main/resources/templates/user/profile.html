@@ -48,12 +48,6 @@
         	<p id="id" hidden th:text="${user.id}">
                 <div class="profilePhoto">
                     <img th:src="@{/avatar/big/} + ${user.login}" height="200" width="200" class="foto">
-                    <div class="butMain">
-                        <div class="butFriend"><a id="butFriend" th:href="@{/} + ${user.id} + @{/friendlist}">friend list</a></div>
-                        <div th:if="${createNews} == true" id="iw-modal-btn" class="butFriend" style="overflow:hidden;" th:text="#{buttom.message}"></div>
-                        <div class="butFriend"><a id="butFriend" href="/search">search</a></div>
-                        <div th:if="${friends} == false" id="addFriend" class="butFriend" style="overflow:hidden;">добавить</div>
-                    </div>
                 </div>
                 <div class="profileInfo">
                     <div class="nameLogin">
@@ -76,6 +70,13 @@
                         <br/>
                         <br/>
                     </div>
+                </div>
+                <div class="butMain">
+                        <div class="butFriend"><a id="butFriend" th:href="@{/} + ${user.id} + @{/friendlist}">friend list</a></div>
+                        <!--  <div th:if="${createNews} == true" id="iw-modal-btn" class="butFriend" style="overflow:hidden;" th:text="#{buttom.message}"></div> -->
+                        <div class="butFriend"><a id="butFriend" href="/search">search</a></div>
+                        <div class="butFriend"><a id="butFriend" href="/message">message</a></div>
+                        <div th:if="${friends} == false" id="addFriend" class="butFriend" style="overflow:hidden;">добавить</div>
                 </div>
         </div>
 

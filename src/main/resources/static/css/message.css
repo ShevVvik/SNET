@@ -1,0 +1,200 @@
+body{
+    background-color: #4a4a4a;
+    font-family: Calibri;
+    background-image: 
+        linear-gradient(to top, rgba(74, 74, 74, 0.2), rgba(74,74,74,0.2)),
+        url("../img/app.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-size: 20px;
+    color: #ffffff;
+    margin: 0px;
+}
+
+.top{
+    height: 80px;
+    background-color: #3d3d3d;
+    position: fixed;
+    top:0;
+    z-index: 9999;
+    width: 100%;
+}
+
+.logo{
+    padding: 25px;
+    padding-left: 70px;
+}
+
+.bottom{
+    height: 40px;
+    background-color: #3d3d3d;
+    position:fixed;
+    bottom:0;
+    width:100%;
+}
+
+.container{
+    width: 1000px;
+    height: 100%;
+    min-height: 88.5vh;
+    padding: 1px;
+    background-color: #635f5cde;
+    margin: 80px auto 40px auto;
+    bottom: 40px;
+}
+
+
+.avatar {
+    height: 100px;
+    width: 100px;
+    margin-right: 10px;
+    float: left;
+}
+
+.avatarLast {
+    height: 40px;
+    width: 40px;
+    margin-right: 10px;
+    float: left;
+}
+
+
+a{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.friends{
+    margin-left: 3%;
+}
+
+.oneFriend{
+    width: 850px;
+    border-top: 1px solid #ff3535;
+    margin: 10px auto 0 auto;
+    padding: 5px 20px;
+    position: relative;
+    display: flex;
+}
+
+.nameLogin, .nameFriend{
+    display: flex;
+    margin-right: 5px;
+}
+
+.friends a{
+    display: flex;
+}
+
+.firstName{
+    margin-right: 5px;
+}
+
+.login{
+    color: #ffffff70;
+}
+
+.link {
+	height: 100%; /* Высота на весь слой */
+	width: 100%;
+	z-index: 9999;
+}
+
+.notRedIn{
+    width: 998px;
+    margin-top: -1px;
+    height: 35px;
+    background-color: #4b4b4b;
+    border-bottom: 1px solid #252525;
+    cursor: pointer;
+    text-align: right;
+    text-decoration: none;
+    border-style: none;
+    color: #ffffff;
+    font-family: Calibri;
+    letter-spacing: 2px;
+    font-size: 20px;
+    border: none;
+}
+
+.titleCont {
+    margin-top: 4px;
+    margin-left: 5%;
+    margin-bottom: 5px;
+}
+
+.friendMessage {
+    margin: 20px 80px 20px 0px;
+    background-color: #777777;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+}
+
+.lastMessage {
+	width: 550px;
+	margin-top: 5px;
+}
+
+.myMessage {
+    margin: 20px 0px 20px 80px;
+    background-color: #777777;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+}
+
+.messageName {
+    color: #b1b1b1;
+    font-size: 14px;
+    font-family: Calibri;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.createMassage {
+	width: 1000px;
+    height: 100px;
+    border-bottom: 1px solid #ff3535;
+    background-color: #635f5cde;
+    bottom: 40px;
+    position: fixed;
+       
+}
+
+.createMassage textarea {
+    overflow: auto;
+    resize: none;
+    width: 1000px;
+    height: 100px;
+    color: #fafafa;
+    font-family: Calibri Regular;
+    letter-spacing: 2px;
+    font-size: 20px;
+    border: none;
+    background-color: #3e3e3e;
+    margin:0px;
+    padding: 0px;
+}
+
+.areaMessage {
+	padding: 0 40px 0 40px;
+    margin-bottom: 100px;
+    overflow: auto;
+}
+
+.newMessage {
+	position: fixed;
+	text-align: center;
+	height: 20px;
+}

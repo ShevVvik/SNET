@@ -38,8 +38,10 @@ public class ImageController {
         File f = new File(avatarFileName);
         if(f.exists() && !f.isDirectory()) {
             return new FileSystemResource(f);
-        }
-        return null;
+        } 
+        avatarFileName = avatarDirPath + File.separator + "noName.png";
+        f = new File(avatarFileName);
+        return new FileSystemResource(f);
     }
   
     @GetMapping(value="/news/image/{id}", produces=MediaType.IMAGE_PNG_VALUE)

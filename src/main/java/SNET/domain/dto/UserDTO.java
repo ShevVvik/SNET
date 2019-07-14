@@ -13,6 +13,20 @@ public class UserDTO {
 	private String city;
 	private String education;
 	
+	public UserDTO() {}
+	
+	public UserDTO(Long id, String email, String firstName, String lastName, String login, String city,
+			String education) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.login = login;
+		this.city = city;
+		this.education = education;
+	}
+	
 	public Long getId() {
 		return id;
 	}

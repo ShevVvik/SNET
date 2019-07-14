@@ -1,14 +1,10 @@
 package SNET.web.controllers;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Locale;
 
 import javax.validation.Valid;
 
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,20 +20,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import SNET.domain.services.HobbyDomainServices;
 import SNET.domain.services.UserDomainServices;
+import SNET.utils.UtilsForImage;
 import SNET.web.form.UserRegistrationForm;
 import SNET.web.validators.UserRegistrationFormValidator;
-import net.coobird.thumbnailator.Thumbnails;
-import net.coobird.thumbnailator.geometry.Positions;
-
 
 @Controller
 public class RegistrationController {
-	
-	//@Value("${project.manager.avatar.dir.path}")
-	@Value("C:\\Folder")
-    private String avatarDirPath;
-	
-	public static String BIG_AVATAR_POSTFIX = "_big_thumb.png";
 	
 	@Autowired
     private MessageSource messageSource;
@@ -67,41 +55,12 @@ public class RegistrationController {
 	@PostMapping("registration")
 	public String registrationPost(Model model, @Valid @ModelAttribute("userForm") UserRegistrationForm userForm,
 				BindingResult binding, @RequestParam("files") MultipartFile[] files) {
-		
-		
 		if(binding.hasErrors()) {
 			model.addAttribute("userForm", userForm);
 			model.addAttribute("allHobby", hobbyService.getAllHobby());
 			return "registration";
 		}
-
-		if (files != null) {
-		for (MultipartFile multipartFile : files) {
-            String filePath = avatarDirPath + File.separator + userForm.getLogin() + File.separator;
-    
-            if(! new File(filePath).exists()) {
-                new File(filePath).mkdirs();
-            }
-            
-            try {
-                FileUtils.cleanDirectory(new File(filePath));
-        
-                String orgName = multipartFile.getOriginalFilename();
-                String fullFilePath = filePath + orgName;
-        
-                File dest = new File(fullFilePath);
-                multipartFile.transferTo(dest);
-                Thumbnails.of(dest).size(200, 200).crop(Positions.CENTER).toFile(new File(filePath + userForm.getLogin() + BIG_AVATAR_POSTFIX));
-                
-            } catch (IllegalStateException e) {
-                System.out.println(e);
-                e.printStackTrace();
-            } catch (IOException e) {
-                System.out.println(e);
-                e.printStackTrace();
-            }
-        }
-		}
+		UtilsForImage.saveImages(files, userForm.getLogin());
 		userService.createUserFromRegistrationForm(userForm);
 		return "redirect:/";
 	}

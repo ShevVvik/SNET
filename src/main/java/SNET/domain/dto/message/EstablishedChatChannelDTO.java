@@ -1,18 +1,20 @@
 package SNET.domain.dto.message;
 
+import SNET.domain.dto.UserDTO;
+
 public class EstablishedChatChannelDTO {
 	
 	private String channelUuid;
 	
-	private String userOneFullName;
+	private UserDTO userOne;
 	  
-	private String userTwoFullName;
+	private UserDTO userTwo;
 	
-	public EstablishedChatChannelDTO(String channelUuid, String userOneFullName, String userTwoFullName) {
+	public EstablishedChatChannelDTO(String channelUuid, UserDTO userOne, UserDTO userTwo) {
 		super();
 		this.channelUuid = channelUuid;
-		this.userOneFullName = userOneFullName;
-		this.userTwoFullName = userTwoFullName;
+		this.userOne = userOne;
+		this.userTwo = userTwo;
 	}
 
 	public String getChannelUuid() {
@@ -23,19 +25,21 @@ public class EstablishedChatChannelDTO {
 		this.channelUuid = channelUuid;
 	}
 
-	public String getUserOneFullName() {
-		return userOneFullName;
+	public UserDTO getUserOne() {
+		return userOne;
 	}
 
-	public void setUserOneFullName(String userOneFullName) {
-		this.userOneFullName = userOneFullName;
+	public void setUserOne(UserDTO userOne) {
+		this.userOne = userOne;
 	}
 
-	public String getUserTwoFullName() {
-		return userTwoFullName;
+	public UserDTO getUserTwo() {
+		return userTwo;
 	}
 
-	public void setUserTwoFullName(String userTwoFullName) {
-		this.userTwoFullName = userTwoFullName;
+	public void setUserTwo(UserDTO userTwo) {
+		this.userTwo = userTwo;
 	}
+
+	
 }

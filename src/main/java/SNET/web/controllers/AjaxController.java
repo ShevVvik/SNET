@@ -39,7 +39,7 @@ public class AjaxController {
 	
 	@Autowired
 	private NewsDomainServices newsService;
-
+	
 	@PostMapping("/addFriend")
     public ResponseEntity<String> addFriend(@RequestParam("q") String pattern, ModelAndView modelAndView, Authentication auth) {
     	

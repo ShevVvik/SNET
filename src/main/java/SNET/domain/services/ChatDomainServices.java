@@ -1,5 +1,7 @@
 package SNET.domain.services;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.BeansException;
@@ -11,10 +13,12 @@ import SNET.dao.ChatChannelRepository;
 import SNET.dao.ChatMessageRepository;
 import SNET.domain.dto.message.ChatConnectionInitializeDTO;
 import SNET.domain.dto.message.ChatMessageDTO;
+import SNET.domain.dto.message.DialogDTO;
 import SNET.domain.entity.User;
 import SNET.domain.entity.message.ChatChannel;
 import SNET.domain.entity.message.ChatMessage;
 import SNET.utils.ConverterMessageDTO;
+import SNET.utils.ConverterToDialogDTO;
 
 @Service
 public class ChatDomainServices {
@@ -30,13 +34,13 @@ public class ChatDomainServices {
 	private final int MAX_PAGABLE_CHAT_MESSAGES = 100;
 
 	private String getExistingChannel(ChatConnectionInitializeDTO chatChannelInitializationDTO) {
-		List<ChatChannel> channel = chatChannelRepository
-	      .findByUserOneAndUserTwo(
-	        userService.getById(chatChannelInitializationDTO.getUserIdOne()),
-	        userService.getById(chatChannelInitializationDTO.getUserIdTwo())
+		String channel = chatChannelRepository
+	      .getChannelUuid(
+	        chatChannelInitializationDTO.getUserIdOne(),
+	        chatChannelInitializationDTO.getUserIdTwo()
 	      );
 	    
-	    return (channel != null && !channel.isEmpty()) ? channel.get(0).getUuid() : null;
+	    return (channel != null && !channel.isEmpty()) ? channel : null;
 	  }
 
 	  private String newChatSession(ChatConnectionInitializeDTO chatChannelInitializationDTO) throws BeansException {
@@ -51,12 +55,12 @@ public class ChatDomainServices {
 	  }
 
 	  public String establishChatSession(ChatConnectionInitializeDTO chatChannelInitializationDTO) {
-	    if (chatChannelInitializationDTO.getUserIdOne() == chatChannelInitializationDTO.getUserIdTwo()) {
+	    /*if (chatChannelInitializationDTO.getUserIdOne() == chatChannelInitializationDTO.getUserIdTwo()) {
 	      return null;
-	    }
+	    }*/
 
 	    String uuid = getExistingChannel(chatChannelInitializationDTO);
-
+	    System.out.println(uuid);
 	    // If channel doesn't already exist, create a new one
 	    return (uuid != null) ? uuid : newChatSession(chatChannelInitializationDTO);
 	  }
@@ -77,17 +81,41 @@ public class ChatDomainServices {
 	      )
 	    );*/
 	  }
-	 
+	  
+	  public List<DialogDTO> getAllDialogByUser(User user) {
+		  List<ChatChannel> channelsList = chatChannelRepository.findByUserOneOrUserTwo(user, user);
+		  if (channelsList != null) {
+			  List<DialogDTO> dialogsList = new ArrayList<DialogDTO>();
+			  for (ChatChannel ch : channelsList) {
+				  List<ChatMessage> messages = chatMessageRepository.getLastMessage(
+						  ch.getUserOne().getId(),
+						  ch.getUserTwo().getId(),
+						  PageRequest.of(0, 1));
+				  if (messages.size() != 0) {
+					  ChatMessage mes = messages.get(0);
+					  if (user.getId().equals(ch.getUserOne().getId())) {
+						  dialogsList.add(ConverterToDialogDTO.convertUsertoDialogDTO(ch.getUserTwo(), mes));  
+					  } else {
+						  dialogsList.add(ConverterToDialogDTO.convertUsertoDialogDTO(ch.getUserOne(), mes));
+					  }
+				  }
+			  }
+			  return dialogsList;
+		  }
+		  
+		  return new ArrayList<DialogDTO>();
+	  }
+	  
 	  public List<ChatMessageDTO> getExistingChatMessages(String channelUuid) {
 	    ChatChannel channel = chatChannelRepository.findByUuid(channelUuid);
-
+	    System.out.println(channelUuid + " " + channel);
 	    List<ChatMessage> chatMessages = 
 	      chatMessageRepository.getExistingChatMessages(
 	        channel.getUserOne().getId(),
 	        channel.getUserTwo().getId(),
 	        PageRequest.of(0, MAX_PAGABLE_CHAT_MESSAGES)
 	      );
-
+	    Collections.reverse(chatMessages);
 	    return ConverterMessageDTO.mapMessagesToChatDTOs(chatMessages);
 	}
 }

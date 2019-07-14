@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/message.css}">
+    <link rel="stylesheet" th:href="@{/css/emoji.css}">
+    <meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <!-- https://cdnjs.com/libraries/sockjs-client -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <!-- https://cdnjs.com/libraries/stomp.js/ -->
+    <script  src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script th:src="@{/js/message.js}" defer="defer"></script>
+    <script th:src="@{/js/emoji.js}" defer="defer"></script>
+    <title>Friends</title>
+</head>
+<body>
+<div>
+    <div class="top">
+        <div class="logo">
+            <a href="/profile"><img src="../img/logo.png"></a>
+        </div>
+    </div>
+</div>
+<div class="container">
+	<p th:id="${user.id}" hidden>
+    <div id="dialogList">
+    <input id="userFilter" class="notRedIn" type="text" placeholder="Search">
+    <p class="titleCont">Dialog list
+    <div id="friend0" th:each="dialog, st: ${dialogs}" class="oneFriend">
+        <a th:id="${dialog.userOne.id}">
+            <img class="avatar" th:src="@{/avatar/big/} + ${dialog.userOne.login}" alt="lorem">
+            <div class="nameFriend">
+                <p class="friendToken" hidden th:text="${dialog.userOne.id}">
+                <div id="firstNameFriend0" class="firstName" th:text="${dialog.userOne.lastName}">Шевяков</div>
+                <div id="lastNameFriend0" th:text="${dialog.userOne.firstName}">Дмитрий</div>
+            </div>
+            <div class="login" id="loginFriend0" th:text="${dialog.userOne.login}">Шевик</div>
+            <div class="lastMessage">
+                <img class="avatarLast" th:src="@{/avatar/big/} + ${dialog.authorLastMessage.login}" alt="lorem">
+                <p th:text="${dialog.contents}">Hi</p>
+            </div>
+        </a>
+    </div>
+    </div>
+</div>
+<div class="bottom"></div>
+</body>
+</html>

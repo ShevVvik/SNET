@@ -2,14 +2,24 @@ var stompClient = null;
 var username = null;
 var channelUuid = null;
 var subscription = null;
+var titleProfile = '<div class="titleProfile"><div id="fullName"></div></div>'
+var inputMessage = '<div class="newMessage">New message...</div><div id="newMessage" class="createMassage" >'    
+                         + '<textarea name="newNewsText" id="textNews" class="newNewsTextArea" maxlength="300" placeholder="Type something..."></textarea>'
+                         + '</div></div>'
+var myMessage = '<div>'
+				+ '<img class="avatarLast"></div>'
+				+ '<div><p class="messageName">Шевяков Дмитрий</p><div class="message"></div></div>'
+var myProfile;
+var friendProfile;
+var userOneId;
+var userTwoId;
 
 function connect() {
-    username = document.querySelector('#username').innerText.trim();
-      
     var socket = new SockJS('/ws');
     stompClient = Stomp.over(socket);
  
     stompClient.connect({}, onConnected, onError);
+    //stompClient.debug = null
 }
  
 function disconnect() {
@@ -25,26 +35,40 @@ function onConnected() {
 }
 
 function onMessageReceived(payload) {
-    alert(payload);
+	var data = JSON.parse(payload.body)
+	var element = document.createElement('div');
+	element.innerHTML = myMessage;
+	if (userTwo.id == data.fromUserId) {
+		$(element).addClass('friendMessage');
+		$(element).find('.messageName').text(userTwo.lastName + ' ' + userTwo.firstName);
+		$(element).find('.avatarLast').attr('src', '/avatar/big/' + userTwo.login);
+	} else {
+		$(element).addClass('myMessage');
+		$(element).find('.messageName').text(userOne.lastName + ' ' + userOne.firstName);
+		$(element).find('.avatarLast').attr('src', '/avatar/big/' + userOne.login);
+	}
+	$(element).find('.message').text(data.contents);
+	$('.areaMessage').append(element);
+	$(window).scrollTop(9999);
 }
 
-function sendMessage(event) {
-	event.preventDefault();
+function sendMessage() {
     if(stompClient) {
         var chatMessage = {
-    		fromUserId: 1,
-            toUserId: 31,
-            contents: document.querySelector('#message').value
+    		fromUserId: userOne.id,
+            toUserId: userTwo.id,
+            contents: document.querySelector('#textNews').value
         }
+        document.querySelector('#textNews').value = '';
     }
     stompClient.send("/app/message." + channelUuid, {}, JSON.stringify(chatMessage));
 } 
 
 function establishChannel (channelDetailsPayload) {
     channelUuid = channelDetailsPayload.channelUuid;
-    /*
-    self.userOneFullName = channelDetailsPayload.data.userOneFullName;
-    self.userTwoFullName = channelDetailsPayload.data.userTwoFullName;*/
+    console.log(channelDetailsPayload);
+    userOne = channelDetailsPayload.userOne;
+    userTwo = channelDetailsPayload.userTwo;
     subscriptions = stompClient.subscribe('/topic/message.' + channelUuid, onMessageReceived);
     getExistingChatMessages(channelUuid);
 };
@@ -83,25 +107,59 @@ function getExistingChatSessionMessages(channelUuid) {
         },
 		url: '/message/' + channelUuid,
 		success: function(data) {
+			var areaMes = document.createElement('div'); 
+			$(areaMes).addClass('areaMessage');
 			data.forEach(function(message) {
-	            alert(message.contents);
+				var element = document.createElement('div');
+				element.innerHTML = myMessage;
+				if (userTwo.id == message.fromUserId) {
+					$(element).addClass('friendMessage');
+					$(element).find('.messageName').text(userTwo.lastName + ' ' + userTwo.firstName);
+					$(element).find('img').attr('src', '/avatar/big/' + userTwo.login)
+				} else {
+					$(element).addClass('myMessage');
+					$(element).find('.messageName').text(userOne.lastName + ' ' + userOne.firstName);
+					$(element).find('.avatarLast').attr('src', '/avatar/big/' + userOne.login);
+				}
+				$(element).find('.message').text(message.contents);
+				$(areaMes).append(element);
 	          });
+			var element = document.createElement('div');
+			element.innerHTML = inputMessage;
+			$('.container').append(areaMes);
+			$('.container').append(element);
+			$(window).scrollTop(9999);
 		},
 		dataType: "JSON"
 	});
 };
 
-messageForm.addEventListener('submit', sendMessage, true);
-document.getElementById('Connector').addEventListener('click', construct);
-document.getElementById('DisConnector').addEventListener('click', disconnector);
+$('.container').on('click', '#crt', sendMessage);
+
+//document.getElementById('Connector').addEventListener('click', construct);
+//document.getElementById('DisConnector').addEventListener('click', disconnector);
+
+$('a').click(function(event) {
+	var id = $(this).attr('id');
+	userOneId = document.querySelector('p').id;
+	userTwoId = id;
+	changeModule();
+	establishChatSession(userOneId, userTwoId)
+});
+
+$('.container').on('keyup', "#textNews", function(event){
+    if(event.keyCode == 13){
+        event.preventDefault();
+        sendMessage();
+    }
+});
+
+function changeModule() {
+	$('#dialogList').remove();
+}
 
 function disconnector() {
 	subscriptions.unsubscribe('/topic/message.' + channelUuid);
-}
-
-function construct() {
-	alert();
-	establishChatSession(1, 31)
 }
 
 function onError(error) {
