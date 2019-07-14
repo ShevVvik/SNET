@@ -4,7 +4,8 @@ var channelUuid = null;
 var subscription = null;
 var titleProfile = '<div class="titleProfile"><div id="fullName"></div></div>'
 var inputMessage = '<div class="newMessage">New message...</div><div id="newMessage" class="createMassage" >'    
-                         + '<textarea name="newNewsText" id="textNews" class="newNewsTextArea" maxlength="300" placeholder="Type something..."></textarea>'
+                         + '<button class="picker">Pick An Emoji</button>'
+                         + '<div name="newNewsText" id="textNews" class="newNewsTextArea" placeholder="Type something..." contenteditable></div>'
                          + '</div></div>'
 var myMessage = '<div>'
 				+ '<img class="avatarLast"></div>'
@@ -57,9 +58,9 @@ function sendMessage() {
         var chatMessage = {
     		fromUserId: userOne.id,
             toUserId: userTwo.id,
-            contents: document.querySelector('#textNews').value
+            contents: document.querySelector('#textNews').innerHTML
         }
-        document.querySelector('#textNews').value = '';
+        document.querySelector('#textNews').innerHTML = '';
     }
     stompClient.send("/app/message." + channelUuid, {}, JSON.stringify(chatMessage));
 } 
@@ -129,6 +130,12 @@ function getExistingChatSessionMessages(channelUuid) {
 			$('.container').append(areaMes);
 			$('.container').append(element);
 			$(window).scrollTop(9999);
+			$('.picker').lsxEmojiPicker({
+				  twemoji: false,
+				  onSelect: function(emoji){
+					  document.getElementById('textNews').innerHTML += emoji.value;
+				  }
+			});
 		},
 		dataType: "JSON"
 	});
@@ -165,3 +172,4 @@ function disconnector() {
 function onError(error) {
 	alert(error);
 }
+

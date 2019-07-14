@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/message.css}">
-    <link rel="stylesheet" th:href="@{/css/emoji.css}">
     <meta name="_csrf" th:content="${_csrf.token}" />
 	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <!-- https://cdnjs.com/libraries/sockjs-client -->
@@ -15,7 +14,8 @@
     <script  src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script th:src="@{/js/message.js}" defer="defer"></script>
-    <script th:src="@{/js/emoji.js}" defer="defer"></script>
+    <link th:href="@{/css/jquery.lsxemojipicker.css}" rel="stylesheet">
+	<script th:src="@{/js/jquery.lsxemojipicker.js}"></script>
     <title>Friends</title>
 </head>
 <body>

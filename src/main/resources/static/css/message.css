@@ -172,7 +172,7 @@ p {
        
 }
 
-.createMassage textarea {
+.newNewsTextArea {
     overflow: auto;
     resize: none;
     width: 1000px;
