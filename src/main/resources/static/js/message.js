@@ -58,7 +58,7 @@ function sendMessage() {
         var chatMessage = {
     		fromUserId: userOne.id,
             toUserId: userTwo.id,
-            contents: document.querySelector('#textNews').innerHTML
+            contents: correctString(document.querySelector('#textNews').innerHTML)
         }
         document.querySelector('#textNews').innerHTML = '';
     }
@@ -173,3 +173,9 @@ function onError(error) {
 	alert(error);
 }
 
+function correctString(str) {
+	str.replace('<div>', '');
+	str.replace('</div>', '');
+	str.replace('<br>', '');
+	return str;
+}
